@@ -1,0 +1,356 @@
+\documentclass[11pt,spanish]{article}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,columnsep=1cm,marginparwidth=1cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{13.6pt}
+\setcounter{tocdepth}{2}
+\usepackage[skip=\bigskipamount]{parskip}
+\usepackage{color}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{pifont}
+
+\makeatletter
+\providecommand{\tabularnewline}{\\}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{xcolor}
+\usepackage[symbol]{footmisc}
+\usepackage[tikz]{bclogo}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz-qtree}
+\usepackage{proof}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\usetikzlibrary{trees,positioning}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\definecolor{fireenginered}{rgb}{0.81, 0.09, 0.13}
+\definecolor{blush}{rgb}{0.87, 0.36, 0.51}
+\definecolor{bubblegum}{rgb}{0.99, 0.76, 0.8}
+\definecolor{paleviolet-red}{rgb}{0.86, 0.44, 0.58}
+\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.00}
+\definecolor{grannysmithapple}{rgb}{0.66, 0.89, 0.63}
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+\definecolor{asparagus}{rgb}{0.53, 0.66, 0.42}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{verdeoscuro}{rgb}{0.0, 0.5, 0.0}
+\definecolor{verdepastel}{rgb}{0.5, 0.8, 0.5}
+\definecolor{verde4c9141}{rgb}{0.298, 0.569, 0.255}
+\definecolor{rojo6d2226}{rgb}{0.427, 0.133, 0.149}
+\definecolor{rojo682a2b}{rgb}{0.408, 0.165, 0.169}
+\definecolor{rojo7a3c3d}{rgb}{0.478, 0.235, 0.239}
+\definecolor{verde587246}{rgb}{0.345, 0.447, 0.275}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+
+\usepackage{forest}
+\newcommand{\cb}[1]{\colorbox{applegreen}{#1}}
+\newcommand{\imp}[1]{\colorbox{grannysmithapple}{#1}}
+\newcommand{\defi}[1]{\colorbox{apricot}{#1}}
+\newtcolorbox{ejemplo}[1]{
+colback=darkpastelblue!5!white,
+colframe=darkpastelblue!85!black,
+fonttitle=\bfseries,
+title=#1,
+breakable}
+\newtcolorbox{definicion}[1]{
+colback=asparagus!5!white,
+colframe=asparagus!85!black,
+fonttitle=\bfseries,
+title=#1,
+breakable}
+\newtcolorbox{observacion}[1]{
+colback=amber!5!white,
+colframe=amber!85!black,
+fonttitle=\bfseries,
+title=#1,
+breakable}
+\newtcolorbox{teorema}[1]{
+colback=bubblegum!5!white,
+colframe=bubblegum!85!black,
+fonttitle=\bfseries,
+title=#1,
+breakable}
+\newtcolorbox{ejercicio}[1]{
+colback=antiquefuchsia!5!white,
+colframe=antiquefuchsia!85!black,
+fonttitle=\bfseries,
+title=#1,
+breakable}
+
+\newcommand{\cf}[2]{%
+    \colorbox{#1}{\textcolor{white}{\strut #2}}%
+}
+
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+
+\AtBeginDocument{
+  \def\labelitemi{\(\star\)}
+  \def\labelitemii{\(\ast\)}
+  \def\labelitemiii{\(\bullet\)}
+  \def\labelitemiv{\(\circ\)}
+}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+\deactivatequoting
+
+\usepackage{listings}
+\lstset{
+keywordstyle={\bfseries\color{blue}},
+commentstyle={\bfseries\color{Verde}\itshape},
+emphstyle={\color{Rojo}},
+stringstyle={\color{Rojo}},
+basicstyle=\ttfamily\small,
+breaklines=true,
+columns=fullflexible
+}
+\renewcommand{\lstlistingname}{Listado de código}
+
+\begin{document}
+
+\lhead{PDS}
+
+\rhead{Tema 1.1}
+\title{Programación de Sistemas\\
+Unidad 1: Introducción a la Programación de Sistemas y los Compiladores\\ \bigskip
+\cf{rojo7a3c3d}{\textbf{\Large Nota de clase 01: Panorama de la programación de sistemas}}}
+\author{Manuel Soto Romero \and Araceli Liliana Reyes Cabello}
+\date{Semestre 2026-2 \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+En un curso inicial de programación solemos concentrarnos en escribir instrucciones que resuelvan un problema. Sin embargo, entre el texto escrito por una persona y su ejecución en una computadora intervienen otros programas: algunos traducen, otros reúnen partes separadas, otros preparan el programa en memoria y otros administran los recursos necesarios para ejecutarlo. En esta nota estudiaremos ese entorno como un panorama: definiremos la programación de sistemas, reconoceremos sus áreas principales y ubicaremos a los compiladores e intérpretes dentro de ella. Finalmente, explicaremos por qué la construcción de un compilador será el caso de estudio que articulará el curso.
+
+\begin{ejemplo}{Caso inicial. Del archivo fuente a la ejecución}
+Supongamos que una persona escribe este programa en \textsc{C}:
+
+\begin{lstlisting}[language=C]
+int main(void) {
+    return 0;
+}
+\end{lstlisting}
+
+El archivo contiene una descripción comprensible para quien conoce el lenguaje, pero el procesador no ejecuta directamente ese texto. Para llegar a la ejecución se necesita un conjunto de herramientas que transforme el programa y lo prepare para la máquina. El programa de aplicación expresa \emph{qué} se quiere hacer; el software de sistemas participa en \emph{cómo} hacerlo ejecutable.
+\end{ejemplo}
+
+\section*{\cf{verde587246}{1. Definición y características de la programación de sistemas}}
+
+El software de sistemas comprende programas que apoyan la operación de una computadora. Gracias a ese apoyo, una persona puede concentrarse en el problema que desea resolver sin controlar directamente todos los detalles internos de la máquina. Un editor permite preparar el texto de un programa; un traductor cambia su representación; un cargador lo coloca en memoria; un sistema operativo coordina recursos. Cada herramienta cumple una función distinta, pero todas forman parte del entorno que permite usar la computadora.
+
+\begin{definicion}{Definición 1. (Software de sistemas)}
+El \textbf{software de sistemas} es el conjunto de programas que apoya la operación y el uso de una computadora, y que proporciona servicios para preparar, traducir, ejecutar o controlar otros programas.
+\end{definicion}
+
+La \textbf{programación de sistemas} se ocupa del diseño y la implementación de ese tipo de software. Su objeto no es una sola aplicación, sino los mecanismos que permiten que los programas se relacionen con lenguajes, herramientas y recursos de cómputo.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.42\textwidth}|p{0.42\textwidth}|}
+\hline
+\textbf{Programación de aplicaciones} & \textbf{Programación de sistemas} \tabularnewline
+\hline
+Se concentra en un problema de una persona o una organización. & Se concentra en la infraestructura de software que permite preparar y ejecutar programas. \tabularnewline
+\hline
+Su producto suele utilizarse para realizar una tarea concreta. & Su producto suele proporcionar servicios a otros programas o administrar recursos de la computadora. \tabularnewline
+\hline
+Pregunta típica: ¿qué resultado necesita la persona usuaria? & Pregunta típica: ¿qué mecanismos necesita el programa para poder ejecutarse? \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Esta comparación no establece una frontera absoluta ni una jerarquía. Una aplicación utiliza servicios del sistema y una herramienta de sistemas también debe resolver necesidades de sus usuarios. La diferencia está en el foco principal del software.
+
+Entre las características de la programación de sistemas destacan las siguientes:
+
+\begin{itemize}
+    \item \textbf{Apoya la operación de otros programas.} Sus componentes preparan código, proporcionan servicios o administran recursos necesarios para la ejecución.
+    \item \textbf{Relaciona diferentes niveles de abstracción.} Conecta representaciones cercanas a las personas con representaciones que una máquina puede procesar.
+    \item \textbf{Considera la arquitectura de la computadora.} Parte de su diseño depende de instrucciones, registros, memoria y otros recursos de la máquina; otra parte puede conservar principios independientes de una arquitectura particular.
+    \item \textbf{Exige interfaces claras entre herramientas.} La salida producida por un componente debe tener la forma esperada por el siguiente.
+    \item \textbf{Debe atender corrección y manejo de errores.} Una herramienta de sistemas no sólo transforma información: también necesita detectar condiciones que impiden continuar y comunicarlas de manera útil.
+\end{itemize}
+
+\begin{observacion}{Observación 1. Una mirada detrás de la ejecución}
+Cuando un programa se ejecuta correctamente, muchas herramientas de sistemas pasan inadvertidas. Estudiarlas significa mirar los procesos que ocurren ``detrás'' de la aplicación: traducción, preparación, carga, control de recursos y apoyo para localizar errores.
+\end{observacion}
+
+\section*{\cf{verde587246}{2. Principales áreas de la programación de sistemas}}
+
+La programación de sistemas abarca varias familias de herramientas. Entre sus áreas principales se encuentran los ensambladores, cargadores y ligadores, procesadores de macros, compiladores y sistemas operativos; también incluye otras herramientas como editores de texto y depuradores interactivos. En esta nota sólo identificaremos su función general.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.25\textwidth}|p{0.61\textwidth}|}
+\hline
+\textbf{Área o herramienta} & \textbf{Función general} \tabularnewline
+\hline
+Ensambladores & Traducen programas escritos en lenguaje ensamblador a código objeto o código de máquina. \tabularnewline
+\hline
+Ligadores y cargadores & Los ligadores reúnen código objeto y bibliotecas para formar un programa ejecutable; los cargadores colocan el programa en memoria y lo preparan para su ejecución. \tabularnewline
+\hline
+Procesadores de macros & Reconocen abreviaturas definidas como macros y las expanden en secuencias del lenguaje correspondiente. \tabularnewline
+\hline
+Compiladores e intérpretes & Procesan programas escritos en un lenguaje: un compilador produce un programa en otro lenguaje; un intérprete ejecuta las operaciones indicadas sin entregar, como resultado principal, un programa destino separado. \tabularnewline
+\hline
+Sistemas operativos & Administran recursos de la computadora y proporcionan servicios para la ejecución de programas. \tabularnewline
+\hline
+Editores y depuradores & Los editores apoyan la creación y modificación de programas; los depuradores ayudan a observar su ejecución y localizar errores. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Estas herramientas no trabajan necesariamente de forma aislada. En un sistema de procesamiento de lenguajes, la salida de una puede convertirse en la entrada de otra. Por ejemplo, un recorrido panorámico frecuente es el siguiente:
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.7cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=darkpastelblue!12, minimum width=2.2cm, minimum height=0.9cm] (fuente) {código fuente};
+\node[draw, rounded corners, fill=darkpastelblue!12, right=of fuente, align=center, minimum height=0.9cm] (ensamblador) {\shortstack{código en lenguaje\\ensamblador}};
+\node[draw, rounded corners, fill=darkpastelblue!12, right=of ensamblador, minimum width=2.2cm, minimum height=0.9cm] (objeto) {código objeto};
+\node[draw, rounded corners, fill=darkpastelblue!12, right=of objeto, minimum width=2cm, minimum height=0.9cm] (ejecutable) {ejecutable};
+\draw[->, thick] (fuente) -- node[above, font=\scriptsize]{compilador} (ensamblador);
+\draw[->, thick] (ensamblador) -- node[above, font=\scriptsize]{ensamblador} (objeto);
+\draw[->, thick] (objeto) -- node[above, font=\scriptsize]{ligador} (ejecutable);
+\end{tikzpicture}
+
+\vspace{0.4em}
+\small El cargador coloca el ejecutable en memoria para iniciar su ejecución.
+\end{center}
+
+El esquema sirve para reconocer cooperación entre herramientas, no como una receta universal. La forma concreta del recorrido depende de los lenguajes, la plataforma y las decisiones del sistema.
+
+\begin{observacion}{Observación 2. Área no significa programa aislado}
+Hablar de áreas ayuda a distinguir responsabilidades. En un entorno real, varias de ellas forman una cadena: cada herramienta recibe una representación, realiza una tarea y produce una nueva representación o prepara la ejecución.
+\end{observacion}
+
+\section*{\cf{verde587246}{3. Compiladores e intérpretes como software de sistemas}}
+
+Los compiladores y los intérpretes pertenecen a una familia más amplia: los \textbf{procesadores de lenguajes}. Ambos permiten trabajar con un programa fuente, pero lo hacen de manera diferente.
+
+\begin{definicion}{Definición 2. (Compilador)}
+Un \textbf{compilador} es un programa que lee un programa escrito en un lenguaje fuente y lo traduce a un programa equivalente escrito en un lenguaje destino. Durante la traducción también informa los errores que puede detectar en el programa fuente.
+\end{definicion}
+
+La palabra \emph{equivalente} indica que el programa destino debe conservar el comportamiento definido por el programa fuente. Los dos programas no tienen que verse iguales ni usar las mismas instrucciones; deben corresponder en lo que hacen.
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.5cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=asparagus!12, minimum width=3cm] (f) {programa fuente};
+\node[draw, rounded corners, fill=apricot!25, right=of f, minimum width=2.5cm] (c) {compilador};
+\node[draw, rounded corners, fill=asparagus!12, right=of c, minimum width=3cm] (d) {programa destino};
+\draw[->, thick] (f) -- (c);
+\draw[->, thick] (c) -- (d);
+\end{tikzpicture}
+\end{center}
+
+\begin{definicion}{Definición 3. (Intérprete)}
+Un \textbf{intérprete} es un programa que ejecuta las operaciones especificadas por un programa fuente a partir de las entradas proporcionadas, sin producir como resultado principal un programa destino independiente.
+\end{definicion}
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.35cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=asparagus!12, minimum width=2.7cm] (f) {programa fuente};
+\node[draw, rounded corners, fill=asparagus!12, below=0.7cm of f, minimum width=2.7cm] (e) {entrada};
+\node[draw, rounded corners, fill=apricot!25, right=of f, yshift=-0.55cm, minimum width=2.5cm] (i) {intérprete};
+\node[draw, rounded corners, fill=asparagus!12, right=of i, minimum width=2.4cm] (s) {salida};
+\draw[->, thick] (f) -- (i);
+\draw[->, thick] (e) -- (i);
+\draw[->, thick] (i) -- (s);
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.22\textwidth}|p{0.31\textwidth}|p{0.31\textwidth}|}
+\hline
+ & \textbf{Compilador} & \textbf{Intérprete} \tabularnewline
+\hline
+Entrada principal & Programa fuente. & Programa fuente y datos de entrada. \tabularnewline
+\hline
+Acción principal & Traduce el programa. & Ejecuta las operaciones del programa. \tabularnewline
+\hline
+Resultado principal & Programa destino y mensajes de error, si se detectan. & Resultados de la ejecución y mensajes de error, si se detectan. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+La distinción anterior presenta los modelos básicos. En la práctica existen sistemas que combinan traducción e interpretación. Lo importante en este punto es reconocer la diferencia entre \emph{producir otra representación ejecutable} y \emph{ejecutar las operaciones del programa fuente}.
+
+\begin{ejemplo}{Ejemplo conceptual. Dos maneras de procesar un programa}
+Imaginemos un programa que recibe un número y muestra su doble.
+
+\begin{itemize}
+    \item Con un \textbf{compilador}, primero se obtiene un programa destino. Después, ese programa se ejecuta con distintos números de entrada.
+    \item Con un \textbf{intérprete}, el programa fuente y cada número de entrada son procesados para producir directamente el resultado de esa ejecución.
+\end{itemize}
+
+El cálculo solicitado es el mismo; cambia la manera en que el procesador de lenguajes lleva el programa a la ejecución.
+\end{ejemplo}
+
+\section*{\cf{verde587246}{4. El compilador como caso de estudio integrador del curso}}
+
+Un compilador es una herramienta adecuada para estudiar programación de sistemas porque conecta varios problemas en un solo producto. Debe reconocer un lenguaje fuente, detectar errores, construir y transformar representaciones, considerar el lenguaje destino y organizar componentes que colaboran mediante interfaces precisas. Su estudio relaciona lenguajes de programación, arquitectura de computadoras, teoría de lenguajes, algoritmos e ingeniería de software.
+
+En este curso construiremos progresivamente un compilador cuyo lenguaje fuente será \textsc{IMP} y cuyo lenguaje destino será \textsc{C}. Por ahora basta representar el objetivo general como una transformación:
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.5cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=grannysmithapple!30, minimum width=3cm] (imp) {programa en \textsc{IMP}};
+\node[draw, rounded corners, fill=apricot!30, right=of imp, minimum width=3.4cm] (comp) {compilador del curso};
+\node[draw, rounded corners, fill=grannysmithapple!30, right=of comp, minimum width=3cm] (c) {programa en \textsc{C}};
+\draw[->, thick] (imp) -- (comp);
+\draw[->, thick] (comp) -- (c);
+\end{tikzpicture}
+\end{center}
+
+La construcción acumulativa permitirá observar cuatro ideas propias de la programación de sistemas:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Especificar.} Una herramienta no puede procesar correctamente un lenguaje si sus reglas no están definidas con claridad.
+    \item \textbf{Transformar.} El programa cambia de representación sin perder el comportamiento que debe conservarse.
+    \item \textbf{Dividir responsabilidades.} Un sistema complejo se organiza en componentes con entradas y salidas explícitas.
+    \item \textbf{Comprobar.} Es necesario probar programas correctos, detectar errores y verificar el resultado producido.
+\end{enumerate}
+
+\begin{observacion}{Observación 3. El compilador es el hilo conductor}
+El curso no pretende revisar todas las áreas de la programación de sistemas con la misma profundidad. El compilador será el producto acumulativo que nos permitirá estudiar, de manera concreta, cómo se especifica, divide, implementa y prueba una herramienta de sistemas.
+\end{observacion}
+
+\section*{\cf{verde587246}{Conclusión}}
+
+La programación de sistemas se ocupa de herramientas que apoyan la operación de la computadora y hacen posible preparar, traducir, ejecutar y controlar programas. Entre sus áreas se encuentran ensambladores, ligadores, cargadores, procesadores de macros, compiladores, intérpretes, sistemas operativos, editores y depuradores. Dentro de este panorama, el compilador destaca porque transforma un programa fuente en un programa destino y reúne problemas de especificación, traducción, modularidad, errores y comprobación. En el siguiente tema abriremos esta herramienta para reconocer su estructura general y la relación entre sus componentes.
+
+\section*{\cf{verde587246}{Referencias}}
+
+\begin{enumerate}[label=\textbf{[\arabic*]}]
+    \item Beck, L. L. (1996). \textit{System Software: An Introduction to Systems Programming} (3.\textsuperscript{a} ed.). Addison-Wesley. ISBN: 978-0-201-42300-6.
+    \item Bala, K., Bracy, A., Sirer, E. y Weatherspoon, H. (2025). \textit{Compilation---Assemblers, Linkers, \& Loaders}. CS 3410: Computer System Organization and Programming [diapositivas]. Archivo \texttt{14-compilation-notes.pdf}.
+    \item Aho, A. V., Lam, M. S., Sethi, R. y Ullman, J. D. (2006). \textit{Compilers: Principles, Techniques, and Tools} (2.\textsuperscript{a} ed.). Pearson/Addison-Wesley.
+    \item Vilar Torres, J. M. (2010). \textit{Estructura de los compiladores e intérpretes}. Universitat Jaume I.
+\end{enumerate}
+
+\end{document}

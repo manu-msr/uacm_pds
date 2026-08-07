@@ -1,0 +1,590 @@
+\documentclass[11pt,spanish]{article}
+\usepackage[utopia]{mathdesign}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{pmboxdraw}
+\usepackage{multirow}
+\usepackage{graphicx}
+
+\providecommand{\tabularnewline}{\\}
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage[tikz]{bclogo}
+
+\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}
+\definecolor{celestialblue}{rgb}{0.29, 0.59, 0.82}
+\definecolor{ao(english)}{rgb}{0.0, 0.5, 0.0}
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Código}
+
+\begin{document}
+
+\lhead{IP 2026-1}
+
+\rhead{Estructura física de una computadora}
+\title{Introducción a la Programación, 2026-1\\
+Nota de clase 02: Estructura física de una computadora}
+\author{Manuel Soto Romero}
+\date{\today \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\setcounter{section}{2}
+
+En esta nota revisaremos, de manera general, cómo se organiza la computadora
+para almacenar y procesar información. Presentaremos definiciones básicas
+de hardware, software y programa, introduciremos la arquitectura de von
+Neumann y describiremos el ciclo de ejecución de instrucciones con un
+ejemplo sencillo.
+
+La programación de computadoras se ha vuelto una labor indispensable
+hoy en día. Podemos encontrar programas en cualquier dispositivo,
+celulares, tabletas, computadoras personales, televisiones, entre
+muchos otros. A lo largo de estas notas estudiaremos los conceptos
+básicos que involucran a la programación de computadoras y nos enfocaremos
+principalmente en el diseño de algoritmos que puedan ser automatizados.
+
+En esta nota, en particular, discutiremos de forma muy general cómo
+es que la computadora almacena información, es decir, estudiaremos
+(de forma muy superficial) su arquitectura. Esto con el fin de entender,
+a grandes rasgos, lo que sucede cuando un programa se ejecuta. Estudiaremos
+con detalle la llamada \emph{Arquitectura de von Neumann} en la cual
+se basan las computadoras actuales.
+
+\subsection*{\color{celestialblue}█ \quad{}\color{black}Definiciones básicas}
+
+Comencemos por dar una definición de lo que es una computadora.
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bcplume, marge =10]{\textit{Definición} (\textbf{Computadora})}
+\vspace{0.25cm}
+
+\emph{Es una máquina electrónica que trabaja a gran velocidad. Procesa
+datos mediante lenguajes entendibles para la misma, almacena y brinda
+información.}
+
+\vspace{0.25cm}       
+\end{bclogo}
+
+A simple vista, una computadora no es más que un conjunto de componentes
+físicos. Llamamos a estos componentes el hardware de la computadora.
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bcplume, marge =10]{\textit{Definición} (\textbf{Hardware})}
+\vspace{0.25cm}
+
+\emph{Es la estructura física de una computadora, todo lo tangible,
+es decir, los dispositivos materiales que puede tocar la persona usuaria como
+son el teclado, el monitor, el gabinete, etcétera.}
+
+\vspace{0.25cm}       
+\end{bclogo}
+
+El hardware de una computadora se encarga de procesar datos, almacenar
+y brindar información. Sin embargo, la mayor utilidad
+de una computadora proviene del hecho de que son entes programables,
+o dicho de otro modo, una computadora es útil porque ejecuta software.
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bcplume, marge =10]{\textit{Definición} (\textbf{Software})}
+\vspace{0.25cm}
+
+\emph{Es la estructura lógica de una computadora, todo lo intangible,
+es decir, son las aplicaciones, sistemas operativos, etcétera que
+no son tangibles para la persona usuaria.}
+
+\vspace{0.25cm}       
+\end{bclogo}
+
+Esta relación entre hardware y software se logra gracias a la programación
+de computadoras. En sus inicios, esta labor consistía en reconfigurar
+el hardware, desconectando cables y conectándolos en otros lugares.
+Hoy en día la programación de computadoras se lleva a cabo usando
+lo que se conoce como \emph{lenguaje de alto nivel}.
+
+\subsection*{\color{celestialblue}█ \quad{}\color{black}Arquitectura de von
+Neumann}
+
+Conscientes de que la labor de programación era muy lenta y, por lo
+tanto, propensa a errores, J. Presper Eckert, John Mauchly, Herman
+Goldstine y John von Neumann discutieron acerca de una forma de proveer
+a la computadora del programa a ejecutar de manera más sencilla.
+Con lo cual se definió una arquitectura con el siguiente proceso:
+\begin{enumerate}
+\item Cargar el programa en la memoria de la computadora.
+\item La persona usuaria proporciona datos de entrada a la computadora.
+\item A partir de la información de entrada, el programa es ejecutado.
+\item Una vez ejecutado el programa, se obtienen datos de salida.
+\end{enumerate}
+Dentro de este proceso, intervienen los siguientes componentes y unidades:
+\cite{key-2}
+\begin{itemize}
+\item \textbf{Memoria RAM}
+
+Aquí son almacenados los datos y las instrucciones durante la ejecución
+del programa.
+\item \textbf{Unidad Central de Proceso (}\textbf{\emph{CPU, Central Processing
+Unit}}\textbf{)}
+
+Controla y coordina la ejecución de las instrucciones de un programa.
+Se compone de dos unidades auxiliares: 
+\begin{itemize}
+\item La \emph{Unidad Aritmético-Lógica }(ALU) se encarga de realizar operaciones
+aritméticas (sumas y restas) y lógicas (Álgebra Booleana) sobre los
+datos del programa. 
+\item La \emph{Unidad de Control} se encarga de leer las instrucciones del
+programa, decodificarlas y enviar órdenes a los componentes correspondientes.
+Cada instrucción es guardada temporalmente en lo que se conoce como
+\emph{Registro de Instrucción} y el \emph{Contador del Programa} que
+indica cuál es la siguiente instrucción a ejecutar.
+\end{itemize}
+\item \textbf{Dispositivos de entrada y salida}
+
+Son responsables de la comunicación con la persona usuaria. Los dispositivos
+de entrada permiten a la computadora obtener datos e instrucciones,
+por ejemplo, a través del teclado. Los dispositivos de salida, permiten
+enviar los resultados de un programa a la persona usuaria, por ejemplo, a través
+del monitor.
+\item \textbf{Buses}
+
+Permiten conectar todos los componentes. Son vistos como una línea
+de transmisión donde pasa la información. Existen, en general tres
+tipos de \emph{buses:}
+\begin{itemize}
+\item \emph{Bus de datos}. Es un canal \emph{bidireccional }que\emph{ }permite
+el intercambio de datos entre la CPU y el resto de unidades.
+\item \emph{Bus de direcciones}. Es un canal \emph{unidireccional} por el
+cual la unidad central de proceso envía las direcciones de memoria
+para ubicar información en los dispositivos de memoria.
+\item \emph{Bus de control}. Por el bus de control, se transmiten las órdenes
+necesarias para activar las operaciones de lectura o escritura.
+\end{itemize}
+\end{itemize}
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bclampe, marge =10]{\textit{Observación}}
+\vspace{0.25cm}
+
+Es importante mencionar que la Unidad Central de Proceso no recibe
+los datos de manera directa de la unidad de entrada, ni los envía
+directamente a la unidad de salida. Usa la memoria RAM como lugar
+de paso. De esta forma:
+\begin{itemize}
+\item La Unidad Central de Proceso es la única que puede procesar los datos,
+esto implica que los datos tienen que llegar de alguna forma ahí para
+ser procesados.
+\item La Unidad Central de Proceso sólo puede acceder a los datos o instrucciones
+almacenados en memoria RAM.
+\end{itemize}
+\vspace{0.25cm}       
+\end{bclogo}
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bclampe, marge =10]{\textit{Observación}}
+\vspace{0.25cm}
+
+Un registro es, de forma más detallada, una colección de celdas de
+memoria, cada una de las cuales puede almacenar un 0 o un 1 (bit).
+El número de celdas corresponde al número de bits que pueden almacenarse
+en un registro. De esta forma hay registros de 4, 16 o 32 bits. A
+esto se le conoce como \emph{palabra}.
+
+\vspace{0.25cm}       
+\end{bclogo}
+
+La Figura 1 muestra un diagrama de la llamada \emph{Arquitectura de
+von Neumann}.
+\begin{center}
+\begin{figure}[h]
+\begin{centering}
+\includegraphics[scale=0.7]{imagenes/1}
+\par\end{centering}
+\caption{\emph{Arquitectura de von Neumann\cite{key-1}}}
+\end{figure}
+\par\end{center}
+
+Finalmente, John von Neumann publicó esta arquitectura en el artículo
+\emph{First Draft of a Reporter: on the EDVAC} a partir de donde recibió
+este nombre. Esta arquitectura es tomada como base en la mayoría de
+dispositivos actuales.
+
+De esta forma, el funcionamiento general de una computadora, se obtiene
+mediante un programa (software), o dicho de otro modo, sigue los siguientes
+pasos:
+\begin{center}
+\emph{}%
+\begin{tabular}{cc>{\centering}p{5cm}cc}
+Datos de entrada & $\Rightarrow$ & Computadora & $\Rightarrow$ & Datos de salida\tabularnewline
+ &  & $\Uparrow$ &  & \tabularnewline
+ &  & Programa (Conformado por instrucciones) &  & \tabularnewline
+\end{tabular}
+\par\end{center}
+
+\subsection*{\color{celestialblue}█ \quad{}\color{black}Procesamiento de instrucciones}
+
+Hemos dicho que una computadora toma datos de entrada que son procesados
+mediante un programa, generando datos de salida. Revisemos la definición
+de estos conceptos con un poco más de detenimiento:
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bcplume, marge =10]{\textit{Definición} (\textbf{Dato})}
+\vspace{0.25cm}
+
+\emph{Un dato es un símbolo, valor, texto o fecha que da lugar a la
+información. Un dato por sí mismo no nos proporciona contexto alguno; sin
+embargo, con el procesamiento adecuado da lugar a obtener información. Se
+dice que un dato es la unidad mínima de información.}
+
+\vspace{0.25cm}       
+\end{bclogo}
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bccrayon, marge =10]{\textit{Ejemplo}}
+\vspace{0.25cm}
+\begin{itemize}
+\item 'F'
+\item ``Chilaquiles''
+\item 2001
+\item 4/02/2004
+\end{itemize}
+\vspace{0.25cm}       
+\end{bclogo}
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bcplume, marge =10]{\textit{Definición} (\textbf{Información})}
+\vspace{0.25cm}
+
+\emph{Es un conjunto de datos procesados en un determinado contexto.}
+
+\vspace{0.25cm}       
+\end{bclogo}
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bccrayon, marge =10]{\textit{Ejemplo}}
+\vspace{0.25cm}
+\begin{itemize}
+\item 'F' Representa el género femenino. 
+\item ``Chilaquiles'' Es la comida favorita de la abuelita de Batman. 
+\item 2001 Es el año de fundación de la UACM. 
+\item 4/02/2004 Es la fecha de fundación de \textsc{Facebook}.
+\end{itemize}
+\vspace{0.25cm}       
+\end{bclogo}
+
+\subsubsection*{Programas}
+
+Debido a que las computadoras únicamente entienden lenguaje de máquina
+(binario), fue necesario crear nuevos lenguajes que fueran más entendibles
+para las personas y que funcionaran como un intermediario entre la
+persona programadora y la computadora. Este tipo de lenguajes (de programación)
+son clasificados como \emph{lenguajes de alto nivel }y \emph{lenguajes
+de bajo nivel}. Mientras más cercano a la arquitectura de la computadora
+(hardware) más bajo el nivel.
+\begin{itemize}
+\item De esta forma, lenguajes de programación como \textsc{C}, \textsc{Java}
+o \textsc{Python} que son más cercanos al lenguaje de los humanos,
+son de alto nivel.
+\item Los lenguajes de bajo nivel son llamados \emph{ensambladores} y cada
+procesador provee su propio lenguaje.
+\end{itemize}
+Con estos conceptos definidos, veamos ahora, qué es un programa.
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bcplume, marge =10]{\textit{Definición} (\textbf{Programa})}
+\vspace{0.25cm}
+
+\emph{Es un conjunto de instrucciones que describen las órdenes dadas
+a una computadora, éstas pueden ser escritas en un lenguaje de programación,
+de alto o bajo nivel o bien en lenguaje máquina.}
+
+\vspace{0.25cm}       
+\end{bclogo}
+\begin{itemize}
+\item Los programas escritos en lenguaje máquina son ejecutados directamente
+por la computadora.
+\item Los programas escritos en lenguajes de programación deben ser traducidos
+al lenguaje de la máquina para que ésta pueda ejecutarlos.
+\end{itemize}
+Al programa que se requiere traducir se le llama \emph{programa fuente}\footnote{También llamado código fuente.}.
+Para realizar la traducción, se puede emplear un programa llamado
+\emph{traductor}. En general existen dos tipos de traductores: \emph{compiladores}
+e \emph{intérpretes}. El programa final generado después de la traducción
+es llamado \emph{programa objeto}\footnote{Código objeto}.
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bcplume, marge =10]{\textit{Definición} (\textbf{Compilador})}
+\vspace{0.25cm}
+
+\emph{Es un traductor de lenguajes de programación de alto o bajo
+nivel que toma todo un programa fuente y lo traduce pasando por distintas
+fases en un programa ensamblador o programa objeto.}
+
+\vspace{0.25cm}       
+\end{bclogo}
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bcplume, marge =10]{\textit{Definición} (\textbf{Intérprete})}
+\vspace{0.25cm}
+
+\emph{Es un traductor de lenguajes de programación de alto o bajo
+nivel que traduce línea por línea las instrucciones de un programa
+fuente, es decir, traduce cada línea a código objeto y la ejecuta.}
+
+\vspace{0.25cm}       
+\end{bclogo}
+
+\subsubsection*{Representación de la información}
+
+Los datos e instrucciones son almacenados en la memoria en un lenguaje
+entendible para la misma, llamado \emph{lenguaje de máquina}. Este
+lenguaje se compone de cadenas de ceros y unos y es llamado \emph{binario}.
+Una computadora entiende este lenguaje, pues únicamente trabaja con
+dos estados: \emph{activo o desactivado, abierto o cerrado, pasa corriente
+o no pasa corriente}. 
+
+\bigskip{}
+
+\textbf{Unidades de medida}
+
+Tanto la memoria como las unidades de almacenamiento utilizan unidades
+para ser medidas, entre las cuales se encuentran.
+\begin{itemize}
+\item \textbf{Bit.} Es la unidad más pequeña de información en el sistema
+binario, es decir, es o bien 0 o 1.
+\item \textbf{Byte.} Es conocida como la unidad de almacenamiento, se presenta
+en bloques de 8 bits. Con esto se pueden representar hasta 256 valores
+distintos. 
+\item \textbf{Kilobyte (KB).} Corresponde a 1,024 bytes.
+\item \textbf{Megabyte (MB).} Corresponde a 1,024 kilobytes, es decir, 1,048,576
+bytes.
+\item \textbf{Gigabyte (GB). }Corresponde a 1,024 megabytes, es decir, 1,073,741,824
+bytes.
+\item \textbf{Terabyte (TB). }Corresponde a 1,024 gigabytes, es decir, 1,099,511,627,776
+bytes.
+\end{itemize}
+
+\subsubsection*{Ejecución de instrucciones}
+
+Ahora que tenemos bien definido cómo se representa la información
+en la computadora, y cómo es traducida a lenguaje de máquina, veamos
+cómo es que la computadora procesa cada cadena de bits.
+
+La mayoría de los lenguajes de programación se traducen directamente
+al lenguaje que provee el procesador, llamado ensamblador. Por lo
+que ejemplificaremos el proceso de ejecución, mediante programas escritos
+en este tipo de lenguajes. Por ejemplo, supongamos un lenguaje ensamblador
+con las siguientes operaciones: \cite{key-2}
+\begin{center}
+\begin{longtable}[c]{lc>{\raggedright}p{10cm}}
+\textbf{\emph{Instrucción}} & \textbf{\emph{Código}} & \textbf{\emph{Descripción}}\tabularnewline
+\hline 
+\endhead
+\texttt{\textbf{Carga <DIR>}} & 20 & Transfiere el dato almacenado en la posición de memoria \texttt{\textbf{<DIR>}}
+al acumulador de la ALU.\tabularnewline
+\hline 
+\texttt{\textbf{Guarda <DIR>}} & 02 & Guarda el contenido del acumulador en la posición de memoria \texttt{\textbf{<DIR>}}.\tabularnewline
+\hline 
+\texttt{\textbf{Divide <DIR>}} & 38 & Divide el contenido del acumulador entre el dato almacenado en la
+posición de memoria \texttt{\textbf{<DIR>}}. El resultado queda almacenado
+en el acumulador.\tabularnewline
+\hline 
+\texttt{\textbf{Multiplica <DIR>}} & 36 & Multiplica el contenido del acumulador entre el dato almacenado en
+la posición de memoria \texttt{\textbf{<DIR>}}. El resultado queda
+almacenado en el acumulador.\tabularnewline
+\hline 
+\texttt{\textbf{Resta <DIR>}} & 33 & Resta el contenido del acumulador entre el dato almacenado en la posición
+de memoria \texttt{\textbf{<DIR>}}. El resultado queda almacenado
+en el acumulador.\tabularnewline
+\hline 
+\texttt{\textbf{Suma <DIR>}} & 30 & Suma el contenido del acumulador entre el dato almacenado en la posición
+de memoria \texttt{\textbf{<DIR>}}. El resultado queda almacenado
+en el acumulador.\tabularnewline
+\hline 
+\texttt{\textbf{Alto}} & 70 & Indica el fin del programa\tabularnewline
+\end{longtable}
+\par\end{center}
+
+\begin{bclogo}[noborder=true, couleurBarre=celestialblue,arrondi =0.1, couleur =anti-flashwhite, logo=\bccrayon, marge =10]{\textit{Ejemplo}}
+\vspace{0.25cm}
+
+Supongamos que tenemos un programa escrito en un lenguaje de alto
+nivel, que calcula el promedio de tres números. Algo similar al siguiente
+código:
+
+\bigskip{}
+
+\begin{lstlisting}[basicstyle={\ttfamily},tabsize=4,mathescape=true]
+Imprimir "Ingresa el primer numero"
+Leer numero1
+Imprimir "Ingresa el segundo numero"
+Leer numero2
+Imprimir "Ingresa el tercer numero"
+Leer numero3
+promedio $\leftarrow$ (numero1 + numero2 + numero3) / 3
+Imprimir "Promedio: " + promedio
+\end{lstlisting}
+Supongamos que la persona usuaria ingresa los números, \texttt{\textbf{10}},
+\texttt{\textbf{4}} y \texttt{\textbf{4}}, por lo tanto, las variables
+\texttt{numero1}, \texttt{numero2} y \texttt{numero3}, tienen esos
+valores, que podemos almacenar en los registros \texttt{\textbf{00}},
+\texttt{\textbf{01}} y \texttt{\textbf{02}} de la memoria. En el registro
+\texttt{\textbf{03}}, agrego un número 3 que me permitirá hacer la
+división. Con lo cual el código ensamblador correspondiente quedaría
+como sigue:
+
+\bigskip{}
+
+\begin{lstlisting}[basicstyle={\ttfamily},tabsize=4,mathescape=true]
+Carga  00
+Suma   01
+Guarda 04
+Carga  02
+Suma   04
+Guarda 04
+Carga  04
+Divide 03
+Guarda 04
+Alto
+\end{lstlisting}
+Una vez realizado esto, necesitamos buscar el código asociado a cada
+operación y representarlo en código máquina, es decir, en binario. Esto
+se vería así:
+
+\bigskip{}
+
+\begin{lstlisting}[basicstyle={\ttfamily},tabsize=4,mathescape=true]
+00010100 00000000
+00011110 00000001
+00000010 00000100
+00010100 00000010
+00011110 00000100
+00000010 00000100
+00010100 00000100
+00100110 00000011
+00010100 00000100
+01000110 00000000
+\end{lstlisting}
+Los pasos que sigue el procesador para ejecutar instrucciones se conocen
+como \emph{ciclo de ejecución }y se listan a continuación\cite{key-2}:
+\begin{enumerate}
+\item La unidad de control obtiene de la memoria RAM la instrucción indicada
+en el contador de programa (PC) y la almacena en el registro de instrucción
+(IR). Actualiza el contenido del contador de programa con la dirección
+de memoria donde se encuentra almacenada la siguiente instrucción
+del programa.
+\item La unidad de control decodifica la instrucción del registro de instrucción,
+detecta las unidades que deben interactuar para ejecutarla y les envía
+señales de control para indicarles la acción que deben de realizar.
+Si la acción requiere un dato que esté en memoria, se hará la lectura
+correspondiente, utilizando para ello los buses apropiados. 
+\item Si las instrucciones contienen operaciones lógicas o aritméticas en
+los datos, este trabajo es asignado a la ALU, la cual realiza la operación
+con el dato indicado en la instrucción y el dato almacenado en el
+acumulador. El resultado es almacenado en el acumulador de la ALU, perdiéndose
+con ello el dato anterior.
+\end{enumerate}
+De esta forma, la memoria final de nuestro programa, luce de la siguiente
+manera. Suponiendo que las instrucciones se almacenan a partir de
+la dirección en memoria 10.
+\begin{center}
+\begin{tabular}{|>{\centering}p{1.5cm}|>{\centering}p{1.5cm}|>{\centering}p{1.5cm}|>{\centering}p{1.5cm}|c|>{\centering}p{1.5cm}|>{\centering}p{1.5cm}|c}
+\cline{1-4} \cline{2-4} \cline{3-4} \cline{4-4} \cline{6-7} \cline{7-7} 
+00000000
+
+00001010 & 0000000
+
+00000100 & 0000000
+
+00000100 & 0000000
+
+0000011 & ... & 00010100
+
+00000000 & 00011110
+
+00000001 & ...\tabularnewline
+\cline{1-4} \cline{2-4} \cline{3-4} \cline{4-4} \cline{6-7} \cline{7-7} 
+\multicolumn{1}{>{\centering}p{1.5cm}}{00} & \multicolumn{1}{>{\centering}p{1.5cm}}{01} & \multicolumn{1}{>{\centering}p{1.5cm}}{02} & \multicolumn{1}{>{\centering}p{1.5cm}}{03} & \multicolumn{1}{c}{} & \multicolumn{1}{>{\centering}p{1.5cm}}{10} & \multicolumn{1}{>{\centering}p{1.5cm}}{11} & \tabularnewline
+\end{tabular}
+\par\end{center}
+
+Podemos resumir la ejecución de cada instrucción en la siguiente tabla.
+\cite{key-2}
+\begin{center}
+\begin{longtable}[c]{|l|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+\multirow{2}{*}{Instrucción} & \multicolumn{2}{c|}{ALU} & \multicolumn{3}{c|}{Unidad de control} & \multicolumn{5}{c|}{Memoria}\tabularnewline
+\cline{2-6} \cline{3-6} \cline{4-6} \cline{5-6} \cline{6-6} 
+ & Operación & Acumulador & \multicolumn{2}{c|}{IR} & PC & \multicolumn{5}{c|}{}\tabularnewline
+\hline 
+\multirow{2}{*}{} & \multirow{2}{*}{} & \multirow{2}{*}{} & \multirow{2}{*}{} & \multirow{2}{*}{} & \multirow{2}{*}{10} & 10 & 4 & 4 & 3 & \tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\multirow{2}{*}{\texttt{\textbf{Carga 00}}} & \multirow{2}{*}{} & \multirow{2}{*}{10} & \multirow{2}{*}{20} & \multirow{2}{*}{00} & \multirow{2}{*}{11} & 10 & 4 & 4 & 3 & \tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\multirow{2}{*}{\texttt{\textbf{Suma 01}}} & \multirow{2}{*}{\texttt{\textbf{10+4}}} & \multirow{2}{*}{14} & \multirow{2}{*}{30} & \multirow{2}{*}{01} & \multirow{2}{*}{12} & 10 & 4 & 4 & 3 & \tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\multirow{2}{*}{\texttt{\textbf{Guarda 04}}} & \multirow{2}{*}{} & \multirow{2}{*}{14} & \multirow{2}{*}{02} & \multirow{2}{*}{04} & \multirow{2}{*}{13} & 10 & 4 & 4 & 3 & 14\tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\multirow{2}{*}{\texttt{\textbf{Carga 02}}} & \multirow{2}{*}{} & \multirow{2}{*}{4} & \multirow{2}{*}{20} & \multirow{2}{*}{02} & \multirow{2}{*}{14} & 10 & 4 & 4 & 3 & 14\tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\multirow{2}{*}{\texttt{\textbf{Suma 04}}} & \multirow{2}{*}{4+14} & \multirow{2}{*}{18} & \multirow{2}{*}{30} & \multirow{2}{*}{04} & \multirow{2}{*}{15} & 10 & 4 & 4 & 3 & 14\tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\multirow{2}{*}{\texttt{\textbf{Guarda 04}}} & \multirow{2}{*}{} & \multirow{2}{*}{18} & \multirow{2}{*}{02} & \multirow{2}{*}{04} & \multirow{2}{*}{16} & 10 & 4 & 4 & 3 & 18\tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\multirow{2}{*}{\texttt{\textbf{Carga 04}}} & \multirow{2}{*}{} & \multirow{2}{*}{18} & \multirow{2}{*}{20} & \multirow{2}{*}{04} & \multirow{2}{*}{17} & 10 & 4 & 4 & 3 & 18\tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\multirow{2}{*}{\texttt{\textbf{Divide 03}}} & \multirow{2}{*}{\texttt{\textbf{18/3}}} & \multirow{2}{*}{6} & \multirow{2}{*}{38} & \multirow{2}{*}{03} & \multirow{2}{*}{18} & 10 & 4 & 4 & 3 & 18\tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\multirow{2}{*}{\texttt{\textbf{Guarda 04}}} & \multirow{2}{*}{} & \multirow{2}{*}{6} & \multirow{2}{*}{20} & \multirow{2}{*}{04} & \multirow{2}{*}{19} & 10 & 4 & 4 & 3 & 6\tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\multirow{2}{*}{\texttt{\textbf{Alto}}} & \multirow{2}{*}{} & \multirow{2}{*}{} & \multirow{2}{*}{70} & \multirow{2}{*}{} & \multirow{2}{*}{-} & 10 & 4 & 4 & 3 & 6\tabularnewline
+\cline{7-11} \cline{8-11} \cline{9-11} \cline{10-11} \cline{11-11} 
+ &  &  &  &  &  & \texttt{\textbf{00}} & \texttt{\textbf{01}} & \texttt{\textbf{02}} & \texttt{\textbf{03}} & \texttt{\textbf{04}}\tabularnewline
+\hline 
+\end{longtable}
+\par\end{center}
+
+\vspace{0.25cm}       
+\end{bclogo}
+
+\subsection*{\color{celestialblue}█ \quad{}\color{black}Conclusiones}
+
+Comprender la arquitectura básica de una computadora ayuda a conectar los
+conceptos de programación con el comportamiento real del hardware. Al
+identificar el papel de la memoria, la CPU y los buses, así como el ciclo
+de ejecución de instrucciones, podemos razonar mejor sobre cómo se
+transforman los datos en resultados y por qué el diseño de algoritmos y
+programas es tan importante.
+\begin{thebibliography}{1}
+\bibitem{key-1}José de J. Galaviz, \emph{Notas de Clase de Organización
+y Arquitectura de Computadoras}, Facultad de Ciencias UNAM, Revisión
+2015-2.
+
+\bibitem{key-2}Alejandra Andrade, Diana Cruz, et. al. \emph{Programación
+estructurada y modular en el lenguaje C}, UACM, Primera Edición, 2010. 
+
+\bibitem{key-3}Juan J. Alvarez, S. Alejandra Andrade, et. al. \emph{Introducción
+a la Programación}, UACM, Primera edición 2007.
+\end{thebibliography}
+
+\end{document}

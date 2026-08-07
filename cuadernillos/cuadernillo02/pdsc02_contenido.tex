@@ -1,0 +1,631 @@
+\documentclass[11pt,spanish]{article}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,columnsep=1cm,marginparwidth=1cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{13.6pt}
+\usepackage[skip=\bigskipamount]{parskip}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+\usepackage{pifont}
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{rojo7a3c3d}{rgb}{0.478, 0.235, 0.239}
+\definecolor{verde587246}{rgb}{0.345, 0.447, 0.275}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+\definecolor{pastelgreen}{rgb}{0.82,0.92,0.78}
+\definecolor{indiagreen}{rgb}{0.07,0.53,0.03}
+
+\newcommand{\blank}[1][4cm]{\rule{#1}{0.4pt}}
+\newcommand{\cuadro}{\(\square\)}
+\newcommand{\cf}[2]{\colorbox{#1}{\textcolor{white}{\strut #2}}}
+\ifrespuestas
+\newcommand{\espaciosalida}{0.10cm}
+\else
+\newcommand{\espaciosalida}{0.65cm}
+\fi
+
+\newtcolorbox{ejercicio}[1]{
+colback=antiquefuchsia!5!white,
+colframe=antiquefuchsia!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+
+\newtcolorbox{observacion}[1]{
+colback=amber!5!white,
+colframe=amber!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+
+\newtcolorbox{respuesta}[1]{
+colback=pastelgreen!35!white,
+colframe=indiagreen!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+
+\AtBeginDocument{
+  \def\labelitemi{\(\star\)}
+  \def\labelitemii{\(\ast\)}
+  \def\labelitemiii{\(\bullet\)}
+  \def\labelitemiv{\(\circ\)}
+}
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+\deactivatequoting
+
+\begin{document}
+
+\lhead{PDS}
+\rhead{Cuadernillo 02}
+\title{Programación de Sistemas\\
+Unidades 1 y 2: Estructura del compilador y análisis léxico\\ \bigskip
+\cf{rojo7a3c3d}{\textbf{Cuadernillo de ejercicios 02}}\\
+\bigskip
+\Large\textbf{Del software de sistemas al análisis léxico}
+\ifrespuestas\\[0.4em]\large Versión para docente\fi}
+\author{Manuel Soto Romero \and Araceli Liliana Reyes Cabello}
+\date{Semestre 2026-2 \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+Este cuadernillo acompaña las notas 02 y 03. Su propósito es practicar la estructura general de un compilador, la función y comunicación de sus fases y los fundamentos del análisis léxico. Las actividades avanzan desde identificar entradas y salidas hasta seguir la transformación de caracteres en tokens y distinguir token, lexema, patrón y atributo.
+
+\begin{observacion}{Observación 1. Límite de trabajo}
+Responde únicamente con lo estudiado en las notas 02 y 03. Los fragmentos de código son ilustrativos: no definen la sintaxis de \textsc{IMP}. No necesitas escribir expresiones regulares, construir autómatas, proponer reglas oficiales de \textsc{IMP} ni diseñar estrategias de recuperación de errores.
+\end{observacion}
+
+\section*{\cf{verde587246}{1. Estructura y fases del compilador}}
+
+\begin{ejercicio}{Ejercicio 1. Reconocer los contratos entre fases}
+Completa la columna de salida con las expresiones del banco. Cada expresión se usa una sola vez.
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|}
+\hline
+secuencia de tokens & representación estructurada & representación validada \tabularnewline
+\hline
+representación intermedia & representación intermedia equivalente & programa destino \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|p{0.20\textwidth}|p{0.30\textwidth}|p{0.35\textwidth}|}
+\hline
+\textbf{Fase} & \textbf{Entrada principal} & \textbf{Salida} \tabularnewline
+\hline
+Análisis léxico & Caracteres del programa fuente & \tabularnewline[\espaciosalida]
+\hline
+Análisis sintáctico & Secuencia de tokens & \tabularnewline[\espaciosalida]
+\hline
+Análisis semántico & Representación estructurada e información necesaria & \tabularnewline[\espaciosalida]
+\hline
+Generación de representación intermedia & Representación validada & \tabularnewline[\espaciosalida]
+\hline
+Optimización & Representación intermedia & \tabularnewline[\espaciosalida]
+\hline
+Generación de código & Representación validada o intermedia & \tabularnewline[\espaciosalida]
+\hline
+\end{tabular}
+\end{center}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 1}
+En orden: secuencia de tokens; representación estructurada; representación validada; representación intermedia; representación intermedia equivalente; programa destino.
+\end{respuesta}
+\fi
+
+\ifrespuestas\else\newpage\fi
+\begin{ejercicio}{Ejercicio 2. Análisis o síntesis}
+Escribe \textbf{A} si la tarea corresponde a la etapa general de análisis y \textbf{S} si corresponde a la etapa general de síntesis.
+
+\begin{center}
+\small
+\begin{tabular}{|p{0.76\textwidth}|p{0.10\textwidth}|}
+\hline
+\textbf{Tarea} & \textbf{A/S} \tabularnewline
+\hline
+Agrupar caracteres para producir tokens. & \tabularnewline[0.55cm]
+\hline
+Reconocer la estructura de una secuencia de tokens. & \tabularnewline[0.55cm]
+\hline
+Comprobar restricciones de declaración y tipos. & \tabularnewline[0.55cm]
+\hline
+Construir una representación intermedia a partir de una representación comprobada. & \tabularnewline[0.55cm]
+\hline
+Transformar una representación para mejorar una característica sin cambiar el comportamiento definido. & \tabularnewline[0.55cm]
+\hline
+Producir instrucciones o construcciones del lenguaje destino. & \tabularnewline[0.55cm]
+\hline
+\end{tabular}
+\end{center}
+
+Explica por qué la representación producida por el análisis es necesaria para iniciar la síntesis:
+
+\ifrespuestas\else
+\blank[14cm]
+
+\blank[14cm]
+\fi
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 2}
+Orden esperado: A, A, A, S, S, S.
+
+La representación producida por el análisis comunica una versión estructurada y comprobada del programa. La síntesis utiliza esa información para transformar el programa sin tener que volver a interpretar directamente el flujo original de caracteres.
+\end{respuesta}
+\fi
+
+\section*{\cf{verde587246}{2. Responsabilidades y diagnósticos}}
+
+\begin{ejercicio}{Ejercicio 3. ¿Qué fase debe responder?}
+Escribe \textbf{L} para análisis léxico, \textbf{S} para análisis sintáctico o \textbf{M} para análisis semántico.
+
+\begin{center}
+\small
+\begin{tabular}{|p{0.77\textwidth}|p{0.09\textwidth}|}
+\hline
+\textbf{Situación} & \textbf{L/S/M} \tabularnewline
+\hline
+Ningún patrón de token permite reconocer el inicio de los caracteres restantes. & \tabularnewline[0.62cm]
+\hline
+Los tokens fueron reconocidos, pero su secuencia no puede organizarse de acuerdo con la gramática. & \tabularnewline[0.62cm]
+\hline
+Un identificador aparece en una estructura válida, pero no satisface una regla de declaración. & \tabularnewline[0.62cm]
+\hline
+Dos operandos forman una expresión sintácticamente válida, pero sus tipos no son compatibles con la operación. & \tabularnewline[0.62cm]
+\hline
+Una secuencia de caracteres se reconoce como un identificador. & \tabularnewline[0.62cm]
+\hline
+Una secuencia de tokens se reconoce como una asignación. & \tabularnewline[0.62cm]
+\hline
+\end{tabular}
+\end{center}
+
+¿Por qué el analizador léxico no debe decidir por sí solo si un identificador fue declarado correctamente?
+
+\ifrespuestas\else
+\blank[14cm]
+
+\blank[14cm]
+\fi
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 3}
+Orden esperado: L, S, M, M, L, S.
+
+El analizador léxico reconoce y clasifica el lexema como identificador. Comprobar una declaración requiere considerar la estructura del programa y la información semántica disponible; por tanto, corresponde a una fase posterior.
+\end{respuesta}
+\fi
+
+\begin{ejercicio}{Ejercicio 4. Delimitación de responsabilidades}
+Marca cada afirmación como \textbf{verdadera} o \textbf{falsa}. Corrige las afirmaciones falsas.
+
+\begin{enumerate}[leftmargin=*]
+    \item El analizador sintáctico recibe una secuencia de tokens. \hfill V \cuadro\quad F \cuadro
+    \item El analizador semántico comprueba restricciones que no dependen únicamente de la forma gramatical. \hfill V \cuadro\quad F \cuadro
+    \item El analizador léxico determina la estructura completa de las expresiones. \hfill V \cuadro\quad F \cuadro
+    \item La optimización puede cambiar el resultado del programa si con ello reduce su tamaño. \hfill V \cuadro\quad F \cuadro
+    \item La generación de código produce una representación en el lenguaje destino. \hfill V \cuadro\quad F \cuadro
+    \item Todos los compiladores deben tener exactamente una representación intermedia y un optimizador. \hfill V \cuadro\quad F \cuadro
+\end{enumerate}
+
+\ifrespuestas\else
+\textbf{Correcciones:}
+
+\blank[14cm]
+
+\blank[14cm]
+
+\blank[14cm]
+\fi
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 4}
+1. Verdadera. 2. Verdadera. 3. Falsa. 4. Falsa. 5. Verdadera. 6. Falsa.
+
+Correcciones:
+\begin{itemize}[leftmargin=*]
+    \item El analizador \textbf{sintáctico} determina cómo se organizan los tokens en estructuras; el léxico reconoce unidades a partir de caracteres.
+    \item La optimización debe conservar el comportamiento definido del programa.
+    \item Un compilador puede usar varias representaciones intermedias, repetir optimizaciones o no incluir un optimizador en una implementación sencilla.
+\end{itemize}
+\end{respuesta}
+\fi
+
+\section*{\cf{verde587246}{3. Integración del compilador del curso}}
+
+\begin{ejercicio}{Ejercicio 5. Completar el recorrido de \textsc{IMP} a \textsc{C}}
+Completa el flujo con las cuatro fases del banco.
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|}
+\hline
+análisis léxico & análisis sintáctico & verificación semántica & generación de código \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.55}
+\begin{tabular}{c@{\(\longrightarrow\)}c@{\(\longrightarrow\)}c}
+programa \textsc{IMP} & \blank[3.3cm] & tokens \\[0.3cm]
+tokens & \blank[3.3cm] & estructura o ASA\footnote{ASA significa \emph{árbol de sintaxis abstracta}. La denominación proviene del inglés \emph{Abstract Syntax Tree}, abreviado AST.} \\[0.3cm]
+estructura o ASA & \blank[3.3cm] & representación validada \\[0.3cm]
+representación validada & \blank[3.3cm] & programa \textsc{C}
+\end{tabular}
+\end{center}
+
+Responde brevemente.
+
+\begin{enumerate}[leftmargin=*]
+    \item ¿Qué fases serán apoyadas por Lark? \ifrespuestas\else\blank[7cm]\fi
+    \item ¿Qué fases se implementarán explícitamente mediante recorridos en Python? \ifrespuestas\else\blank[6cm]\fi
+    \item ¿El programa \textsc{C} producido ya es un archivo ejecutable? Explica.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item ¿Dónde puede ubicarse una representación intermedia en este recorrido?
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+\end{enumerate}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 5}
+En orden: análisis léxico; análisis sintáctico; verificación semántica; generación de código.
+
+\begin{enumerate}[leftmargin=*]
+    \item Lark apoyará el análisis léxico y el análisis sintáctico.
+    \item La verificación semántica y la generación de código se implementarán explícitamente en Python mediante recorridos sobre la representación construida.
+    \item No. El destino de nuestro compilador es un programa en \textsc{C}; después debe intervenir un compilador de \textsc{C} para continuar la cadena hacia un ejecutable.
+    \item Puede ubicarse después de obtener una representación validada y antes de la generación de código. Su forma concreta se definirá en otra nota.
+\end{enumerate}
+\end{respuesta}
+\fi
+
+\begin{ejercicio}{Ejercicio 6. Interfaces y cambios}
+Un equipo define esta interfaz:
+
+\begin{center}
+\fbox{analizador léxico}
+\(\longrightarrow\)
+\fbox{secuencia de tokens}
+\(\longrightarrow\)
+\fbox{analizador sintáctico}
+\end{center}
+
+Responde.
+
+\begin{enumerate}[leftmargin=*]
+    \item ¿Qué debe conocer el analizador sintáctico sobre la salida del léxico?
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item Si cambia la forma de representar los tokens, ¿qué componente debe revisarse además del analizador léxico y por qué?
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item Explica por qué una interfaz clara ayuda a probar el compilador por fases.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+\end{enumerate}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 6}
+\begin{enumerate}[leftmargin=*]
+    \item Debe conocer el formato de cada token: el nombre que representa la categoría y, cuando se requiera, el atributo comunicado.
+    \item Debe revisarse el analizador sintáctico porque consume esa representación. También deben revisarse otros componentes que utilicen directamente los atributos modificados.
+    \item Una interfaz clara permite preparar entradas controladas, observar salidas y verificar cada responsabilidad sin ejecutar necesariamente todo el compilador.
+\end{enumerate}
+\end{respuesta}
+\fi
+
+\section*{\cf{verde587246}{4. Fundamentos del análisis léxico}}
+
+\begin{ejercicio}{Ejercicio 7. Token, lexema, patrón o atributo}
+Relaciona cada término con su descripción. Escribe la letra correspondiente.
+
+\begin{center}
+\small
+\begin{tabular}{|p{0.22\textwidth}|p{0.65\textwidth}|}
+\hline
+\textbf{Término} & \textbf{Descripción} \tabularnewline
+\hline
+1. Token & A. Información adicional que distingue la aparición reconocida, por ejemplo el texto de un identificador o el valor de un entero. \tabularnewline
+\hline
+2. Lexema & B. Descripción de la forma que pueden tener los lexemas asociados con un nombre de token. \tabularnewline
+\hline
+3. Patrón & C. Secuencia concreta de caracteres reconocida en el programa fuente. \tabularnewline
+\hline
+4. Atributo & D. Par formado por un nombre de token y un valor de atributo opcional. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+1 & 2 & 3 & 4 \tabularnewline
+\hline
+\phantom{D} & \phantom{C} & \phantom{B} & \phantom{A} \tabularnewline[0.45cm]
+\hline
+\end{tabular}
+\end{center}
+
+Completa las relaciones:
+
+\begin{itemize}[leftmargin=*]
+    \item El patrón describe una \blank[4cm].
+    \item El lexema \blank[4cm] ese patrón.
+    \item El token \blank[4cm] el resultado a otra fase.
+\end{itemize}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 7}
+1-D, 2-C, 3-B y 4-A.
+
+Relaciones: el patrón describe una \textbf{forma}; el lexema \textbf{satisface} ese patrón; el token \textbf{comunica} el resultado a otra fase.
+\end{respuesta}
+\fi
+
+\begin{ejercicio}{Ejercicio 8. Analizar un fragmento ilustrativo}
+Considera el fragmento \texttt{total = 25;}. No supongas que pertenece a \textsc{IMP}. Completa la tabla con los datos del banco.
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|}
+\hline
+\texttt{ID} & \texttt{ASIG} & \texttt{ENTERO} & \texttt{PYC} \tabularnewline
+\hline
+\(\langle\texttt{ID},\texttt{total}\rangle\) & \(\langle\texttt{ASIG}\rangle\) & \(\langle\texttt{ENTERO},25\rangle\) & \(\langle\texttt{PYC}\rangle\) \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|p{0.15\textwidth}|p{0.17\textwidth}|p{0.34\textwidth}|p{0.21\textwidth}|}
+\hline
+\textbf{Lexema} & \textbf{Nombre} & \textbf{Patrón informal} & \textbf{Token} \tabularnewline
+\hline
+\texttt{total} & & Letra seguida opcionalmente de letras o dígitos. & \tabularnewline[0.72cm]
+\hline
+\texttt{=} & & El carácter \texttt{=}. & \tabularnewline[0.72cm]
+\hline
+\texttt{25} & & Secuencia de uno o más dígitos. & \tabularnewline[0.72cm]
+\hline
+\texttt{;} & & El carácter \texttt{;}. & \tabularnewline[0.72cm]
+\hline
+\end{tabular}
+\end{center}
+
+Responde:
+
+\begin{enumerate}[leftmargin=*]
+    \item ¿Qué tokens necesitan atributo en este ejemplo y para qué sirve?
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item ¿Por qué \texttt{total} es un lexema y no un patrón?
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+\end{enumerate}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 8}
+Por filas:
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.15\textwidth}|p{0.17\textwidth}|p{0.34\textwidth}|p{0.21\textwidth}|}
+\hline
+\textbf{Lexema} & \textbf{Nombre} & \textbf{Patrón informal} & \textbf{Token} \tabularnewline
+\hline
+\texttt{total} & \texttt{ID} & Letra seguida opcionalmente de letras o dígitos. & \(\langle\texttt{ID},\texttt{total}\rangle\) \tabularnewline
+\hline
+\texttt{=} & \texttt{ASIG} & El carácter \texttt{=}. & \(\langle\texttt{ASIG}\rangle\) \tabularnewline
+\hline
+\texttt{25} & \texttt{ENTERO} & Secuencia de uno o más dígitos. & \(\langle\texttt{ENTERO},25\rangle\) \tabularnewline
+\hline
+\texttt{;} & \texttt{PYC} & El carácter \texttt{;}. & \(\langle\texttt{PYC}\rangle\) \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[leftmargin=*]
+    \item \texttt{ID} necesita el atributo \texttt{total} para distinguir ese identificador de otros. \texttt{ENTERO} necesita el atributo 25 para conservar el valor o su representación. En esta descripción, \texttt{ASIG} y \texttt{PYC} no necesitan atributo.
+    \item \texttt{total} es la secuencia concreta encontrada en la entrada. El patrón es la descripción general que pueden satisfacer muchos lexemas, por ejemplo ``letra seguida opcionalmente de letras o dígitos''.
+\end{enumerate}
+\end{respuesta}
+\fi
+
+\section*{\cf{verde587246}{5. Comunicación y revisión integradora}}
+
+\begin{ejercicio}{Ejercicio 9. Solicitar el siguiente token}
+Completa el párrafo con las expresiones del banco. Cada expresión se usa una sola vez.
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+token & caracteres & lexema & nombre de token & atributo \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Cuando el analizador sintáctico necesita otra unidad, solicita el siguiente \blank[3cm]. El analizador léxico consume los \blank[3cm] necesarios y los agrupa en un \blank[3cm]. Después devuelve un \blank[3.7cm] y, cuando se requiere, un \blank[3cm].
+
+Responde brevemente.
+
+\begin{enumerate}[leftmargin=*]
+    \item ¿Es correcto eliminar siempre todos los espacios y saltos de línea? ¿Por qué?
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item ¿Qué debe especificar el equipo antes de que Lark pueda producir tokens?
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item ¿Cómo puede observarse el analizador léxico de manera independiente con Lark?
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+\end{enumerate}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 9}
+En orden: token; caracteres; lexema; nombre de token; atributo.
+
+\begin{enumerate}[leftmargin=*]
+    \item No. Deben aplicarse las reglas del lenguaje; en algunos lenguajes los espacios o saltos de línea pueden ser significativos.
+    \item Debe especificar las categorías que se reconocerán y el patrón o regla que describe los lexemas de cada una.
+    \item Puede utilizarse Lark con \texttt{parser=None}, \texttt{lexer="basic"} y el método \texttt{lex()} para recorrer una entrada y observar los tokens producidos.
+\end{enumerate}
+\end{respuesta}
+\fi
+
+\ifrespuestas\else\newpage\fi
+\begin{ejercicio}{Ejercicio 10. Detectar y corregir confusiones}
+Cada afirmación contiene un error. Subraya la parte incorrecta y reescribe la oración de forma adecuada.
+
+\begin{enumerate}[leftmargin=*]
+    \item Un lexema y un patrón son lo mismo: ambos son la secuencia concreta encontrada en el programa.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item El analizador léxico recibe tokens y produce caracteres para el analizador sintáctico.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item Si dos lexemas pertenecen al token \texttt{ID}, entonces deben contener exactamente los mismos caracteres.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item La optimización puede reparar un programa sintácticamente inválido antes de generar código.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item El programa \textsc{C} generado por el compilador del curso ya es directamente un ejecutable de la máquina.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item Lark decide automáticamente qué categorías necesita el lenguaje, aunque el equipo no las especifique.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+\end{enumerate}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 10}
+Correcciones esperadas:
+\begin{enumerate}[leftmargin=*]
+    \item Un \textbf{lexema} es la secuencia concreta encontrada; un \textbf{patrón} describe la forma de los lexemas de un nombre de token.
+    \item El analizador léxico recibe \textbf{caracteres} y produce una secuencia de \textbf{tokens} para el analizador sintáctico.
+    \item Dos lexemas pueden corresponder a \texttt{ID} porque satisfacen el mismo patrón, aunque tengan caracteres y atributos distintos.
+    \item La optimización recibe una representación válida y la transforma sin cambiar el comportamiento definido; no repara la sintaxis del programa fuente.
+    \item El programa \textsc{C} es el destino de nuestro compilador, pero necesita un compilador de \textsc{C} para continuar la cadena hacia un ejecutable.
+    \item El equipo debe especificar las categorías y reglas léxicas; Lark aplica esa especificación para producir tokens.
+\end{enumerate}
+\end{respuesta}
+\fi
+
+\end{document}

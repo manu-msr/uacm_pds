@@ -1,0 +1,394 @@
+\documentclass[11pt,spanish]{article}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,columnsep=1cm,marginparwidth=1cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{13.6pt}
+\setcounter{tocdepth}{2}
+\usepackage[skip=\bigskipamount]{parskip}
+\usepackage{color}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{pifont}
+
+\makeatletter
+\providecommand{\tabularnewline}{\\}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{xcolor}
+\usepackage[symbol]{footmisc}
+\usepackage[tikz]{bclogo}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz-qtree}
+\usepackage{proof}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\usetikzlibrary{trees,positioning}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\definecolor{fireenginered}{rgb}{0.81, 0.09, 0.13}
+\definecolor{blush}{rgb}{0.87, 0.36, 0.51}
+\definecolor{bubblegum}{rgb}{0.99, 0.76, 0.8}
+\definecolor{paleviolet-red}{rgb}{0.86, 0.44, 0.58}
+\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.00}
+\definecolor{grannysmithapple}{rgb}{0.66, 0.89, 0.63}
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+\definecolor{asparagus}{rgb}{0.53, 0.66, 0.42}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{verdeoscuro}{rgb}{0.0, 0.5, 0.0}
+\definecolor{verdepastel}{rgb}{0.5, 0.8, 0.5}
+\definecolor{verde4c9141}{rgb}{0.298, 0.569, 0.255}
+\definecolor{rojo6d2226}{rgb}{0.427, 0.133, 0.149}
+\definecolor{rojo682a2b}{rgb}{0.408, 0.165, 0.169}
+\definecolor{rojo7a3c3d}{rgb}{0.478, 0.235, 0.239}
+\definecolor{verde587246}{rgb}{0.345, 0.447, 0.275}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+
+\usepackage{forest}
+\newcommand{\cb}[1]{\colorbox{applegreen}{#1}}
+\newcommand{\imp}[1]{\colorbox{grannysmithapple}{#1}}
+\newcommand{\defi}[1]{\colorbox{apricot}{#1}}
+\newtcolorbox{ejemplo}[1]{
+colback=darkpastelblue!5!white,
+colframe=darkpastelblue!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{definicion}[1]{
+colback=asparagus!5!white,
+colframe=asparagus!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{observacion}[1]{
+colback=amber!5!white,
+colframe=amber!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{teorema}[1]{
+colback=bubblegum!5!white,
+colframe=bubblegum!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{ejercicio}[1]{
+colback=antiquefuchsia!5!white,
+colframe=antiquefuchsia!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+
+\newcommand{\cf}[2]{%
+    \colorbox{#1}{\textcolor{white}{\strut #2}}%
+}
+
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+
+\AtBeginDocument{
+  \def\labelitemi{\(\star\)}
+  \def\labelitemii{\(\ast\)}
+  \def\labelitemiii{\(\bullet\)}
+  \def\labelitemiv{\(\circ\)}
+}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+\deactivatequoting
+
+\usepackage{listings}
+\lstset{
+keywordstyle={\bfseries\color{blue}},
+commentstyle={\bfseries\color{Verde}\itshape},
+emphstyle={\color{Rojo}},
+stringstyle={\color{Rojo}},
+basicstyle=\ttfamily\small,
+breaklines=true,
+columns=fullflexible
+}
+\renewcommand{\lstlistingname}{Listado de código}
+
+\begin{document}
+
+\lhead{PDS}
+
+\rhead{Tema 2.1}
+\title{Programación de Sistemas\\
+Unidad 2: Análisis léxico\\ \bigskip
+\cf{rojo7a3c3d}{\textbf{\Large Nota de clase 03: Fundamentos del análisis léxico}}}
+\author{Manuel Soto Romero \and Araceli Liliana Reyes Cabello}
+\date{Semestre 2026-2 \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+En la nota anterior observamos que un compilador no trabaja todo el tiempo con el texto original. Cada fase recibe una representación, realiza una tarea y comunica un resultado. El análisis léxico inicia ese recorrido: lee los caracteres del programa fuente, reconoce unidades elementales y entrega una secuencia de tokens al analizador sintáctico.
+
+En esta nota estudiaremos la función del analizador léxico y distinguiremos tres conceptos relacionados: token, lexema y patrón. También veremos por qué algunos tokens necesitan atributos y cómo se establece la comunicación con el analizador sintáctico. Todavía no construiremos expresiones regulares, autómatas ni un analizador con Lark; esos desarrollos corresponden a otras notas.
+
+\begin{ejemplo}{Caso inicial. De caracteres a unidades}
+Retomemos el fragmento ilustrativo utilizado en la nota anterior:
+
+\begin{lstlisting}
+valor = valor + inc;
+\end{lstlisting}
+
+Para una persona, el fragmento contiene una asignación y una suma. El analizador léxico comienza con algo más básico: una secuencia de caracteres. Su trabajo consiste en reconocer dónde empieza y termina cada unidad y clasificarla. Una posible salida descriptiva es:
+
+\begin{lstlisting}
+ID(valor)  ASIG  ID(valor)  SUMA  ID(inc)  PYC
+\end{lstlisting}
+
+El fragmento se usa para observar la transformación y \textbf{no establece la sintaxis oficial de \textsc{IMP}}. Los nombres de tokens también son etiquetas ilustrativas, no una especificación del lenguaje del curso.
+\end{ejemplo}
+
+\section*{\cf{verde587246}{1. Función del analizador léxico en el proceso de traducción}}
+
+El programa fuente llega al compilador como un flujo de caracteres. Si el analizador sintáctico tuviera que trabajar directamente con cada letra, dígito, espacio y signo, además de reconocer construcciones mayores, su tarea sería más compleja. La separación en fases permite que el analizador léxico se concentre en las unidades elementales y que el analizador sintáctico reciba una entrada más adecuada para reconocer la estructura del programa.
+
+\begin{definicion}{Definición 1. (Analizador léxico)}
+El \textbf{analizador léxico} es el componente del compilador que lee los caracteres del programa fuente, los agrupa en lexemas y produce una secuencia de tokens para el analizador sintáctico.
+\end{definicion}
+
+Su transformación principal puede representarse así:
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.3cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=grannysmithapple!30, align=center, minimum width=2.9cm, minimum height=0.9cm] (fuente) {flujo de\\caracteres};
+\node[draw, rounded corners, fill=apricot!30, right=of fuente, align=center, minimum width=3.1cm, minimum height=0.9cm] (lexico) {analizador\\léxico};
+\node[draw, rounded corners, fill=darkpastelblue!16, right=of lexico, align=center, minimum width=3.1cm, minimum height=0.9cm] (tokens) {secuencia\\de tokens};
+\node[draw, rounded corners, fill=apricot!30, right=of tokens, align=center, minimum width=3.1cm, minimum height=0.9cm] (sintactico) {analizador\\sintáctico};
+\draw[->, thick] (fuente) -- (lexico);
+\draw[->, thick] (lexico) -- (tokens);
+\draw[->, thick] (tokens) -- (sintactico);
+\end{tikzpicture}
+\end{center}
+
+Además de reconocer lexemas, el analizador léxico suele realizar tareas relacionadas con la lectura del texto:
+
+\begin{itemize}
+    \item omitir espacios, tabuladores, saltos de línea o comentarios cuando las reglas del lenguaje indican que no deben llegar al analizador sintáctico;
+    \item conservar información necesaria sobre los lexemas reconocidos;
+    \item apoyar la ubicación de los elementos del programa para que los diagnósticos puedan relacionarse con el texto fuente.
+\end{itemize}
+
+Estas tareas dependen del lenguaje. Por ejemplo, no siempre es correcto eliminar todos los espacios o saltos de línea: en algunos lenguajes forman parte de la estructura. El analizador léxico debe aplicar la especificación del lenguaje que procesa, no una regla universal.
+
+Separar el análisis léxico del sintáctico ofrece tres ventajas señaladas en las fuentes: simplifica el diseño, permite usar técnicas especializadas para leer y clasificar caracteres, y concentra en un componente los detalles relacionados con la entrada. La separación también establece un límite de responsabilidad.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.22}
+\begin{tabular}{|p{0.42\textwidth}|p{0.42\textwidth}|}
+\hline
+\textbf{Corresponde al analizador léxico} & \textbf{Corresponde a fases posteriores} \tabularnewline
+\hline
+Reconocer unidades a partir de caracteres. & Organizar tokens según la gramática. \tabularnewline
+\hline
+Clasificar un lexema en una categoría. & Determinar la estructura sintáctica completa. \tabularnewline
+\hline
+Proporcionar los atributos léxicos necesarios. & Comprobar declaraciones, tipos y otras restricciones semánticas. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{observacion}{Observación 1. Reconocer no es interpretar todo el programa}
+Cuando el analizador léxico encuentra el texto \texttt{valor}, puede reconocerlo como un identificador. En ese momento no necesita decidir qué representa el nombre, qué tipo tiene ni si fue declarado correctamente. Esas preguntas requieren información y reglas de otras fases.
+\end{observacion}
+
+\section*{\cf{verde587246}{2. Del flujo de caracteres a la secuencia de tokens}}
+
+El analizador léxico avanza sobre la entrada y agrupa caracteres que forman una unidad. El resultado ya no presenta cada carácter por separado, sino una secuencia de elementos clasificados. Para seguir el cambio paso a paso, observemos nuevamente el fragmento inicial.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.20\textwidth}|p{0.25\textwidth}|p{0.34\textwidth}|}
+\hline
+\textbf{Caracteres agrupados} & \textbf{Clasificación ilustrativa} & \textbf{Resultado descriptivo} \tabularnewline
+\hline
+\texttt{valor} & Identificador & \texttt{ID(valor)} \tabularnewline
+\hline
+\texttt{=} & Asignación & \texttt{ASIG} \tabularnewline
+\hline
+\texttt{valor} & Identificador & \texttt{ID(valor)} \tabularnewline
+\hline
+\texttt{+} & Suma & \texttt{SUMA} \tabularnewline
+\hline
+\texttt{inc} & Identificador & \texttt{ID(inc)} \tabularnewline
+\hline
+\texttt{;} & Terminador & \texttt{PYC} \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Los espacios permiten ver con facilidad algunas separaciones, pero no se convierten necesariamente en tokens. En este ejemplo se omiten porque asumimos, sólo para ilustrar el proceso, que no son significativos. Tampoco basta buscar espacios para encontrar todas las fronteras: \texttt{=}, \texttt{+} y \texttt{;} aparecen junto a otros caracteres y deben reconocerse de acuerdo con las reglas del lenguaje.
+
+El proceso conserva dos clases de información:
+
+\begin{itemize}
+    \item una \textbf{clasificación}, que permite distinguir un identificador de un operador o un terminador;
+    \item información sobre la \textbf{aparición concreta}, como el texto del identificador o el valor representado por una constante.
+\end{itemize}
+
+La distinción es necesaria porque \texttt{valor} e \texttt{inc} pertenecen a la misma clasificación, pero son apariciones distintas. Si la salida dijera únicamente \texttt{ID}, las fases posteriores sabrían que encontraron un identificador, pero no cuál.
+
+\begin{ejemplo}{Ejemplo conceptual. Misma clasificación, distinta información}
+Consideremos los textos \texttt{2} y \texttt{25}. Ambos pueden clasificarse como números enteros. Sin embargo, no representan el mismo valor. El analizador léxico necesita comunicar la categoría y la información que distingue una aparición de la otra:
+
+\[
+\langle \texttt{ENTERO}, 2 \rangle
+\qquad
+\langle \texttt{ENTERO}, 25 \rangle
+\]
+
+La forma exacta de almacenar esa información es una decisión de diseño. Aquí usamos pares únicamente para hacer visible qué datos se comunican.
+\end{ejemplo}
+
+\section*{\cf{verde587246}{3. Tokens, lexemas y patrones}}
+
+Para describir con precisión el resultado del análisis léxico debemos distinguir tres términos. Están relacionados, pero no son intercambiables.
+
+\begin{definicion}{Definición 2. (Token)}
+Un \textbf{token} es un par formado por un nombre de token y un valor de atributo opcional. El nombre representa una categoría léxica que el analizador sintáctico puede procesar; el atributo conserva información adicional sobre la aparición reconocida.
+\end{definicion}
+
+En exposiciones informales también se usa la palabra \emph{token} para referirse sólo a su nombre o categoría. En esta nota escribiremos el par completo cuando el atributo sea importante y únicamente el nombre cuando no se necesite información adicional.
+
+\begin{definicion}{Definición 3. (Lexema)}
+Un \textbf{lexema} es la secuencia concreta de caracteres del programa fuente que el analizador léxico reconoce como una aparición de un token.
+\end{definicion}
+
+En el ejemplo, las dos apariciones de \texttt{valor} son lexemas. Ambas corresponden al nombre de token \texttt{ID}. El texto \texttt{inc} es otro lexema que corresponde al mismo nombre de token.
+
+\begin{definicion}{Definición 4. (Patrón)}
+Un \textbf{patrón} es una descripción de la forma que pueden tener los lexemas asociados con un nombre de token.
+\end{definicion}
+
+Por ejemplo, un patrón descrito informalmente como ``una letra seguida opcionalmente de letras o dígitos'' puede servir para una categoría de identificadores. \texttt{valor} e \texttt{inc} satisfacen esa descripción; cada uno es un lexema concreto. La escritura formal de los patrones mediante expresiones regulares se estudiará en otra nota.
+
+La relación entre los tres conceptos puede resumirse así:
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.4cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=asparagus!12, align=center, minimum width=3.1cm, minimum height=1cm] (patron) {patrón\\describe una forma};
+\node[draw, rounded corners, fill=darkpastelblue!12, right=of patron, align=center, minimum width=3.1cm, minimum height=1cm] (lexema) {lexema\\satisface el patrón};
+\node[draw, rounded corners, fill=apricot!25, right=of lexema, align=center, minimum width=3.4cm, minimum height=1cm] (token) {token\\comunica el resultado};
+\draw[->, thick] (patron) -- (lexema);
+\draw[->, thick] (lexema) -- (token);
+\end{tikzpicture}
+\end{center}
+
+La tabla siguiente aplica esta relación a ejemplos habituales. Los patrones se expresan en lenguaje natural para no adelantar su notación formal.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.15\textwidth}|p{0.33\textwidth}|p{0.15\textwidth}|p{0.21\textwidth}|}
+\hline
+\textbf{Nombre} & \textbf{Patrón informal} & \textbf{Lexema} & \textbf{Token ilustrativo} \tabularnewline
+\hline
+\texttt{ID} & Letra seguida opcionalmente de letras o dígitos. & \texttt{valor} & \(\langle\texttt{ID},\texttt{valor}\rangle\) \tabularnewline
+\hline
+\texttt{ENTERO} & Secuencia de uno o más dígitos. & \texttt{25} & \(\langle\texttt{ENTERO},25\rangle\) \tabularnewline
+\hline
+\texttt{SUMA} & El carácter \texttt{+}. & \texttt{+} & \(\langle\texttt{SUMA}\rangle\) \tabularnewline
+\hline
+\texttt{PYC} & El carácter \texttt{;}. & \texttt{;} & \(\langle\texttt{PYC}\rangle\) \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Los operadores y signos de puntuación pueden no requerir atributo porque su nombre ya comunica la información necesaria. En cambio, muchas apariciones pueden satisfacer el patrón de \texttt{ID} o \texttt{ENTERO}; por ello, el atributo permite distinguirlas.
+
+\begin{observacion}{Observación 2. Tres preguntas diferentes}
+Ante el texto \texttt{25}, podemos formular tres preguntas:
+
+\begin{itemize}
+    \item ¿Qué caracteres aparecieron? El \textbf{lexema} es \texttt{25}.
+    \item ¿Qué forma satisface? El \textbf{patrón} describe una secuencia de uno o más dígitos.
+    \item ¿Qué se comunica? Un \textbf{token} posible es \(\langle\texttt{ENTERO},25\rangle\).
+\end{itemize}
+
+Responder una pregunta no sustituye las otras dos.
+\end{observacion}
+
+\section*{\cf{verde587246}{4. Atributos de los tokens y comunicación con el analizador sintáctico}}
+
+El nombre de un token permite al analizador sintáctico tomar decisiones sobre la estructura. El atributo transporta información particular que puede utilizarse durante la traducción. Por ejemplo, el nombre \texttt{ENTERO} indica la clase de unidad reconocida, mientras que su atributo distingue el valor 2 del valor 25.
+
+Entre los atributos habituales se encuentran:
+
+\begin{itemize}
+    \item el texto de un identificador;
+    \item el valor o la representación textual de una constante;
+    \item una referencia a información conservada en otra estructura del compilador;
+    \item datos que permitan relacionar el token con su ubicación en el programa fuente.
+\end{itemize}
+
+No todos los atributos deben estar presentes ni almacenarse de la misma manera. La interfaz se diseña de acuerdo con la información que necesitarán las fases posteriores.
+
+La comunicación entre el analizador sintáctico y el léxico suele organizarse como una solicitud: cuando el analizador sintáctico necesita otra unidad, pide el siguiente token. El analizador léxico consume los caracteres necesarios y devuelve el resultado.
+
+\begin{center}
+\begin{tikzpicture}[node distance=3.0cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=apricot!30, align=center, minimum width=3.3cm, minimum height=1.1cm] (sintactico) {analizador\\sintáctico};
+\node[draw, rounded corners, fill=darkpastelblue!14, right=of sintactico, align=center, minimum width=3.3cm, minimum height=1.1cm] (lexico) {analizador\\léxico};
+\draw[->, thick, bend left=18] (sintactico) to node[above, font=\scriptsize]{solicita el siguiente token} (lexico);
+\draw[->, thick, bend left=18] (lexico) to node[below, font=\scriptsize]{devuelve nombre y atributo} (sintactico);
+\end{tikzpicture}
+\end{center}
+
+Este modelo evita exigir que toda la secuencia se almacene antes de iniciar el análisis sintáctico. Sin embargo, para estudiar el analizador léxico de manera independiente también es útil recorrer una entrada completa y observar todos los tokens producidos.
+
+\begin{observacion}{Observación 3. Qué hará Lark y qué debemos especificar}
+En la primera práctica utilizaremos Lark para apoyar la implementación. Lark podrá leer la entrada y producir tokens a partir de las reglas proporcionadas, pero no decide por sí mismo cuáles son las categorías del lenguaje ni qué forma tiene cada una. Esas decisiones deben especificarse y justificarse. Para observar el analizador léxico de manera independiente podrá utilizarse Lark con \texttt{parser=None}, \texttt{lexer="basic"} y el método \texttt{lex()}.
+\end{observacion}
+
+Si ningún patrón permite reconocer el inicio de la entrada restante, el analizador no puede producir el siguiente token. Esa situación corresponde a un problema léxico. Su diagnóstico, recuperación y prueba se desarrollarán en otra nota.
+
+\begin{observacion}{Mini-checkpoint. Del texto al token}
+Considera el fragmento ilustrativo \texttt{total = 25;}. Sin asumir que pertenece a \textsc{IMP}, comprueba si puedes:
+
+\begin{enumerate}[leftmargin=*]
+    \item separar los lexemas \texttt{total}, \texttt{=}, \texttt{25} y \texttt{;};
+    \item proponer un nombre de token para cada lexema;
+    \item describir en lenguaje natural el patrón de los identificadores y el de los enteros;
+    \item señalar cuáles tokens necesitan un atributo para distinguir su aparición concreta.
+\end{enumerate}
+\end{observacion}
+
+\section*{\cf{verde587246}{Conclusión}}
+
+El analizador léxico establece la primera interfaz del compilador: transforma un flujo de caracteres en una secuencia de tokens que el analizador sintáctico puede procesar. Durante esa transformación agrupa caracteres en lexemas, clasifica cada aparición y conserva los atributos que serán necesarios después. También puede omitir espacios o comentarios cuando las reglas del lenguaje así lo establecen y apoyar la ubicación de los elementos del programa fuente.
+
+Token, lexema y patrón describen aspectos diferentes. El lexema es el texto concreto; el patrón describe la forma admitida; y el token comunica un nombre y, cuando se necesita, un atributo. Esta distinción permitirá pasar de descripciones informales a especificaciones precisas. En otra nota estudiaremos cómo expresar patrones mediante expresiones regulares y cómo reconocerlos con autómatas finitos.
+
+\section*{\cf{verde587246}{Referencias}}
+
+\begin{enumerate}[label=\textbf{[\arabic*]}]
+    \item Aho, A. V., Lam, M. S., Sethi, R., y Ullman, J. D. (2008). \textit{Compiladores: principios, técnicas y herramientas} (2.\textsuperscript{a} ed.). Pearson Educación. ISBN 978-970-26-1133-2.
+    \item Vilar Torres, J. M. (2010). \textit{Analizador léxico}. Universitat Jaume I.
+    \item Thain, D. (2026). \textit{Introduction to Compilers and Language Design} (2.\textsuperscript{a} ed.). University of Notre Dame.
+\end{enumerate}
+
+\end{document}

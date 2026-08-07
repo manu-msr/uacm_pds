@@ -1,0 +1,433 @@
+\documentclass[11pt,spanish]{article}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,columnsep=1cm,marginparwidth=1cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{13.6pt}
+\setcounter{tocdepth}{2}
+\usepackage[skip=\bigskipamount]{parskip}
+\usepackage{color}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{pifont}
+
+\makeatletter
+\providecommand{\tabularnewline}{\\}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{xcolor}
+\usepackage[symbol]{footmisc}
+\usepackage[tikz]{bclogo}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz-qtree}
+\usepackage{proof}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\usetikzlibrary{trees,positioning}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\definecolor{fireenginered}{rgb}{0.81, 0.09, 0.13}
+\definecolor{blush}{rgb}{0.87, 0.36, 0.51}
+\definecolor{bubblegum}{rgb}{0.99, 0.76, 0.8}
+\definecolor{paleviolet-red}{rgb}{0.86, 0.44, 0.58}
+\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.00}
+\definecolor{grannysmithapple}{rgb}{0.66, 0.89, 0.63}
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+\definecolor{asparagus}{rgb}{0.53, 0.66, 0.42}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{verdeoscuro}{rgb}{0.0, 0.5, 0.0}
+\definecolor{verdepastel}{rgb}{0.5, 0.8, 0.5}
+\definecolor{verde4c9141}{rgb}{0.298, 0.569, 0.255}
+\definecolor{rojo6d2226}{rgb}{0.427, 0.133, 0.149}
+\definecolor{rojo682a2b}{rgb}{0.408, 0.165, 0.169}
+\definecolor{rojo7a3c3d}{rgb}{0.478, 0.235, 0.239}
+\definecolor{verde587246}{rgb}{0.345, 0.447, 0.275}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+
+\usepackage{forest}
+\newcommand{\cb}[1]{\colorbox{applegreen}{#1}}
+\newcommand{\imp}[1]{\colorbox{grannysmithapple}{#1}}
+\newcommand{\defi}[1]{\colorbox{apricot}{#1}}
+\newtcolorbox{ejemplo}[1]{
+colback=darkpastelblue!5!white,
+colframe=darkpastelblue!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{definicion}[1]{
+colback=asparagus!5!white,
+colframe=asparagus!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{observacion}[1]{
+colback=amber!5!white,
+colframe=amber!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{teorema}[1]{
+colback=bubblegum!5!white,
+colframe=bubblegum!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{ejercicio}[1]{
+colback=antiquefuchsia!5!white,
+colframe=antiquefuchsia!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+
+\newcommand{\cf}[2]{%
+    \colorbox{#1}{\textcolor{white}{\strut #2}}%
+}
+
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+
+\AtBeginDocument{
+  \def\labelitemi{\(\star\)}
+  \def\labelitemii{\(\ast\)}
+  \def\labelitemiii{\(\bullet\)}
+  \def\labelitemiv{\(\circ\)}
+}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+\deactivatequoting
+
+\usepackage{listings}
+\lstset{
+keywordstyle={\bfseries\color{blue}},
+commentstyle={\bfseries\color{Verde}\itshape},
+emphstyle={\color{Rojo}},
+stringstyle={\color{Rojo}},
+basicstyle=\ttfamily\small,
+breaklines=true,
+columns=fullflexible
+}
+\renewcommand{\lstlistingname}{Listado de código}
+
+\begin{document}
+
+\lhead{PDS}
+
+\rhead{Tema 1.2}
+\title{Programación de Sistemas\\
+Unidad 1: Introducción a la Programación de Sistemas y los Compiladores\\ \bigskip
+\cf{rojo7a3c3d}{\textbf{\Large Nota de clase 02: Estructura y fases de un compilador}}}
+\author{Manuel Soto Romero \and Araceli Liliana Reyes Cabello}
+\date{Semestre 2026-2 \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+En la nota anterior ubicamos al compilador entre las herramientas de la programación de sistemas. Visto desde fuera, recibe un programa escrito en un lenguaje fuente y produce un programa equivalente en un lenguaje destino. Esa descripción es correcta, pero oculta el trabajo interno. Un compilador debe reconocer unidades elementales, descubrir la estructura del programa, comprobar restricciones de significado y transformar varias representaciones antes de producir su salida.
+
+En esta nota abriremos esa ``caja'' para estudiar su organización general. Primero distinguiremos las dos grandes etapas de análisis y síntesis. Después seguiremos las fases léxica, sintáctica y semántica; ubicaremos las representaciones intermedias, la optimización y la generación de código; y, finalmente, observaremos cómo se comunican las fases. Se trata de un mapa inicial: cada componente se estudiará con mayor detalle en las unidades posteriores.
+
+\begin{ejemplo}{Caso inicial. Un mismo programa, varias representaciones}
+Consideremos el siguiente fragmento ilustrativo:
+
+\begin{lstlisting}
+valor = valor + inc;
+\end{lstlisting}
+
+El fragmento es legible para una persona que reconoce una asignación y una suma. Sin embargo, el compilador no pasa directamente de ese texto al código destino. A lo largo del proceso puede observarlo como una secuencia de caracteres, una secuencia de componentes, una estructura en forma de árbol y una secuencia de operaciones más cercana al lenguaje destino.
+
+El ejemplo procede de los materiales de estructura de compiladores disponibles para el curso. Se emplea únicamente para reconocer las fases: \textbf{no establece todavía la sintaxis oficial de \textsc{IMP}}.
+\end{ejemplo}
+
+\section*{\cf{verde587246}{1. Del código fuente al código destino: análisis y síntesis}}
+
+El punto de partida es un \textbf{programa fuente}: un texto escrito de acuerdo con las reglas de un lenguaje. El punto de llegada es un \textbf{programa destino}: otra representación del programa en un lenguaje diferente. El lenguaje destino puede ser lenguaje de máquina, ensamblador, un lenguaje intermedio o incluso otro lenguaje de alto nivel. Por ejemplo, el compilador que construiremos en el curso traducirá programas de \textsc{IMP} a programas en \textsc{C}.
+
+Entre los dos extremos se conserva una exigencia central: el programa destino debe corresponder al significado del programa fuente. Cambiar la representación no autoriza al compilador a cambiar lo que el programa debe hacer.
+
+\begin{definicion}{Definición 1. (Fase de compilación)}
+Una \textbf{fase de compilación} es una parte conceptualmente diferenciada del proceso que recibe una representación del programa, realiza una tarea específica y produce información o una nueva representación para las fases siguientes.
+\end{definicion}
+
+Una primera división organiza el proceso en dos grandes etapas:
+
+\begin{itemize}
+    \item \textbf{Análisis.} Examina el programa fuente para reconocer sus componentes, su estructura y las restricciones que debe satisfacer. Su resultado es una representación interna adecuada para continuar la traducción.
+    \item \textbf{Síntesis.} Toma la representación obtenida por el análisis y construye una representación equivalente en el lenguaje destino.
+\end{itemize}
+
+\begin{center}
+\resizebox{0.98\textwidth}{!}{%
+\begin{tikzpicture}[node distance=1.25cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=grannysmithapple!30, minimum width=2.7cm, minimum height=0.9cm] (fuente) {programa fuente};
+\node[draw, rounded corners, fill=apricot!30, right=of fuente, minimum width=2.2cm, minimum height=0.9cm] (analisis) {análisis};
+\node[draw, rounded corners, fill=darkpastelblue!16, right=of analisis, align=center, minimum width=2.8cm, minimum height=0.9cm] (rep) {representación\\interna};
+\node[draw, rounded corners, fill=apricot!30, right=of rep, minimum width=2.2cm, minimum height=0.9cm] (sintesis) {síntesis};
+\node[draw, rounded corners, fill=grannysmithapple!30, right=of sintesis, minimum width=2.7cm, minimum height=0.9cm] (destino) {programa destino};
+\draw[->, thick] (fuente) -- (analisis);
+\draw[->, thick] (analisis) -- (rep);
+\draw[->, thick] (rep) -- (sintesis);
+\draw[->, thick] (sintesis) -- (destino);
+\end{tikzpicture}
+}
+\end{center}
+
+La figura muestra una separación conceptual, no una única arquitectura obligatoria. Un compilador real puede usar varias representaciones internas, aplicar varias transformaciones o combinar parte del trabajo de dos fases. Para comprenderlo y construirlo, conviene comenzar con responsabilidades separadas y con entradas y salidas explícitas.
+
+También es necesario distinguir al compilador de la cadena de herramientas que rodea la compilación. En un entorno habitual pueden intervenir un preprocesador, el compilador propiamente dicho, un ensamblador y un ligador. El compilador no realiza necesariamente todas esas tareas.
+
+\begin{observacion}{Observación 1. El destino del compilador del curso es C}
+En este curso, el producto de nuestra traducción será un programa en \textsc{C}. Después, un compilador de \textsc{C} como GCC o Clang podrá convertir ese programa en una forma ejecutable. Por tanto, generar \textsc{C} completa la traducción prevista para nuestro compilador, pero no toda la cadena que lleva hasta la ejecución en la máquina.
+\end{observacion}
+
+\section*{\cf{verde587246}{2. Análisis léxico, sintáctico y semántico}}
+
+El análisis suele dividirse en tres fases. Cada una responde una pregunta distinta y trabaja con el resultado producido por la anterior:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.19\textwidth}|p{0.30\textwidth}|p{0.37\textwidth}|}
+\hline
+\textbf{Fase} & \textbf{Pregunta principal} & \textbf{Transformación general} \tabularnewline
+\hline
+Análisis léxico & ¿Cuáles son las unidades elementales del texto? & De una secuencia de caracteres a una secuencia de componentes léxicos o tokens. \tabularnewline
+\hline
+Análisis sintáctico & ¿Cómo se agrupan esas unidades de acuerdo con la gramática? & De una secuencia de tokens a una representación estructurada del programa. \tabularnewline
+\hline
+Análisis semántico & ¿La estructura satisface las restricciones de significado estático del lenguaje? & De una estructura reconocida a una estructura comprobada y, cuando corresponde, enriquecida con información. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{2.1 Análisis léxico}
+
+El \textbf{analizador léxico} lee los caracteres del programa fuente y los agrupa en unidades que las fases posteriores pueden manejar. Estas unidades representan categorías como identificadores, números, palabras reservadas, operadores o signos de puntuación. Los espacios y los comentarios pueden separarse u omitirse cuando no son significativos para las siguientes fases.
+
+Para el fragmento inicial, una salida léxica ilustrativa sería:
+
+\begin{lstlisting}
+ID(valor)  ASIG  ID(valor)  SUMA  ID(inc)  PYC
+\end{lstlisting}
+
+En esta representación, cada aparición de \texttt{ID} indica la categoría identificador y conserva el texto asociado. Los nombres \texttt{ASIG}, \texttt{SUMA} y \texttt{PYC} son etiquetas descriptivas usadas sólo en el ejemplo. Los conceptos de token, lexema y patrón, así como las reglas para reconocerlos, se estudiarán con detalle en otra nota.
+
+La fase léxica todavía no decide si \texttt{valor} fue declarado ni si la suma es válida. Su responsabilidad en este punto es reconocer y clasificar las unidades del texto.
+
+\subsection*{2.2 Análisis sintáctico}
+
+El \textbf{analizador sintáctico} recibe la secuencia producida por el analizador léxico y determina si sus elementos pueden agruparse según la gramática del lenguaje. Así reconoce construcciones mayores: expresiones, asignaciones, condicionales o ciclos, entre otras.
+
+Una representación estructurada simplificada del fragmento puede verse así:
+
+\begin{center}
+\begin{forest}
+for tree={draw, rounded corners, align=center, font=\small, fill=darkpastelblue!8, edge={->}}
+[asignación
+  [identificador\\\texttt{valor}]
+  [suma
+    [identificador\\\texttt{valor}]
+    [identificador\\\texttt{inc}]
+  ]
+]
+\end{forest}
+\end{center}
+
+El árbol hace explícita una relación que en el texto sólo aparece por el orden de los símbolos: la suma de \texttt{valor} e \texttt{inc} produce el valor que se asignará. Los detalles de las gramáticas, las derivaciones y los árboles se estudiarán en la Unidad 3.
+
+Las fuentes presentan variantes en la construcción de árboles. Algunas arquitecturas distinguen un árbol sintáctico y un ASA\footnote{ASA significa \emph{árbol de sintaxis abstracta}. La denominación proviene del inglés \emph{Abstract Syntax Tree}, abreviado AST.}; otras hacen que el analizador sintáctico produzca directamente un ASA. Para el compilador del curso, la decisión concreta deberá conservar una representación compatible con el verificador de tipos y el generador de código posteriores.
+
+\subsection*{2.3 Análisis semántico}
+
+Una estructura puede ajustarse a la gramática y, aun así, incumplir otras reglas del lenguaje. El \textbf{analizador semántico} comprueba restricciones que no se resuelven únicamente con la forma sintáctica. Entre los ejemplos habituales se encuentran verificar que un identificador esté declarado, comprobar la compatibilidad de tipos y revisar que el uso de una función corresponda con su definición.
+
+En el fragmento inicial, esta fase necesitaría saber a qué entidades se refieren \texttt{valor} e \texttt{inc} y qué tipos tienen. Sólo con esa información podría comprobar si la suma y la asignación son válidas. La nota no supone declaraciones ni tipos concretos para esos nombres; señala la información que la fase requeriría.
+
+El resultado puede ser la misma estructura acompañada de información adicional o una nueva representación. Lo importante es el contrato: las fases posteriores deben saber que se realizaron las comprobaciones previstas y deben recibir los datos necesarios para continuar.
+
+\begin{ejemplo}{Un diagnóstico pertenece a una fase}
+Cada fase puede encontrar una clase diferente de problema:
+
+\begin{itemize}
+    \item La fase \textbf{léxica} detecta una secuencia de caracteres que no puede clasificar de acuerdo con las reglas léxicas.
+    \item La fase \textbf{sintáctica} detecta una secuencia de tokens que no puede organizar de acuerdo con la gramática.
+    \item La fase \textbf{semántica} detecta una estructura sintáctica que incumple una restricción, por ejemplo, una regla de declaración o de tipos.
+\end{itemize}
+
+El compilador debe indicar la ubicación y la naturaleza del problema con la mayor claridad posible. No debe enviar a generación de código una representación que ya sabe que es inválida.
+\end{ejemplo}
+
+\begin{observacion}{Observación 2. Qué construimos y qué automatiza Lark}
+En las prácticas del curso, Lark apoyará el reconocimiento léxico y sintáctico. Esto no sustituye la definición de las reglas ni la comprensión de las transformaciones. El estudiantado especificará qué debe reconocerse y observará la salida producida. La verificación semántica se implementará explícitamente en Python mediante recorridos sobre la representación construida.
+\end{observacion}
+
+\section*{\cf{verde587246}{3. Representaciones intermedias, optimización y generación de código}}
+
+Después del análisis comienza el trabajo de síntesis. La representación validada debe acercarse de manera progresiva al lenguaje destino. Para separar las particularidades del lenguaje fuente de las del lenguaje destino, muchos compiladores emplean una o más representaciones intermedias.
+
+\begin{definicion}{Definición 2. (Representación intermedia)}
+Una \textbf{representación intermedia} (IR, por sus siglas en inglés) es una forma interna del programa utilizada para comunicar fases y facilitar su análisis o transformación antes de producir el código destino.
+\end{definicion}
+
+Una representación intermedia puede adoptar forma de árbol, grafo o secuencia lineal de operaciones. No existe una única IR apropiada para todos los compiladores. Su diseño depende de la información que deben comunicar las fases y de las transformaciones que se realizarán después.
+
+En términos generales, la síntesis puede incluir las tareas siguientes:
+
+\begin{itemize}
+    \item \textbf{Generación de una representación intermedia.} Convierte la estructura comprobada en una forma conveniente para las transformaciones posteriores.
+    \item \textbf{Optimización.} Transforma una representación para mejorar alguna característica del programa, como el tiempo de ejecución o el espacio utilizado, sin cambiar su comportamiento definido.
+    \item \textbf{Generación de código.} Traduce la representación disponible a instrucciones o construcciones del lenguaje destino.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[node distance=0.9cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=darkpastelblue!12, align=center, minimum width=2.55cm, minimum height=1cm] (validada) {representación\\validada};
+\node[draw, rounded corners, fill=apricot!25, right=of validada, align=center, minimum width=2.45cm, minimum height=1cm] (genir) {generación\\de IR};
+\node[draw, rounded corners, fill=darkpastelblue!12, right=of genir, align=center, minimum width=2.1cm, minimum height=1cm] (ir) {representación\\intermedia};
+\node[draw, rounded corners, fill=apricot!25, right=of ir, minimum width=2.1cm, minimum height=1cm] (opt) {optimización};
+\node[draw, rounded corners, fill=apricot!25, right=of opt, align=center, minimum width=2.45cm, minimum height=1cm] (gencod) {generación\\de código};
+\draw[->, thick] (validada) -- (genir);
+\draw[->, thick] (genir) -- (ir);
+\draw[->, thick] (ir) -- (opt);
+\draw[->, thick] (opt) -- (gencod);
+\end{tikzpicture}
+\end{center}
+
+El diagrama señala un recorrido frecuente. No obliga a que todos los compiladores tengan exactamente una IR o un único optimizador. La optimización puede aparecer en distintos momentos, repetirse o no estar presente en un compilador sencillo. Tampoco se utiliza para corregir programas fuente inválidos: su entrada ya debe haber superado las comprobaciones correspondientes.
+
+En el compilador del curso, la salida de la generación de código será \textsc{C}. Esto permite expresar la relación con la cadena completa de manera explícita:
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.1cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=grannysmithapple!30, minimum width=2.4cm] (imp) {programa \textsc{IMP}};
+\node[draw, rounded corners, fill=apricot!30, right=of imp, align=center, minimum width=2.8cm] (nuestro) {compilador\\del curso};
+\node[draw, rounded corners, fill=grannysmithapple!30, right=of nuestro, minimum width=2.3cm] (c) {programa \textsc{C}};
+\node[draw, rounded corners, fill=anti-flashwhite, right=of c, align=center, minimum width=2.8cm] (cc) {compilador\\de \textsc{C}};
+\node[draw, rounded corners, fill=anti-flashwhite, right=of cc, minimum width=2.3cm] (exe) {ejecutable};
+\draw[->, thick] (imp) -- (nuestro);
+\draw[->, thick] (nuestro) -- (c);
+\draw[->, thick] (c) -- (cc);
+\draw[->, thick] (cc) -- (exe);
+\end{tikzpicture}
+\end{center}
+
+La forma concreta del ASA, de la representación intermedia y del código \textsc{C} se definirá en las unidades correspondientes. En este momento basta reconocer la responsabilidad de cada transformación y la necesidad de conservar el significado del programa.
+
+\begin{observacion}{Observación 3. Optimizar no significa cambiar el resultado}
+Una transformación sólo es aceptable si conserva el comportamiento definido del programa. Producir código más corto o más rápido no compensa una traducción incorrecta. En este curso se reconocerá la función de la optimización sin introducir técnicas avanzadas fuera del alcance del temario.
+\end{observacion}
+
+\section*{\cf{verde587246}{4. Integración y comunicación entre las fases}}
+
+Dividir el compilador permite concentrar cada componente en una responsabilidad. Sin embargo, la división sólo funciona si las fases acuerdan qué información reciben y qué producen. La salida de una fase se convierte en la entrada de otra; por ello, un cambio en una representación puede afectar a varios componentes posteriores.
+
+El flujo general puede resumirse con los siguientes contratos:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.22}
+\begin{tabular}{|p{0.19\textwidth}|p{0.25\textwidth}|p{0.42\textwidth}|}
+\hline
+\textbf{Fase} & \textbf{Entrada principal} & \textbf{Salida o información comunicada} \tabularnewline
+\hline
+Análisis léxico & Caracteres del programa fuente. & Secuencia de tokens con la información necesaria para reconocerlos y ubicarlos. \tabularnewline
+\hline
+Análisis sintáctico & Secuencia de tokens. & Representación estructurada de las construcciones reconocidas. \tabularnewline
+\hline
+Análisis semántico & Estructura sintáctica e información de símbolos. & Representación comprobada y datos semánticos requeridos por fases posteriores. \tabularnewline
+\hline
+Generación de IR & Representación comprobada. & Operaciones o estructuras internas adecuadas para transformar el programa. \tabularnewline
+\hline
+Optimización & IR. & Representación equivalente con la mejora buscada. \tabularnewline
+\hline
+Generación de código & Representación intermedia o estructura validada. & Programa escrito en el lenguaje destino. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Dos componentes apoyan a varias fases y no deben imaginarse como simples pasos aislados al final del proceso:
+
+\begin{itemize}
+    \item \textbf{Tabla de símbolos.} Organiza información asociada con nombres del programa, por ejemplo su clase, tipo o ubicación. Diferentes fases pueden crear, consultar o completar esa información.
+    \item \textbf{Gestión de errores.} Permite registrar la ubicación del problema, producir un diagnóstico y decidir si es posible continuar el análisis. Los errores pueden aparecer en varias fases.
+\end{itemize}
+
+La organización también suele describirse mediante dos grandes partes. La \textbf{parte frontal} (\emph{front end}) se concentra en comprender el lenguaje fuente y producir una representación comprobada. La \textbf{parte posterior} (\emph{back end}) se concentra en transformar esa representación y producir código para el lenguaje destino. Una IR bien definida ayuda a separar ambas responsabilidades y favorece una arquitectura modular.
+
+Para el proyecto acumulativo del curso, la comunicación prevista puede resumirse así:
+
+\begin{center}
+\resizebox{0.98\textwidth}{!}{%
+\begin{tikzpicture}[node distance=0.7cm, every node/.style={font=\scriptsize}]
+\node[draw, rounded corners, fill=grannysmithapple!30, minimum width=1.55cm, minimum height=0.8cm] (imp) {\textsc{IMP}};
+\node[draw, rounded corners, fill=apricot!25, right=of imp, align=center, minimum width=1.75cm, minimum height=0.8cm] (lex) {análisis\\léxico};
+\node[draw, rounded corners, fill=darkpastelblue!12, right=of lex, minimum width=1.45cm, minimum height=0.8cm] (tok) {tokens};
+\node[draw, rounded corners, fill=apricot!25, right=of tok, align=center, minimum width=1.75cm, minimum height=0.8cm] (sin) {análisis\\sintáctico};
+\node[draw, rounded corners, fill=darkpastelblue!12, right=of sin, align=center, minimum width=1.75cm, minimum height=0.8cm] (asa) {estructura\\o ASA};
+\node[draw, rounded corners, fill=apricot!25, right=of asa, align=center, minimum width=1.75cm, minimum height=0.8cm] (sem) {verificación\\semántica};
+\node[draw, rounded corners, fill=darkpastelblue!12, right=of sem, align=center, minimum width=1.75cm, minimum height=0.8cm] (val) {representación\\validada};
+\node[draw, rounded corners, fill=apricot!25, right=of val, align=center, minimum width=1.75cm, minimum height=0.8cm] (gen) {generación\\de código};
+\node[draw, rounded corners, fill=grannysmithapple!30, right=of gen, minimum width=1.45cm, minimum height=0.8cm] (c) {\textsc{C}};
+\draw[->, thick] (imp) -- (lex);
+\draw[->, thick] (lex) -- (tok);
+\draw[->, thick] (tok) -- (sin);
+\draw[->, thick] (sin) -- (asa);
+\draw[->, thick] (asa) -- (sem);
+\draw[->, thick] (sem) -- (val);
+\draw[->, thick] (val) -- (gen);
+\draw[->, thick] (gen) -- (c);
+\end{tikzpicture}
+}
+\end{center}
+
+El esquema no fija todavía las estructuras de datos ni la sintaxis de \textsc{IMP}. Establece la dirección de las dependencias: cada práctica extenderá la anterior y deberá conservar interfaces que las fases posteriores puedan utilizar.
+
+\begin{observacion}{Mini-checkpoint. Seguir la información}
+Al observar cualquier fase del compilador, conviene responder cuatro preguntas:
+
+\begin{enumerate}[leftmargin=*]
+    \item ¿Qué representación recibe?
+    \item ¿Qué tarea realiza y qué errores puede detectar?
+    \item ¿Qué representación o información produce?
+    \item ¿Qué fase utilizará ese resultado?
+\end{enumerate}
+
+Si alguna respuesta no está definida, la comunicación entre los componentes todavía necesita precisarse.
+\end{observacion}
+
+\section*{\cf{verde587246}{Conclusión}}
+
+Un compilador transforma un programa fuente en un programa destino mediante una secuencia organizada de fases. El análisis léxico agrupa caracteres; el análisis sintáctico reconoce estructuras; y el análisis semántico comprueba restricciones que dependen del significado estático del programa. Después, las representaciones intermedias facilitan la separación entre el lenguaje fuente y el lenguaje destino, la optimización transforma el programa sin alterar su comportamiento y la generación de código produce la salida prevista.
+
+La arquitectura no consiste sólo en enumerar fases. Cada componente necesita una responsabilidad, una entrada y una salida claras; además, varias fases comparten información mediante estructuras como la tabla de símbolos y colaboran en el diagnóstico de errores. En el compilador acumulativo del curso, este flujo llevará de \textsc{IMP} a \textsc{C}. El siguiente tema concentrará la atención en el primer componente del recorrido: el analizador léxico y las unidades que reconoce.
+
+\clearpage
+\section*{\cf{verde587246}{Referencias}}
+
+\begin{enumerate}[label=\textbf{[\arabic*]}]
+    \item Thain, D. (2026). \textit{Introduction to Compilers and Language Design} (2.\textsuperscript{a} ed.). University of Notre Dame.
+    \item Aho, A. V., Lam, M. S., Sethi, R. y Ullman, J. D. (2006). \textit{Compilers: Principles, Techniques, and Tools} (2.\textsuperscript{a} ed.). Pearson/Addison-Wesley.
+    \item Cooper, K. D. y Torczon, L. (2012). \textit{Engineering a Compiler} (2.\textsuperscript{a} ed.). Morgan Kaufmann/Elsevier.
+    \item Vilar Torres, J. M. (2010). \textit{Estructura de los compiladores e intérpretes}. Universitat Jaume I.
+\end{enumerate}
+
+\end{document}

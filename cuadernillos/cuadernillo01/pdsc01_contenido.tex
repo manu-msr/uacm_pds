@@ -1,0 +1,479 @@
+\documentclass[11pt,spanish]{article}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,columnsep=1cm,marginparwidth=1cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{13.6pt}
+\usepackage[skip=\bigskipamount]{parskip}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{pifont}
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{amssymb}
+
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{rojo7a3c3d}{rgb}{0.478, 0.235, 0.239}
+\definecolor{verde587246}{rgb}{0.345, 0.447, 0.275}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+\definecolor{pastelgreen}{rgb}{0.82,0.92,0.78}
+\definecolor{indiagreen}{rgb}{0.07,0.53,0.03}
+
+\newcommand{\blank}[1][4cm]{\rule{#1}{0.4pt}}
+\newcommand{\cuadro}{\(\square\)}
+\newcommand{\cf}[2]{\colorbox{#1}{\textcolor{white}{\strut #2}}}
+
+\newtcolorbox{ejercicio}[1]{
+colback=antiquefuchsia!5!white,
+colframe=antiquefuchsia!85!black,
+fonttitle=\bfseries,
+title=#1,
+breakable}
+
+\newtcolorbox{observacion}[1]{
+colback=amber!5!white,
+colframe=amber!85!black,
+fonttitle=\bfseries,
+title=#1,
+breakable}
+
+\newtcolorbox{respuesta}[1]{
+colback=pastelgreen!35!white,
+colframe=indiagreen!85!black,
+fonttitle=\bfseries,
+title=#1,
+breakable}
+
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+
+\AtBeginDocument{
+  \def\labelitemi{\(\star\)}
+  \def\labelitemii{\(\ast\)}
+  \def\labelitemiii{\(\bullet\)}
+  \def\labelitemiv{\(\circ\)}
+}
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+\deactivatequoting
+
+\begin{document}
+
+\lhead{PDS}
+\rhead{Cuadernillo 01}
+\title{Programación de Sistemas\\
+Unidad 1: Introducción a la Programación de Sistemas y los Compiladores\\ \bigskip
+\cf{rojo7a3c3d}{\textbf{Cuadernillo de ejercicios 01}}\\
+\bigskip
+\Large\textbf{Panorama de la programación de sistemas}
+\ifrespuestas\\[0.4em]\large Versión para docente\fi}
+\author{Manuel Soto Romero \and Araceli Liliana Reyes Cabello}
+\date{Semestre 2026-2 \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+
+Este cuadernillo acompaña la Nota 01. Su propósito es practicar cuatro ideas: qué distingue a la programación de sistemas, cuáles son sus áreas principales, cómo se diferencian compiladores e intérpretes y por qué un compilador puede integrar el recorrido del curso. Las actividades avanzan de reconocer conceptos a utilizarlos en situaciones breves.
+
+\begin{observacion}{Observación 1. Límite de trabajo}
+Responde únicamente con lo estudiado en la Nota 01. No necesitas describir las fases internas de un compilador, escribir reglas de \textsc{IMP} ni explicar técnicas de generación de código.
+\end{observacion}
+
+\section*{\cf{verde587246}{1. Conceptos fundamentales}}
+
+\begin{ejercicio}{Ejercicio 1. Completar las ideas centrales}
+Completa las oraciones con las expresiones del banco. Cada expresión se usa una sola vez.
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|}
+\hline
+software de sistemas & programación de sistemas & aplicación \tabularnewline
+\hline
+arquitectura de la computadora & niveles de abstracción & interfaces \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[leftmargin=*]
+    \item El \blank[5.4cm] apoya la operación y el uso de una computadora.
+    \item La \blank[5.4cm] se ocupa del diseño y la implementación de ese software.
+    \item Una \blank[5.4cm] se concentra principalmente en resolver una tarea concreta para una persona u organización.
+    \item La \blank[6cm] incluye instrucciones, registros y memoria.
+    \item La programación de sistemas relaciona distintos \blank[5.5cm], desde representaciones cercanas a las personas hasta otras que una máquina puede procesar.
+    \item Las \blank[5cm] permiten que la salida de una herramienta tenga la forma que espera la siguiente.
+\end{enumerate}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 1}
+1. software de sistemas; 2. programación de sistemas; 3. aplicación; 4. arquitectura de la computadora; 5. niveles de abstracción; 6. interfaces.
+\end{respuesta}
+\fi
+
+\ifrespuestas\else\newpage\fi
+\begin{ejercicio}{Ejercicio 2. Aplicación o software de sistemas}
+Escribe \textbf{A} si el caso se enfoca principalmente en una aplicación y \textbf{S} si se enfoca principalmente en software de sistemas. Después justifica los casos 3 y 6.
+
+\begin{center}
+\small
+\begin{tabular}{|p{0.07\textwidth}|p{0.78\textwidth}|p{0.07\textwidth}|}
+\hline
+ & \textbf{Caso} & \textbf{A/S} \tabularnewline
+\hline
+1 & Programa que calcula el promedio de un grupo y presenta el resultado. & \tabularnewline[0.55cm]
+\hline
+2 & Herramienta que traduce un programa a otra representación. & \tabularnewline[0.55cm]
+\hline
+3 & Programa que administra los recursos de la computadora. & \tabularnewline[0.55cm]
+\hline
+4 & Sistema para registrar préstamos de una biblioteca escolar. & \tabularnewline[0.55cm]
+\hline
+5 & Herramienta que ayuda a observar la ejecución de otro programa para localizar errores. & \tabularnewline[0.55cm]
+\hline
+6 & Programa que reúne código objeto y bibliotecas para formar un ejecutable. & \tabularnewline[0.55cm]
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Justificación del caso 3:} \blank[10cm]
+
+\blank[14cm]
+
+\textbf{Justificación del caso 6:} \blank[10cm]
+
+\blank[14cm]
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 2}
+Clasificación esperada: 1-A, 2-S, 3-S, 4-A, 5-S y 6-S.
+
+Justificaciones posibles:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Caso 3:} es software de sistemas porque administra recursos y proporciona servicios necesarios para otros programas.
+    \item \textbf{Caso 6:} es software de sistemas porque prepara la forma ejecutable de otros programas al reunir sus partes.
+\end{itemize}
+\end{respuesta}
+\fi
+
+\ifrespuestas\newpage\fi
+\section*{\cf{verde587246}{2. Áreas y herramientas}}
+
+\begin{ejercicio}{Ejercicio 3. Relacionar responsabilidades}
+Relaciona cada herramienta con su función general. Escribe la letra correspondiente en la tabla de respuestas.
+
+\begin{center}
+\small
+\begin{tabular}{|p{0.30\textwidth}|p{0.60\textwidth}|}
+\hline
+\textbf{Herramienta} & \textbf{Función} \tabularnewline
+\hline
+1. Ensamblador & A. Administra recursos y proporciona servicios para ejecutar programas. \tabularnewline
+\hline
+2. Ligador & B. Ayuda a crear y modificar el texto de un programa. \tabularnewline
+\hline
+3. Cargador & C. Traduce lenguaje ensamblador a código objeto o de máquina. \tabularnewline
+\hline
+4. Procesador de macros & D. Coloca un programa en memoria y lo prepara para su ejecución. \tabularnewline
+\hline
+5. Sistema operativo & E. Ayuda a observar la ejecución y localizar errores. \tabularnewline
+\hline
+6. Editor & F. Reúne código objeto y bibliotecas para formar un ejecutable. \tabularnewline
+\hline
+7. Depurador & G. Reconoce macros y las expande en secuencias del lenguaje correspondiente. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+1 & 2 & 3 & 4 & 5 & 6 & 7 \tabularnewline
+\hline
+\phantom{C} & \phantom{F} & \phantom{D} & \phantom{G} & \phantom{A} & \phantom{B} & \phantom{E} \tabularnewline[0.45cm]
+\hline
+\end{tabular}
+\end{center}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 3}
+1-C, 2-F, 3-D, 4-G, 5-A, 6-B y 7-E.
+\end{respuesta}
+\fi
+
+\ifrespuestas\else\newpage\fi
+\begin{ejercicio}{Ejercicio 4. Del código fuente a la memoria}
+Completa el recorrido panorámico con las expresiones del banco.
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|}
+\hline
+compilador & ensamblador & ligador & cargador \tabularnewline
+\hline
+código en lenguaje ensamblador & código objeto & ejecutable & memoria \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.55}
+\begin{tabular}{|p{0.31\textwidth}|p{0.24\textwidth}|p{0.29\textwidth}|}
+\hline
+\textbf{Entrada} & \textbf{Herramienta} & \textbf{Resultado} \tabularnewline
+\hline
+código fuente & \blank[3cm] & \blank[4cm] \tabularnewline
+\hline
+\raggedright código en lenguaje\\ensamblador & \blank[3cm] & \blank[4cm] \tabularnewline
+\hline
+código objeto y bibliotecas & \blank[3cm] & \blank[4cm] \tabularnewline
+\hline
+ejecutable & \blank[3cm] & \blank[4cm] \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Explica con una oración la diferencia entre \textbf{lenguaje ensamblador} y \textbf{ensamblador}:
+
+\blank[14cm]
+
+\blank[14cm]
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 4}
+Por filas: compilador / código en lenguaje ensamblador; ensamblador / código objeto; ligador / ejecutable; cargador / memoria.
+
+El \textbf{lenguaje ensamblador} es una representación del programa; el \textbf{ensamblador} es la herramienta que traduce esa representación a código objeto o código de máquina.
+\end{respuesta}
+\fi
+
+\section*{\cf{verde587246}{3. Compiladores e intérpretes}}
+
+\begin{ejercicio}{Ejercicio 5. Comparar dos procesadores de lenguajes}
+Completa la tabla. Usa cada expresión del banco una vez.
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|}
+\hline
+programa fuente & programa fuente y datos & traduce \tabularnewline
+\hline
+ejecuta operaciones & programa destino & resultados de la ejecución \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.45}
+\begin{tabular}{|p{0.25\textwidth}|p{0.31\textwidth}|p{0.31\textwidth}|}
+\hline
+ & \textbf{Compilador} & \textbf{Intérprete} \tabularnewline
+\hline
+Entrada principal & \blank[3.7cm] & \blank[3.7cm] \tabularnewline
+\hline
+Acción principal & \blank[3.7cm] & \blank[3.7cm] \tabularnewline
+\hline
+Resultado principal & \blank[3.7cm] & \blank[3.7cm] \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 5}
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.25\textwidth}|p{0.31\textwidth}|p{0.31\textwidth}|}
+\hline
+ & \textbf{Compilador} & \textbf{Intérprete} \tabularnewline
+\hline
+Entrada principal & programa fuente & programa fuente y datos \tabularnewline
+\hline
+Acción principal & traduce & ejecuta operaciones \tabularnewline
+\hline
+Resultado principal & programa destino & resultados de la ejecución \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+\end{respuesta}
+\fi
+
+\begin{ejercicio}{Ejercicio 6. Identificar el modelo}
+Escribe \textbf{C} para compilador, \textbf{I} para intérprete o \textbf{M} si la situación indica una combinación de ambos modelos.
+
+\begin{center}
+\small
+\begin{tabular}{|p{0.76\textwidth}|p{0.12\textwidth}|}
+\hline
+\textbf{Situación} & \textbf{C/I/M} \tabularnewline
+\hline
+La herramienta recibe un programa fuente y produce un programa destino que después puede ejecutarse varias veces. & \tabularnewline[0.65cm]
+\hline
+La herramienta recibe el programa fuente y los datos de entrada, y produce directamente el resultado de esa ejecución. & \tabularnewline[0.65cm]
+\hline
+El sistema primero traduce el programa a una forma intermedia y luego ejecuta esa forma mediante otra herramienta. & \tabularnewline[0.65cm]
+\hline
+El resultado principal del procesamiento es otro programa equivalente escrito en un lenguaje distinto. & \tabularnewline[0.65cm]
+\hline
+No se entrega un programa destino independiente; se realizan las operaciones indicadas en el programa fuente. & \tabularnewline[0.65cm]
+\hline
+\end{tabular}
+\end{center}
+
+Elige una situación y justifica tu respuesta:
+
+\blank[14cm]
+
+\blank[14cm]
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 6}
+Orden esperado: C, I, M, C, I.
+
+Ejemplo de justificación para la tercera situación: corresponde a una combinación porque primero ocurre una traducción y después una herramienta ejecuta la representación obtenida.
+\end{respuesta}
+\fi
+
+\section*{\cf{verde587246}{4. El compilador como caso integrador}}
+
+\begin{ejercicio}{Ejercicio 7. Cuatro ideas para construir una herramienta}
+Relaciona cada decisión con la idea que representa: \textbf{especificar}, \textbf{transformar}, \textbf{dividir responsabilidades} o \textbf{comprobar}.
+
+\begin{center}
+\small
+\begin{tabular}{|p{0.68\textwidth}|p{0.22\textwidth}|}
+\hline
+\textbf{Decisión del equipo} & \textbf{Idea} \tabularnewline
+\hline
+Definir con claridad las reglas del lenguaje que recibirá la herramienta. & \tabularnewline[0.7cm]
+\hline
+Cambiar la representación del programa sin perder el comportamiento que debe conservarse. & \tabularnewline[0.7cm]
+\hline
+Organizar el sistema en componentes con entradas y salidas explícitas. & \tabularnewline[0.7cm]
+\hline
+Probar programas correctos, revisar errores y verificar el resultado producido. & \tabularnewline[0.7cm]
+\hline
+\end{tabular}
+\end{center}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 7}
+En orden: especificar, transformar, dividir responsabilidades y comprobar.
+\end{respuesta}
+\fi
+
+\begin{ejercicio}{Ejercicio 8. El caso del compilador del curso}
+El producto acumulativo del curso puede representarse así:
+
+\begin{center}
+\fbox{programa en \textsc{IMP}}
+\(\longrightarrow\)
+\fbox{compilador del curso}
+\(\longrightarrow\)
+\fbox{programa en \textsc{C}}
+\end{center}
+
+Responde brevemente.
+
+\begin{enumerate}[leftmargin=*]
+    \item ¿Cuál es el lenguaje fuente? \blank[6cm]
+    \item ¿Cuál es el lenguaje destino? \blank[6cm]
+    \item ¿Por qué este compilador es software de sistemas?
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item Un equipo genera un programa en \textsc{C}, pero nunca revisa si conserva el comportamiento esperado. ¿Cuál de las cuatro ideas del ejercicio anterior está descuidando y por qué?
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item Explica en dos o tres oraciones por qué la construcción de este compilador puede integrar distintos aprendizajes del curso.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+\end{enumerate}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 8}
+\begin{enumerate}[leftmargin=*]
+    \item \textsc{IMP}.
+    \item \textsc{C}.
+    \item Porque procesa otros programas: recibe un programa fuente, detecta errores y produce un programa destino.
+    \item \textbf{Comprobar}, porque debe verificarse que el programa generado conserve el comportamiento esperado.
+    \item Integra la especificación de un lenguaje, la transformación entre representaciones, la organización de componentes y la comprobación de resultados y errores.
+\end{enumerate}
+\end{respuesta}
+\fi
+
+\newpage
+\section*{\cf{verde587246}{5. Revisión de afirmaciones}}
+
+\begin{ejercicio}{Ejercicio 9. Detectar y corregir confusiones}
+Cada afirmación contiene un error. Subraya la parte incorrecta y reescribe la oración de forma adecuada.
+
+\begin{enumerate}[leftmargin=*]
+    \item Un compilador y un intérprete hacen exactamente lo mismo porque ambos producen siempre un programa destino independiente.
+
+    \blank[14cm]
+
+    \blank[14cm]
+
+    \item El cargador reúne código objeto y bibliotecas para formar un ejecutable.
+
+    \blank[14cm]
+
+    \blank[14cm]
+
+    \item El lenguaje ensamblador es la herramienta que traduce código a lenguaje de máquina.
+
+    \blank[14cm]
+
+    \blank[14cm]
+
+    \item La programación de sistemas se limita al desarrollo de sistemas operativos.
+
+    \blank[14cm]
+
+    \blank[14cm]
+\end{enumerate}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 9}
+Correcciones esperadas:
+\begin{enumerate}[leftmargin=*]
+    \item Un compilador traduce un programa fuente y produce un programa destino; un intérprete ejecuta las operaciones indicadas sin producir como resultado principal un programa destino independiente.
+    \item El \textbf{ligador} reúne código objeto y bibliotecas para formar un ejecutable; el cargador coloca el ejecutable en memoria.
+    \item El \textbf{lenguaje ensamblador} es una representación del programa; el \textbf{ensamblador} es la herramienta que la traduce a código objeto o de máquina.
+    \item La programación de sistemas incluye sistemas operativos, ensambladores, ligadores, cargadores, procesadores de macros, compiladores, intérpretes, editores y depuradores, entre otras herramientas.
+\end{enumerate}
+\end{respuesta}
+\fi
+
+\end{document}
