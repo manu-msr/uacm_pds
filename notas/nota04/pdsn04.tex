@@ -1,0 +1,708 @@
+\documentclass[11pt,spanish]{article}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,columnsep=1cm,marginparwidth=1cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{13.6pt}
+\setcounter{tocdepth}{2}
+\usepackage[skip=\bigskipamount]{parskip}
+\usepackage{color}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{pifont}
+
+\makeatletter
+\providecommand{\tabularnewline}{\\}
+
+\@ifundefined{date}{}{\date{}}
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{xcolor}
+\usepackage[symbol]{footmisc}
+\usepackage[tikz]{bclogo}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[most]{tcolorbox}
+\usepackage{tikz-qtree}
+\usepackage{proof}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\usepackage{fontawesome5}
+
+\usetikzlibrary{trees,positioning,automata,arrows.meta}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\definecolor{fireenginered}{rgb}{0.81, 0.09, 0.13}
+\definecolor{blush}{rgb}{0.87, 0.36, 0.51}
+\definecolor{bubblegum}{rgb}{0.99, 0.76, 0.8}
+\definecolor{paleviolet-red}{rgb}{0.86, 0.44, 0.58}
+\definecolor{anti-flashwhite}{rgb}{0.95, 0.95, 0.96}
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.00}
+\definecolor{grannysmithapple}{rgb}{0.66, 0.89, 0.63}
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{apricot}{rgb}{0.98, 0.81, 0.69}
+\definecolor{asparagus}{rgb}{0.53, 0.66, 0.42}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{verdeoscuro}{rgb}{0.0, 0.5, 0.0}
+\definecolor{verdepastel}{rgb}{0.5, 0.8, 0.5}
+\definecolor{verde4c9141}{rgb}{0.298, 0.569, 0.255}
+\definecolor{rojo6d2226}{rgb}{0.427, 0.133, 0.149}
+\definecolor{rojo682a2b}{rgb}{0.408, 0.165, 0.169}
+\definecolor{rojo7a3c3d}{rgb}{0.478, 0.235, 0.239}
+\definecolor{verde587246}{rgb}{0.345, 0.447, 0.275}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+
+\usepackage{forest}
+\newcommand{\cb}[1]{\colorbox{applegreen}{#1}}
+\newcommand{\imp}[1]{\colorbox{grannysmithapple}{#1}}
+\newcommand{\defi}[1]{\colorbox{apricot}{#1}}
+\newtcolorbox{ejemplo}[1]{
+colback=darkpastelblue!5!white,
+colframe=darkpastelblue!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{definicion}[1]{
+colback=asparagus!5!white,
+colframe=asparagus!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{observacion}[1]{
+colback=amber!5!white,
+colframe=amber!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{ruta}[1]{
+colback=darkpastelblue!5!white,
+colframe=darkpastelblue!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{teorema}[1]{
+colback=bubblegum!5!white,
+colframe=bubblegum!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+\newtcolorbox{ejercicio}[1]{
+colback=antiquefuchsia!5!white,
+colframe=antiquefuchsia!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+
+\newcommand{\cf}[2]{%
+    \colorbox{#1}{\textcolor{white}{\strut #2}}%
+}
+
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+
+\AtBeginDocument{
+  \def\labelitemi{\(\star\)}
+  \def\labelitemii{\(\ast\)}
+  \def\labelitemiii{\(\bullet\)}
+  \def\labelitemiv{\(\circ\)}
+}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+\deactivatequoting
+
+\usepackage{listings}
+\lstset{
+keywordstyle={\bfseries\color{blue}},
+commentstyle={\bfseries\color{Verde}\itshape},
+emphstyle={\color{Rojo}},
+stringstyle={\color{Rojo}},
+basicstyle=\ttfamily\small,
+breaklines=true,
+columns=fullflexible
+}
+\renewcommand{\lstlistingname}{Listado de código}
+
+\begin{document}
+
+\lhead{PDS}
+
+\rhead{Tema 2.2}
+\title{Programación de Sistemas\\
+Unidad 2: Análisis léxico\\ \bigskip
+\cf{rojo7a3c3d}{\textbf{\Large Nota de clase 04: Expresiones regulares y autómatas finitos}}}
+\author{Manuel Soto Romero \and Araceli Liliana Reyes Cabello}
+\date{Semestre 2026-2 \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+En la nota anterior distinguimos token, lexema y patrón. El patrón describía, todavía en lenguaje natural, la forma de los lexemas asociados con una categoría. Para construir un analizador léxico necesitamos dar el siguiente paso: escribir esas descripciones con precisión y contar con un procedimiento que decida si una cadena las satisface.
+
+En esta nota utilizaremos expresiones regulares para especificar patrones y autómatas finitos para reconocerlos. Primero reconstruiremos los conceptos indispensables de lenguajes formales; después compararemos autómatas finitos no deterministas y deterministas; finalmente, seguiremos la ruta de conversión y minimización que conecta ambas herramientas. Los ejemplos se aplicarán a los tokens del \textsc{IMP} básico. La coordinación de todos los patrones y su implementación con \textsc{Lark} se desarrollarán en el tema siguiente.
+
+\begin{ruta}{Ruta de lectura (35--40 minutos)}
+\textbf{Lectura esencial:} sigue el caso inicial; identifica qué lenguaje denota cada expresión regular; compara AFN y AFD; y revisa el ejemplo completo \(a\mid b\) en la ruta expresión regular \(\rightarrow\) AFN \(\rightarrow\) AFD \(\rightarrow\) AFD mínimo. Termina cotejando la salida conceptual del fragmento de \textsc{IMP}.
+
+\textbf{Lectura complementaria:} revisa las definiciones formales de alfabeto, cadena y lenguaje; las plantillas de Thompson; el detalle de la cerradura-\(\varepsilon\); y el refinamiento de particiones. Estas partes sirven como nivelación y pueden retomarse cuando se necesiten.
+\end{ruta}
+
+\begin{ejemplo}{Caso inicial. Dos formas de describir un patrón}
+Consideremos el siguiente fragmento de \textsc{IMP}:
+
+\begin{lstlisting}
+while x2 <= 20 do x2 := x2 + 1
+\end{lstlisting}
+
+En la nota anterior podíamos describir \texttt{x2} como ``una o más letras seguidas de cero o más dígitos''. En esta nota escribiremos esa descripción mediante una expresión regular:
+
+\[
+\mathit{LOC}=\mathit{letra}^{+}\mathit{digito}^{*}.
+\]
+
+Esta expresión especifica un conjunto de cadenas, pero todavía necesitamos un mecanismo que reciba una cadena como \texttt{x2} y responda si pertenece a ese conjunto. Un autómata finito realizará ese reconocimiento.
+\end{ejemplo}
+
+\section*{\cf{verde587246}{1. Del patrón a un reconocedor}}
+
+Especificar y reconocer son tareas relacionadas, pero distintas. Una \textbf{especificación} describe cuáles cadenas pertenecen a una categoría léxica; un \textbf{reconocedor} recibe una cadena y decide si pertenece al lenguaje especificado. En el análisis léxico utilizaremos expresiones regulares para la primera tarea y autómatas finitos para la segunda.
+
+Antes de formalizar esta relación necesitamos tres conceptos básicos.
+
+\begin{definicion}{Definición 1. (Alfabeto, cadena y lenguaje)}
+Un \textbf{alfabeto} \(\Sigma\) es un conjunto finito de símbolos. Una \textbf{cadena} sobre \(\Sigma\) es una secuencia finita de símbolos de ese alfabeto. La cadena sin símbolos se llama \textbf{cadena vacía} y se representa con \(\varepsilon\). Un \textbf{lenguaje} sobre \(\Sigma\) es un conjunto de cadenas formadas con símbolos de \(\Sigma\).
+\end{definicion}
+
+En nuestro caso, los símbolos del alfabeto son caracteres del programa fuente. El lenguaje asociado con \texttt{NUM}, por ejemplo, contiene las cadenas formadas por uno o más dígitos decimales. \texttt{0}, \texttt{7} y \texttt{205} pertenecen a ese lenguaje; la cadena vacía y \texttt{2x} no pertenecen.
+
+La ruta conceptual que seguiremos puede resumirse así:
+
+\begin{center}
+\resizebox{0.98\textwidth}{!}{%
+\begin{tikzpicture}[node distance=1.05cm, every node/.style={font=\small}]
+\node[draw, rounded corners, fill=grannysmithapple!30, align=center, minimum width=2.7cm, minimum height=1cm] (patron) {patrón de\\un token};
+\node[draw, rounded corners, fill=darkpastelblue!15, right=of patron, align=center, minimum width=2.8cm, minimum height=1cm] (er) {expresión\\regular};
+\node[draw, rounded corners, fill=apricot!30, right=of er, align=center, minimum width=2.8cm, minimum height=1cm] (afn) {autómata finito\\no determinista};
+\node[draw, rounded corners, fill=darkpastelblue!15, right=of afn, align=center, minimum width=2.8cm, minimum height=1cm] (afd) {autómata finito\\determinista};
+\node[draw, rounded corners, fill=grannysmithapple!30, right=of afd, align=center, minimum width=2.8cm, minimum height=1cm] (min) {AFD\\mínimo};
+\draw[->, thick] (patron) -- (er);
+\draw[->, thick] (er) -- (afn);
+\draw[->, thick] (afn) -- (afd);
+\draw[->, thick] (afd) -- (min);
+\end{tikzpicture}
+}
+\end{center}
+
+Las conversiones conservan el lenguaje: cambian la representación, pero no el conjunto de cadenas aceptadas. Esta propiedad permite elegir una notación cómoda para especificar y una representación eficiente para reconocer.
+
+\begin{observacion}{Observación 1. Un lenguaje no es una cadena}
+La expresión regular de \texttt{NUM} describe un conjunto potencialmente infinito de lexemas. \texttt{205} es una cadena concreta de ese conjunto; no es la expresión regular ni el lenguaje completo. Esta distinción continúa la separación entre patrón y lexema de la nota anterior.
+\end{observacion}
+
+\section*{\cf{verde587246}{2. Expresiones regulares y definición de tokens}}
+
+Una expresión regular se construye a partir de símbolos y operaciones. A cada expresión \(r\) le corresponde un lenguaje, que representaremos con \(L(r)\).
+
+\begin{definicion}{Definición 2. (Expresión regular)}
+Sea \(\Sigma\) un alfabeto. La cadena vacía \(\varepsilon\) es una expresión regular y denota el lenguaje \(\{\varepsilon\}\). Cada símbolo \(a\in\Sigma\) es una expresión regular y denota \(\{a\}\). Si \(r\) y \(s\) son expresiones regulares, también lo son \(r\mid s\), \(rs\), \(r^{*}\) y \((r)\).
+\end{definicion}
+
+Las tres operaciones principales tienen el siguiente significado:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|p{0.18\textwidth}|p{0.22\textwidth}|p{0.49\textwidth}|}
+\hline
+\textbf{Operación} & \textbf{Notación} & \textbf{Lenguaje resultante} \tabularnewline
+\hline
+Unión & \(r\mid s\) & Las cadenas que pertenecen a \(L(r)\), a \(L(s)\) o a ambos. \tabularnewline
+\hline
+Concatenación & \(rs\) & Las cadenas formadas al concatenar una cadena de \(L(r)\) con una de \(L(s)\). \tabularnewline
+\hline
+Cerradura de Kleene & \(r^{*}\) & Las cadenas formadas al concatenar cero o más cadenas de \(L(r)\); incluye \(\varepsilon\). \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Por convención, la cerradura tiene mayor precedencia que la concatenación, y la concatenación tiene mayor precedencia que la unión. Así, \(a\mid b^{*}c\) se interpreta como \(a\mid((b^{*})c)\).
+
+En la especificación de tokens también se utilizan abreviaturas. La cerradura positiva \(r^{+}\) significa ``una o más repeticiones'' y equivale a \(rr^{*}\). Una clase como \texttt{[0-9]} abrevia la unión de los diez dígitos. Estas extensiones hacen más breve la escritura, pero no aumentan los lenguajes que pueden describirse.
+
+\begin{ejemplo}{Ejemplo resuelto. Qué cadenas denota cada expresión}
+Sea \(\Sigma=\{a,b\}\).
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.18\textwidth}|p{0.61\textwidth}|}
+\hline
+\textbf{Expresión} & \textbf{Lenguaje denotado} \tabularnewline
+\hline
+\(a\mid b\) & \(\{a,b\}\). \tabularnewline
+\hline
+\(ab\) & \(\{ab\}\). \tabularnewline
+\hline
+\(a^{*}\) & \(\{\varepsilon,a,aa,aaa,\ldots\}\). \tabularnewline
+\hline
+\((a\mid b)^{*}\) & Todas las cadenas finitas formadas con \(a\) y \(b\), incluida \(\varepsilon\). \tabularnewline
+\hline
+\(a(a\mid b)^{*}\) & Las cadenas no vacías sobre \(\{a,b\}\) cuyo primer símbolo es \(a\). \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+\end{ejemplo}
+
+Para evitar repetir subexpresiones podemos asignarles nombres y construir \textbf{definiciones regulares}. La especificación léxica aprobada para las dos categorías variables del \textsc{IMP} básico es:
+
+\[
+\begin{aligned}
+\mathit{letra}  & = \texttt{[A-Za-z]},\\
+\mathit{digito} & = \texttt{[0-9]},\\
+\mathit{LOC}    & = \mathit{letra}^{+}\mathit{digito}^{*},\\
+\mathit{NUM}    & = \mathit{digito}^{+}.
+\end{aligned}
+\]
+
+La definición de \texttt{LOC} tiene dos partes. \(\mathit{letra}^{+}\) exige una o más letras; después, \(\mathit{digito}^{*}\) admite cero o más dígitos. Por ello, los dígitos pueden aparecer al final, pero no al inicio ni entre dos grupos de letras.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.14\textwidth}|p{0.26\textwidth}|p{0.24\textwidth}|p{0.24\textwidth}|}
+\hline
+\textbf{Token} & \textbf{Patrón} & \textbf{Sí satisface} & \textbf{No satisface} \tabularnewline
+\hline
+\texttt{LOC} & \(\mathit{letra}^{+}\mathit{digito}^{*}\) & \texttt{x}, \texttt{total}, \texttt{x20} & \texttt{20x}, \texttt{x2y}, \texttt{x\_1} \tabularnewline
+\hline
+\texttt{NUM} & \(\mathit{digito}^{+}\) & \texttt{0}, \texttt{25}, \texttt{2048} & \(\varepsilon\), \texttt{2x}, \texttt{-5} \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+El signo de \texttt{-5} no forma parte de \texttt{NUM}: en \textsc{IMP}, \texttt{-} corresponde al token \texttt{MINUS} y \texttt{5} corresponde a \texttt{NUM}. La estructura sintáctica determinará después cómo se agrupan.
+
+Las palabras reservadas, operadores y delimitadores del \textsc{IMP} básico tienen patrones fijos. Algunos ejemplos son:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.17\textwidth}|p{0.20\textwidth}||p{0.17\textwidth}|p{0.20\textwidth}|}
+\hline
+\textbf{Token} & \textbf{Lexema fijo} & \textbf{Token} & \textbf{Lexema fijo} \tabularnewline
+\hline
+\texttt{WHILE} & \texttt{while} & \texttt{DO} & \texttt{do} \tabularnewline
+\hline
+\texttt{ASSIGN} & \texttt{:=} & \texttt{LE} & \texttt{<=} \tabularnewline
+\hline
+\texttt{PLUS} & \texttt{+} & \texttt{SEMI} & \texttt{;} \tabularnewline
+\hline
+\texttt{LPAR} & \texttt{(} & \texttt{RPAR} & \texttt{)} \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{observacion}{Observación 2. Los patrones pueden coincidir}
+La cadena \texttt{while} satisface el patrón de \texttt{LOC}, pero también es el lexema fijo de \texttt{WHILE}. Las expresiones regulares especifican ambos casos; todavía falta establecer cómo coordinar las reglas para elegir un token. Esa decisión pertenece al diseño del analizador léxico del tema 2.3.
+\end{observacion}
+
+\begin{observacion}{Mini-checkpoint. Lee la expresión antes de probar cadenas}
+Considera \(\mathit{letra}^{+}\mathit{digito}^{*}\). Clasifica \texttt{abc}, \texttt{abc12}, \texttt{ab12c} y \texttt{12}.
+
+\textbf{Resultado esperado:} \texttt{abc} y \texttt{abc12} satisfacen la expresión. \texttt{ab12c} no la satisface porque aparece una letra después de comenzar los dígitos; \texttt{12} tampoco, porque falta la parte inicial de una o más letras.
+\end{observacion}
+
+\section*{\cf{verde587246}{3. Autómatas finitos deterministas y no deterministas}}
+
+Una expresión regular dice \emph{qué} cadenas forman un lenguaje. Un autómata finito permite decidir si una cadena concreta pertenece a él. Su memoria está representada por un conjunto finito de estados y cambia conforme consume los símbolos de la entrada.
+
+\begin{definicion}{Definición 3. (Autómata finito no determinista)}
+Un \textbf{autómata finito no determinista} (AFN) es una quíntupla \(N=(Q,\Sigma,\delta,q_0,F)\), donde \(Q\) es un conjunto finito de estados, \(\Sigma\) es el alfabeto, \(q_0\in Q\) es el estado inicial, \(F\subseteq Q\) es el conjunto de estados de aceptación y
+\[
+\delta:Q\times(\Sigma\cup\{\varepsilon\})\longrightarrow 2^{Q}
+\]
+indica los posibles estados siguientes.
+\end{definicion}
+
+En un AFN puede haber varias transiciones con el mismo símbolo y también transiciones con \(\varepsilon\), que cambian de estado sin consumir un símbolo. Una cadena se acepta si \textbf{existe al menos un recorrido} que consume toda la entrada y termina en un estado de aceptación.
+
+\begin{definicion}{Definición 4. (Autómata finito determinista)}
+Un \textbf{autómata finito determinista} (AFD) es una quíntupla \(D=(Q,\Sigma,\delta,q_0,F)\) cuya función de transición es
+\[
+\delta:Q\times\Sigma\longrightarrow Q.
+\]
+Para cada estado y cada símbolo del alfabeto existe exactamente un estado siguiente.
+\end{definicion}
+
+En un AFD no hay transiciones con \(\varepsilon\) ni alternativas para el mismo par estado--símbolo. Por ello, una cadena determina un único recorrido.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.27\textwidth}|p{0.28\textwidth}|p{0.31\textwidth}|}
+\hline
+\textbf{Aspecto} & \textbf{AFN} & \textbf{AFD} \tabularnewline
+\hline
+Siguiente estado & Puede ser un conjunto de estados. & Es un solo estado. \tabularnewline
+\hline
+Transiciones \(\varepsilon\) & Se permiten. & No se permiten. \tabularnewline
+\hline
+Aceptación & Basta un recorrido de aceptación. & Se sigue el único recorrido posible. \tabularnewline
+\hline
+Uso en la ruta de construcción & Facilita componer subexpresiones. & Facilita reconocer la entrada mediante una transición por símbolo. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Aunque su funcionamiento es distinto, AFN y AFD tienen el mismo poder expresivo: para cada AFN existe un AFD que reconoce el mismo lenguaje.
+
+\begin{ejemplo}{Ejemplo resuelto. Un AFD para \texttt{NUM}}
+La expresión \(\mathit{digito}^{+}\) requiere consumir al menos un dígito. El siguiente AFD reconoce una cadena completa que satisface ese patrón. El doble círculo señala el estado de aceptación.
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=3.2cm,on grid,auto,>=Stealth]
+\node[state,initial] (q0) {\(q_0\)};
+\node[state,accepting,right=of q0] (q1) {\(q_1\)};
+\node[state,below=of q1] (qd) {\(q_d\)};
+\path[->]
+  (q0) edge node {\texttt{[0-9]}} (q1)
+       edge[bend right=18] node[left] {otro} (qd)
+  (q1) edge[loop above] node {\texttt{[0-9]}} ()
+       edge node[right] {otro} (qd)
+  (qd) edge[loop below] node {cualquiera} ();
+\end{tikzpicture}
+\end{center}
+
+El estado \(q_0\) representa que todavía no se ha leído un dígito. \(q_1\) recuerda que ya se consumió al menos uno y permite consumir más. \(q_d\) es un estado muerto: una vez alcanzado, la cadena completa ya no puede satisfacer el patrón.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.18\textwidth}|p{0.43\textwidth}|p{0.20\textwidth}|}
+\hline
+\textbf{Entrada} & \textbf{Recorrido} & \textbf{Resultado} \tabularnewline
+\hline
+\texttt{25} & \(q_0\xrightarrow{2}q_1\xrightarrow{5}q_1\) & Acepta. \tabularnewline
+\hline
+\(\varepsilon\) & Permanece en \(q_0\). & Rechaza. \tabularnewline
+\hline
+\texttt{2x} & \(q_0\xrightarrow{2}q_1\xrightarrow{x}q_d\) & Rechaza. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+\end{ejemplo}
+
+Aquí comprobamos cadenas completas contra un patrón. Un lexer real debe encontrar un prefijo que forme un lexema y dejar el carácter siguiente para continuar el análisis. Esa coordinación se estudiará al diseñar e implementar el analizador léxico.
+
+\section*{\cf{verde587246}{4. De expresiones regulares a autómatas}}
+
+La construcción presentada por Aho, Lam, Sethi y Ullman sigue dos conversiones. Primero aplica el método de McNaughton--Yamada--Thompson para obtener un AFN a partir de una expresión regular. Después aplica la construcción de subconjuntos para convertir ese AFN en un AFD equivalente.
+
+\subsection*{4.1 De una expresión regular a un AFN}
+
+El método de Thompson analiza la expresión por subexpresiones y construye para cada una un AFN con un estado inicial y uno de aceptación. Sus plantillas siguen la definición recursiva de las expresiones regulares:
+
+\begin{itemize}
+    \item un símbolo \(a\) se representa con una transición etiquetada con \(a\);
+    \item \(\varepsilon\) se representa con una transición \(\varepsilon\);
+    \item la unión agrega un nuevo inicio que puede entrar mediante \(\varepsilon\) a cualquiera de los dos AFN y un nuevo estado de aceptación común;
+    \item la concatenación enlaza la salida del primer AFN con la entrada del segundo;
+    \item la cerradura agrega recorridos \(\varepsilon\) para omitir la subexpresión o repetirla.
+\end{itemize}
+
+\begin{ejemplo}{Ejemplo resuelto. AFN de Thompson para \(a\mid b\)}
+La unión permite elegir, sin consumir entrada, entre el AFN que reconoce \(a\) y el que reconoce \(b\).
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=2.0cm,on grid,auto,>=Stealth]
+\node[state,initial] (q0) {\(0\)};
+\node[state,above right=of q0] (q1) {\(1\)};
+\node[state,right=of q1] (q2) {\(2\)};
+\node[state,below right=of q0] (q3) {\(3\)};
+\node[state,right=of q3] (q4) {\(4\)};
+\node[state,accepting,below right=of q2] (q5) {\(5\)};
+\path[->]
+  (q0) edge node[above left] {\(\varepsilon\)} (q1)
+       edge node[below left] {\(\varepsilon\)} (q3)
+  (q1) edge node {\(a\)} (q2)
+  (q3) edge node {\(b\)} (q4)
+  (q2) edge node[above right] {\(\varepsilon\)} (q5)
+  (q4) edge node[below right] {\(\varepsilon\)} (q5);
+\end{tikzpicture}
+\end{center}
+
+La entrada \(a\) puede seguir el recorrido \(0\xrightarrow{\varepsilon}1\xrightarrow{a}2\xrightarrow{\varepsilon}5\). La entrada \(b\) sigue la rama inferior. Ambas terminan en el estado de aceptación; \(ab\) no puede consumir por completo la entrada y se rechaza.
+\end{ejemplo}
+
+\subsection*{4.2 De un AFN a un AFD: construcción de subconjuntos}
+
+Un estado del AFD representará el conjunto de estados en los que el AFN podría encontrarse después de leer la misma entrada. Para calcularlo utilizamos dos operaciones.
+
+\begin{definicion}{Definición 5. (Cerradura-\(\varepsilon\) y movimiento)}
+La \textbf{cerradura-\(\varepsilon\)} de un conjunto \(T\) contiene los estados de \(T\) y todos los estados alcanzables desde ellos usando únicamente transiciones \(\varepsilon\). \(\operatorname{mover}(T,a)\) contiene los estados alcanzables desde algún estado de \(T\) mediante una transición etiquetada con \(a\).
+\end{definicion}
+
+Como cada estado del AFD es un subconjunto de \(Q\), los estados posibles pertenecen al \textbf{conjunto potencia} \(\mathcal{P}(Q)\). Si el AFN tiene \(n\) estados, existen hasta \(2^n\) subconjuntos, aunque normalmente sólo algunos son alcanzables desde el estado inicial. En lugar de escribirlos todos y eliminar después los inalcanzables, podemos construir únicamente los que se descubren mediante los siguientes pasos:
+
+\begin{enumerate}[leftmargin=*]
+    \item Calcula \(A_0=\operatorname{cerradura}_{\varepsilon}(\{q_0\})\). Éste será el estado inicial del AFD y el primer conjunto pendiente de procesar.
+    \item Para cada conjunto pendiente \(T\) y cada símbolo \(a\in\Sigma\), calcula
+
+\[
+U=\operatorname{cerradura}_{\varepsilon}(\operatorname{mover}(T,a)).
+\]
+
+    \item Si \(U\) todavía no aparece, agrégalo como estado pendiente; registra además la transición \(T\xrightarrow{a}U\).
+    \item Marca \(U\) como estado de aceptación si contiene algún estado de aceptación del AFN, es decir, si \(U\cap F\neq\emptyset\).
+    \item Repite el proceso hasta que no queden conjuntos pendientes. Después pueden asignarse nombres breves a los subconjuntos alcanzables.
+\end{enumerate}
+
+Para el AFN de \(a\mid b\), el estado inicial del AFD es
+
+\[
+A=\operatorname{cerradura}_{\varepsilon}(\{0\})=\{0,1,3\}.
+\]
+
+Desde \(A\), leer \(a\) permite llegar primero a \(2\); su cerradura también contiene \(5\). De manera análoga, leer \(b\) lleva primero a \(4\) y después a \(5\):
+
+\[
+\begin{aligned}
+\operatorname{mover}(A,a)&=\{2\}, &
+\operatorname{cerradura}_{\varepsilon}(\{2\})&=\{2,5\}=B,\\
+\operatorname{mover}(A,b)&=\{4\}, &
+\operatorname{cerradura}_{\varepsilon}(\{4\})&=\{4,5\}=C.
+\end{aligned}
+\]
+
+\(B\) y \(C\) son estados de aceptación porque ambos contienen al estado \(5\) del AFN. Desde cualquiera de ellos, leer \(a\) o \(b\) produce el conjunto vacío \(D=\emptyset\), que representa que el AFN ya no tiene un recorrido posible.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|p{0.25\textwidth}|p{0.20\textwidth}|p{0.20\textwidth}|p{0.15\textwidth}|}
+\hline
+\textbf{Estado del AFD} & \textbf{Con \(a\)} & \textbf{Con \(b\)} & \textbf{Acepta} \tabularnewline
+\hline
+\(A=\{0,1,3\}\) & \(B\) & \(C\) & No \tabularnewline
+\hline
+\(B=\{2,5\}\) & \(D\) & \(D\) & Sí \tabularnewline
+\hline
+\(C=\{4,5\}\) & \(D\) & \(D\) & Sí \tabularnewline
+\hline
+\(D=\emptyset\) & \(D\) & \(D\) & No \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=3.0cm,on grid,auto,>=Stealth]
+\node[state,initial] (A) {\(A\)};
+\node[state,accepting,above right=of A] (B) {\(B\)};
+\node[state,accepting,below right=of A] (C) {\(C\)};
+\node[state,right=4.0cm of A] (D) {\(D\)};
+\path[->]
+  (A) edge node[above left] {\(a\)} (B)
+      edge node[below left] {\(b\)} (C)
+  (B) edge node[above] {\(a,b\)} (D)
+  (C) edge node[below] {\(a,b\)} (D)
+  (D) edge[loop right] node {\(a,b\)} ();
+\end{tikzpicture}
+\end{center}
+
+El AFD ya no necesita elegir entre recorridos. Por ejemplo, con la entrada \(b\) sigue \(A\xrightarrow{b}C\) y acepta; con \(ab\) sigue \(A\xrightarrow{a}B\xrightarrow{b}D\) y rechaza. El lenguaje sigue siendo \(\{a,b\}\).
+
+\begin{observacion}{Observación 3. Un estado del AFD puede representar varios estados del AFN}
+Los nombres \(A\), \(B\), \(C\) y \(D\) sólo simplifican la escritura; cada uno representa un subconjunto. Aunque \(Q\) tiene seis estados y \(\mathcal{P}(Q)\) contiene \(64\) candidatos, el recorrido desde \(A\) sólo alcanza esos cuatro. Los demás no se incorporan al AFD.
+\end{observacion}
+
+\section*{\cf{verde587246}{5. Minimización de autómatas}}
+
+Dos AFD pueden reconocer el mismo lenguaje y tener diferente cantidad de estados. Minimizar consiste en encontrar un AFD equivalente con el menor número de estados.
+
+\begin{definicion}{Definición 6. (Estados distinguibles y equivalentes)}
+Una cadena \(x\) \textbf{distingue} dos estados \(p\) y \(q\) si, al comenzar en ellos y consumir \(x\), exactamente uno de los recorridos termina en aceptación. Dos estados son \textbf{equivalentes} si ninguna cadena los distingue.
+
+Si \(\widehat{\delta}(p,x)\) representa el estado alcanzado desde \(p\) después de consumir toda la cadena \(x\), esta relación puede escribirse como
+\[
+p\approx q
+\quad\Longleftrightarrow\quad
+\forall x\in\Sigma^{*},\;
+\bigl(
+\widehat{\delta}(p,x)\in F
+\Longleftrightarrow
+\widehat{\delta}(q,x)\in F
+\bigr).
+\]
+\end{definicion}
+
+El algoritmo de minimización por particiones agrupa los estados que todavía no se han distinguido:
+
+\begin{enumerate}[leftmargin=*]
+    \item Divide inicialmente los estados en dos grupos: estados de aceptación y estados que no son de aceptación.
+    \item Revisa las transiciones de los estados de cada grupo. Si con algún símbolo llegan a grupos distintos, separa esos estados.
+    \item Repite el refinamiento hasta que ningún grupo pueda dividirse.
+    \item Sustituye cada grupo final por un solo estado.
+\end{enumerate}
+
+\begin{ejemplo}{Ejemplo resuelto. Minimización del AFD de \(a\mid b\)}
+La partición inicial del AFD anterior es
+
+\[
+\Pi_0=\big\{\{B,C\},\{A,D\}\big\}.
+\]
+
+\(B\) y \(C\) son estados de aceptación y, con \(a\) o \(b\), ambos llegan a \(D\). Ninguna continuación los distingue. En cambio, \(A\) y \(D\) deben separarse: con la cadena \(a\), desde \(A\) se llega al estado de aceptación \(B\), mientras que desde \(D\) se permanece en un estado que no acepta. La partición estable es
+
+\[
+\Pi_f=\big\{\{B,C\},\{A\},\{D\}\big\}.
+\]
+
+El mismo refinamiento puede cotejarse mediante la \textbf{tabla de pares} empleada en las notas de Teoría de la Computación. Primero se marcan los pares formados por un estado de aceptación y otro que no acepta. Después se marca un par pendiente si, con algún símbolo, sus transiciones llegan a un par ya marcado. El procedimiento se repite hasta que no haya cambios.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.06}
+\begin{tabular}{|p{0.15\textwidth}|p{0.23\textwidth}|p{0.43\textwidth}|}
+\hline
+\textbf{Par} & \textbf{Resultado} & \textbf{Razón} \tabularnewline
+\hline
+\(\{A,B\}\) & Marcado & Sólo \(B\) es de aceptación. \tabularnewline
+\hline
+\(\{A,C\}\) & Marcado & Sólo \(C\) es de aceptación. \tabularnewline
+\hline
+\(\{A,D\}\) & Marcado por transición & Con \(a\) llega a \(\{B,D\}\), que ya está marcado. \tabularnewline
+\hline
+\(\{B,C\}\) & Sin marca & Con \(a\) o \(b\), ambos estados llegan a \(D\). \tabularnewline
+\hline
+\(\{B,D\}\) & Marcado & Sólo \(B\) es de aceptación. \tabularnewline
+\hline
+\(\{C,D\}\) & Marcado & Sólo \(C\) es de aceptación. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+El único par que permanece sin marca es \(\{B,C\}\); por tanto, \(B\approx C\). Este resultado coincide con el grupo \(\{B,C\}\) obtenido mediante particiones.
+
+Al reunir \(B\) y \(C\) obtenemos el siguiente AFD mínimo:
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=3.1cm,on grid,auto,>=Stealth]
+\node[state,initial] (S) {\(S\)};
+\node[state,accepting,right=of S] (F) {\(F\)};
+\node[state,right=of F] (M) {\(M\)};
+\path[->]
+  (S) edge node {\(a,b\)} (F)
+  (F) edge node {\(a,b\)} (M)
+  (M) edge[loop above] node {\(a,b\)} ();
+\end{tikzpicture}
+\end{center}
+
+\(S\) representa \(\{A\}\), \(F\) representa \(\{B,C\}\) y \(M\) representa \(\{D\}\). La expresión regular, el AFN, el AFD de cuatro estados y este AFD de tres estados reconocen exactamente \(\{a,b\}\).
+\end{ejemplo}
+
+\begin{teorema}{Propiedad. AFD mínimo}
+Para cada lenguaje regular existe un AFD con un número mínimo de estados, único salvo por los nombres elegidos para esos estados.
+\end{teorema}
+
+Un AFD completo requiere una transición para cada estado y cada símbolo; por ello conserva el estado muerto \(M\). En la implementación de un analizador léxico puede omitirse ese estado y tratar una transición ausente como señal de que ya no es posible extender el lexema. Esta decisión de implementación no cambia el lenguaje reconocido por el autómata completo.
+
+\begin{observacion}{Mini-checkpoint. Coteja el lenguaje después de convertir}
+Comprueba las entradas \(\varepsilon\), \(a\), \(b\), \(aa\) y \(ab\) en el AFD mínimo.
+
+\textbf{Salida esperada:}
+\[
+\begin{array}{c|ccccc}
+\text{entrada} & \varepsilon & a & b & aa & ab\\ \hline
+\text{resultado} & \text{rechaza} & \text{acepta} & \text{acepta} & \text{rechaza} & \text{rechaza}
+\end{array}
+\]
+
+Los resultados coinciden con \(L(a\mid b)=\{a,b\}\); por tanto, las conversiones del ejemplo conservaron el lenguaje.
+\end{observacion}
+
+\section*{\cf{verde587246}{6. Aplicación integrada a los tokens de IMP}}
+
+Regresemos al fragmento inicial y hagamos visible la relación entre entrada, especificación y reconocimiento:
+
+\begin{lstlisting}
+while x2 <= 20 do x2 := x2 + 1
+\end{lstlisting}
+
+Cada lexema puede cotejarse con el lenguaje descrito por una expresión regular o por un lexema fijo.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{0.14\textwidth}|p{0.19\textwidth}|p{0.35\textwidth}|p{0.17\textwidth}|}
+\hline
+\textbf{Lexema} & \textbf{Token} & \textbf{Patrón que satisface} & \textbf{Información} \tabularnewline
+\hline
+\texttt{while} & \texttt{WHILE} & Lexema fijo \texttt{while}. & --- \tabularnewline
+\hline
+\texttt{x2} & \texttt{LOC} & \(\mathit{letra}^{+}\mathit{digito}^{*}\). & \texttt{x2} \tabularnewline
+\hline
+\texttt{<=} & \texttt{LE} & Lexema fijo \texttt{<=}. & --- \tabularnewline
+\hline
+\texttt{20} & \texttt{NUM} & \(\mathit{digito}^{+}\). & \(20\) \tabularnewline
+\hline
+\texttt{do} & \texttt{DO} & Lexema fijo \texttt{do}. & --- \tabularnewline
+\hline
+\texttt{x2} & \texttt{LOC} & \(\mathit{letra}^{+}\mathit{digito}^{*}\). & \texttt{x2} \tabularnewline
+\hline
+\texttt{:=} & \texttt{ASSIGN} & Lexema fijo \texttt{:=}. & --- \tabularnewline
+\hline
+\texttt{x2} & \texttt{LOC} & \(\mathit{letra}^{+}\mathit{digito}^{*}\). & \texttt{x2} \tabularnewline
+\hline
+\texttt{+} & \texttt{PLUS} & Lexema fijo \texttt{+}. & --- \tabularnewline
+\hline
+\texttt{1} & \texttt{NUM} & \(\mathit{digito}^{+}\). & \(1\) \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Si representamos los atributos entre paréntesis, la salida conceptual esperada es:
+
+\begin{lstlisting}
+WHILE  LOC(x2)  LE  NUM(20)  DO
+LOC(x2)  ASSIGN  LOC(x2)  PLUS  NUM(1)
+\end{lstlisting}
+
+La transformación puede leerse en tres pasos:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Entrada:} el flujo de caracteres del programa fuente.
+    \item \textbf{Reconocimiento:} los autómatas asociados con los patrones avanzan sobre la entrada y determinan qué cadenas pueden formar lexemas.
+    \item \textbf{Salida:} una secuencia de tokens con los atributos necesarios para las fases posteriores.
+\end{enumerate}
+
+Hasta aquí hemos estudiado cada patrón y las conversiones que permiten reconocer su lenguaje. Para obtener el analizador léxico funcional todavía será necesario coordinar todas las reglas, resolver coincidencias como \texttt{while} frente a \texttt{LOC}, identificar el lexema adecuado dentro del flujo, omitir los espacios permitidos, reportar errores y expresar la especificación en \textsc{Lark}. Esas decisiones corresponden al tema 2.3.
+
+\begin{observacion}{Observación 4. Qué se construye ahora y qué se automatizará después}
+Las expresiones regulares, los autómatas y las conversiones explican por qué una especificación léxica puede transformarse en un reconocedor. Más adelante, \textsc{Lark} automatizará parte de ese trabajo a partir de las reglas que proporcionemos; no decidirá cuáles son los tokens de \textsc{IMP} ni corregirá una especificación que describa el lenguaje equivocado.
+\end{observacion}
+
+\section*{\cf{verde587246}{Conclusión}}
+
+Las expresiones regulares permiten reemplazar descripciones informales por especificaciones precisas de los patrones léxicos. Sus operaciones de unión, concatenación y cerradura construyen lenguajes a partir de símbolos y subexpresiones. En \textsc{IMP}, estas herramientas permiten expresar categorías como \texttt{LOC} y \texttt{NUM}, además de los patrones fijos de palabras reservadas, operadores y delimitadores.
+
+Los autómatas finitos convierten esa especificación en un procedimiento de reconocimiento. Un AFN puede mantener varias posibilidades y utilizar transiciones \(\varepsilon\); un AFD sigue una sola transición por símbolo. La construcción de Thompson lleva una expresión regular a un AFN, la construcción de subconjuntos produce un AFD equivalente y la minimización reúne estados que no pueden distinguirse. Cada transformación conserva el lenguaje reconocido.
+
+Ya contamos con la base formal para reconocer los patrones del \textsc{IMP} básico. En el tema siguiente coordinaremos las reglas léxicas y construiremos con \textsc{Python} y \textsc{Lark} el analizador que convertirá un programa completo en la secuencia de tokens que recibirá el analizador sintáctico.
+
+\section*{\cf{verde587246}{Referencias}}
+
+{\small
+\begin{enumerate}[label=\textbf{[\arabic*]},leftmargin=*,itemsep=0.25em,topsep=0.25em]
+    \item Aho, A. V., Lam, M. S., Sethi, R., \& Ullman, J. D. (2006). \textit{Compilers: Principles, techniques, and tools} (2nd ed.). Pearson.
+    \item Vilar Torres, J. M. (2010). \textit{Analizador léxico}. Universitat Jaume I.
+    \item Soto Romero, M. (2021). \textit{Autómatas finitos} (Nota de clase 3, Teoría de la Computación). Colegio de Ciencia y Tecnología UACM.
+    \item Soto Romero, M. (2021). \textit{Autómatas finitos con \(\varepsilon\)-transiciones} (Nota de clase 5, Teoría de la Computación). Colegio de Ciencia y Tecnología UACM.
+\end{enumerate}
+}
+
+\end{document}

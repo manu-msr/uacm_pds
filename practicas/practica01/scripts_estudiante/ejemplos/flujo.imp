@@ -1,3 +1,0 @@
-X := 2;
-Y := X + 3;
-if Y <= 10 then skip else Y := Y * 2

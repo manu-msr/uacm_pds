@@ -14,7 +14,8 @@
 Codex debe trabajar con las siguientes fuentes, cada una con una función distinta:
 
 - `temario_desglosado` determina **qué contenidos corresponden**, su numeración, secuencia y alcance curricular.
-- La especificación canónica vigente de IMP determina la gramática, tipos, semántica, representación e interfaces compartidas del compilador.
+- La definición de IMP de Winskel determina el lenguaje base que se implementa en las notas y clases.
+- La especificación canónica aprobada de IMP++ determina las extensiones, tipos, semántica, representación e interfaces compartidas que se desarrollan en las prácticas.
 - `cig/<semestre>/cig_<semestre>.md` determina **cómo adaptar pedagógicamente los materiales al grupo real de cada semestre**.
 - `Mejora continua .xlsx` reúne correcciones y aprendizajes acumulados sobre los materiales del curso.
 - `contenido_base/` funciona como corpus técnico y pedagógico interno de apoyo.
@@ -23,7 +24,7 @@ Reglas de prioridad:
 
 1. Una instrucción explícita y vigente del docente prevalece sobre las reglas generales de este archivo.
 2. El CIG nunca modifica por sí mismo el temario, los objetivos, la secuencia curricular ni la especificación de IMP; orienta el **andamiaje, ritmo, carga, accesibilidad, ejemplos, apoyos y formas de participación**.
-3. Si una adaptación sugerida por el CIG o por `Mejora continua .xlsx` entra en conflicto con el temario, la planeación o la especificación canónica de IMP, no resolver el conflicto silenciosamente.
+3. Si una adaptación sugerida por el CIG o por `Mejora continua .xlsx` entra en conflicto con el temario, la definición base de IMP o la especificación aprobada de IMP++, no resolver el conflicto silenciosamente.
 4. No reproducir en materiales para el estudiantado la procedencia interna de estas fuentes.
 
 ## 1. Perfil del curso y decisiones finales
@@ -36,6 +37,8 @@ El programa se construyó de manera colaborativa. Su columna vertebral proviene 
 
 - Programación de Sistemas estudia cómo se construye software que conecta lenguajes, programas y distintos niveles de abstracción.
 - El desarrollo de un compilador para el lenguaje IMP será el hilo conductor.
+- Las notas y clases construirán paso a paso un compilador funcional para el IMP básico de Winskel.
+- Las prácticas partirán de esa implementación y la extenderán de manera acumulativa para construir IMP++.
 - El recorrido irá del reconocimiento de tokens a la generación de código C, integrando análisis léxico, sintáctico y semántico.
 - Al finalizar, se recuperará esta experiencia para extraer conclusiones aplicables a otras herramientas de sistemas.
 
@@ -50,9 +53,10 @@ El programa se construyó de manera colaborativa. Su columna vertebral proviene 
 
 - Lenguaje de implementación: Python 3.
 - Herramienta para análisis léxico y sintáctico: Lark.
-- Lenguaje fuente común de todas las prácticas: IMP.
+- Lenguaje base de las notas y clases: IMP de Winskel.
+- Lenguaje fuente común de las prácticas: IMP++, extensión acumulativa y compatible de IMP.
 - Lenguaje destino del compilador: C.
-- Control de versiones y portafolio de código: Git en un repositorio personal.
+- Control de versiones y portafolio de código: Git en un repositorio privado y compartido por el equipo.
 - Sistemas permitidos: Windows o Linux.
 - Entornos posibles: Visual Studio Code, PyCharm u otro editor compatible con Python.
 - Compilación del C generado: GCC, Clang u otro compilador compatible.
@@ -61,6 +65,8 @@ El programa se construyó de manera colaborativa. Su columna vertebral proviene 
 ### Restricciones de alcance
 
 - Mantener el compilador de IMP como narrativa y producto acumulativo principal.
+- No pedir en las prácticas que se reproduzca sin cambios la implementación básica ya desarrollada en notas y clase; cada práctica debe partir de esa versión y plantear una extensión significativa hacia IMP++.
+- No incorporar una construcción a IMP++ sin definir antes cómo afecta, cuando corresponda, al lexer, la gramática, el AST, los tipos, la semántica y la generación de C.
 - NO convertir el curso en un panorama extenso de sistemas operativos, sistemas embebidos u otras áreas.
 - NO introducir tecnologías no previstas sin indicación explícita del docente.
 - NO introducir optimizaciones complejas, SSA, análisis interprocedural u otras técnicas avanzadas salvo petición expresa.
@@ -175,7 +181,7 @@ Independientemente de las diferencias del grupo, cada material debe:
 
 - Comprender el papel de los compiladores dentro de la programación de sistemas.
 - Analizar e implementar las principales fases de un compilador.
-- Traducir programas de IMP a código C preservando su significado.
+- Traducir programas de IMP e IMP++ a código C preservando su significado.
 - Integrar las fases desarrolladas en un sistema modular y funcional.
 
 ### Indicadores de logro
@@ -190,7 +196,7 @@ El estudiantado deberá:
 - Construir y recorrer árboles de sintaxis abstracta.
 - Implementar tablas de símbolos y manejar los alcances de los identificadores.
 - Construir un verificador de tipos que detecte y reporte errores semánticos.
-- Generar una representación intermedia y traducir programas de IMP a código C.
+- Generar una representación intermedia y traducir programas de IMP++ a código C.
 - Comprobar que el código generado compile, se ejecute y preserve el comportamiento del programa fuente.
 - Integrar las fases en un compilador modular.
 - Diseñar pruebas para programas correctos y errores léxicos, sintácticos y semánticos.
@@ -207,6 +213,26 @@ El temario oficial y su desglose por unidades y temas se encuentran en el archiv
 
 `programación de sistemas -> compilador como caso de estudio -> análisis léxico -> análisis sintáctico -> análisis semántico -> generación de C -> integración -> conclusiones sobre software de sistemas`
 
+### Dos recorridos coordinados
+
+- **Notas y clase:** desarrollar de forma guiada una implementación funcional del IMP básico de Winskel en cada fase del compilador.
+- **Prácticas:** recibir esa implementación como punto de partida y extenderla para incorporar las construcciones aprobadas de IMP++.
+- La extensión es acumulativa: una construcción léxica añadida en la Práctica 1 debe conservarse e integrarse en la sintaxis, el AST, la semántica y la generación de código de las prácticas posteriores.
+- Las prácticas deben exigir transferencia y toma de decisiones sobre la extensión, no la repetición literal del ejemplo resuelto en clase.
+
+Flujo de trabajo de las prácticas:
+
+`IMP funcional desarrollado en clase -> extensión léxica IMP++ -> extensión sintáctica y AST -> extensión semántica -> generación de C e integración`
+
+### Repositorio docente incremental de IMP
+
+- La carpeta raíz `IMP/` contiene el repositorio incremental del compilador del IMP básico desarrollado en notas y clase. Es un producto docente distinto de los repositorios privados de los equipos y de las extensiones de IMP++.
+- Sus versiones son acumulativas: `IMP01` corresponde al lexer; `IMP02`, al lexer, parser y AST; `IMP03` agrega verificación semántica, tipos y alcances; `IMP04` agrega generación de C e integración.
+- Cada vez que una nota complete una fase funcional del compilador, actualizar en la misma tarea la versión correspondiente de `IMP/` y su índice. Una fase se considera completa sólo si el código puede ejecutarse, incluye instrucciones y dependencias, cuenta con ejemplos y supera pruebas representativas.
+- Si una nota sólo presenta conceptos, decisiones de diseño o fragmentos parciales, conservar la versión como pendiente; no publicar esos fragmentos como una implementación completa.
+- No copiar al repositorio base las extensiones de IMP++ desarrolladas para las prácticas. `IMP/` conserva la implementación canónica del IMP de Winskel que reciben los equipos.
+- Después de actualizar `IMP/`, informar explícitamente al docente qué versión cambió, qué pruebas se ejecutaron y que los archivos están listos para que él suba los cambios. No realizar la publicación externa salvo solicitud explícita.
+
 ### Narrativa por unidad
 
 - U1: Situar la programación de sistemas y presentar el compilador, su arquitectura y sus fases.
@@ -220,10 +246,12 @@ El temario oficial y su desglose por unidades y temas se encuentran en el archiv
 
 - Respetar qué conceptos ya fueron vistos y no depender de temas posteriores.
 - Conectar brevemente cada tema con el producto previo y el siguiente.
-- Mantener la misma definición de IMP, su gramática, tipos y semántica a lo largo de todos los materiales.
-- Si la especificación canónica de IMP no está disponible, NO inventarla silenciosamente. Solicitarla o presentar una propuesta claramente marcada para aprobación.
+- Mantener la definición de IMP de Winskel como base común a lo largo de todos los materiales.
+- Mantener una sola especificación aprobada de IMP++ y aplicarla de manera consistente en todas las prácticas.
+- Si la especificación de una extensión de IMP++ no está disponible, NO inventarla silenciosamente. Solicitarla o presentar una propuesta claramente marcada para aprobación antes de generar materiales o código.
 - Toda decisión sobre el AST debe ser compatible con el verificador de tipos y el generador de C posteriores.
-- Las prácticas son acumulativas; no rediseñar una fase de manera incompatible sin explicar la migración necesaria.
+- Cada práctica debe identificar qué implementación básica de IMP recibe, qué parte de IMP++ agrega y qué interfaz entrega a la práctica siguiente.
+- Las prácticas son acumulativas; no rediseñar una extensión o interfaz de manera incompatible sin explicar la migración necesaria.
 
 ## 7. Planeación semanal vigente
 
@@ -253,35 +281,127 @@ Semestre de 16 semanas, seguido por el periodo de certificación.
 - No colocar una práctica en la misma semana ni en la semana inmediatamente anterior a un examen.
 - Distribución vigente: Práctica 1 en semana 4, examen en semana 6; Práctica 2 en semana 9, examen en semana 11; Práctica 3 en semana 13, examen en semana 16; Práctica 4 en certificación.
 
-## 8. Prácticas acumulativas: Python, Lark, IMP y C
+## 8. Prácticas acumulativas: Python, Lark, IMP++ y C
 
-Lenguaje común: IMP.
+Punto de partida común: el compilador del IMP básico de Winskel desarrollado en notas y clase.
 
-### Práctica 1. Analizador léxico para IMP
+Lenguaje común de las prácticas: IMP++, definido como la siguiente extensión acumulativa y compatible de IMP. Esta es la especificación canónica aprobada para las cuatro prácticas.
 
-- Definir tokens y reglas léxicas.
-- Implementar el analizador con Python y Lark.
+### Organización de los equipos y del repositorio
+
+- Todas las prácticas se realizan en equipos de una a tres personas.
+- Cada equipo trabaja en un repositorio Git privado y acumulativo para las cuatro prácticas.
+- En la Práctica 1, el equipo debe crear el repositorio, dar acceso a todas las personas integrantes y añadir a `manu-msr` como colaborador.
+- El `README.md` debe registrar los nombres y usuarios de Git de quienes integran el equipo.
+- El historial debe permitir reconocer la evolución del compilador y la participación del equipo.
+
+### Especificación canónica de IMP++
+
+IMP++ conserva las construcciones de IMP y agrega:
+
+- declaraciones con tipos `int` y `bool`;
+- bloques delimitados por `{` y `}` con alcance anidado;
+- salida mediante `print`;
+- ciclos `for`;
+- actualizaciones `++` y `--`;
+- identificadores que pueden contener guion bajo;
+- comentarios de una línea iniciados por `//`.
+
+Quedan fuera de esta versión: funciones, arreglos, cadenas, `break`, `continue` y entrada interactiva.
+
+Gramática concreta aprobada:
+
+```ebnf
+programa      ::= declaracion* sentencia+
+
+declaracion   ::= tipo LOC ":=" expresion ";"
+tipo          ::= "int" | "bool"
+
+sentencia     ::= "skip" ";"
+                | asignacion ";"
+                | LOC "++" ";"
+                | LOC "--" ";"
+                | "print" "(" expresion ")" ";"
+                | "if" expresion "then" bloque "else" bloque
+                | "while" expresion "do" bloque
+                | "for" "(" asignacion ";" expresion ";" actualizacion ")" bloque
+                | bloque
+
+bloque        ::= "{" declaracion* sentencia* "}"
+
+asignacion    ::= LOC ":=" expresion
+actualizacion ::= asignacion | LOC "++" | LOC "--"
+
+expresion     ::= disyuncion
+disyuncion    ::= conjuncion ("||" conjuncion)*
+conjuncion    ::= igualdad ("&&" igualdad)*
+igualdad      ::= comparacion ("=" comparacion)?
+comparacion   ::= suma ("<=" suma)?
+suma          ::= producto (("+" | "-") producto)*
+producto      ::= unaria ("*" unaria)*
+unaria        ::= "!" unaria | "-" unaria | primaria
+primaria      ::= NUM | "true" | "false" | LOC | "(" expresion ")"
+```
+
+#### Especificación léxica e interfaz de tokens
+
+- `NUM = [0-9]+`.
+- En IMP básico, `LOC = [A-Za-z]+[0-9]*`.
+- En IMP++, `LOC = [A-Za-z][A-Za-z0-9_]*`.
+- `COMMENT = //[^\n]*`; los comentarios y los espacios se ignoran.
+- Los tokens compuestos `:=`, `<=`, `&&`, `||`, `++` y `--` deben reconocerse completos, antes que sus prefijos.
+- Palabras reservadas heredadas de IMP: `true`, `false`, `skip`, `if`, `then`, `else`, `while` y `do`.
+- Palabras reservadas nuevas de IMP++: `int`, `bool`, `print` y `for`.
+- Nombres estables de tokens heredados: `NUM`, `LOC`, `TRUE`, `FALSE`, `SKIP`, `IF`, `THEN`, `ELSE`, `WHILE`, `DO`, `PLUS`, `MINUS`, `TIMES`, `EQ`, `LE`, `NOT`, `AND`, `OR`, `ASSIGN`, `SEMI`, `LPAR` y `RPAR`.
+- Nombres estables de tokens nuevos: `INT`, `BOOL`, `PRINT`, `FOR`, `LBRACE`, `RBRACE`, `INC`, `DEC` y `COMMENT`. `COMMENT` no se entrega al parser porque se ignora.
+
+#### Compatibilidad, tipos y alcances
+
+- Todo programa válido de IMP debe seguir siendo reconocido por IMP++.
+- Una localidad usada sin declaración explícita se considera una variable global implícita de tipo `int`; esto conserva la compatibilidad con IMP.
+- Una declaración introduce una variable en el alcance actual. Declarar dos veces el mismo nombre en ese alcance es un error; un bloque anidado sí puede ocultar una declaración externa.
+- Los inicializadores y las asignaciones requieren tipos iguales.
+- `+`, `-`, `*`, `++`, `--` y `<=` operan sobre enteros; `<=` produce un booleano.
+- `!`, `&&` y `||` operan sobre booleanos.
+- `=` compara expresiones del mismo tipo y produce un booleano.
+- Las condiciones de `if`, `while` y `for` deben ser booleanas.
+- `print` acepta expresiones enteras o booleanas.
+
+#### Desazucarado y representación
+
+- `X++` se representa como `X := X + 1`.
+- `X--` se representa como `X := X - 1`.
+- `for (inicio; condicion; actualizacion) { cuerpo }` se representa como `inicio; while condicion do { cuerpo; actualizacion; }`.
+- El desazucarado se realiza en la fase sintáctica o al construir el AST, después de reconocer y conservar correctamente los tokens de IMP++.
+- La Práctica 1 entrega el lexer extendido; la Práctica 2 integra esta gramática y el desazucarado; la Práctica 3 implementa tipos y alcances; la Práctica 4 traduce las construcciones resultantes a C.
+
+### Práctica 1. Extensión del analizador léxico para IMP++
+
+- Partir del analizador léxico funcional de IMP desarrollado en notas y clase.
+- Agregar `INT`, `BOOL`, `PRINT`, `FOR`, `LBRACE`, `RBRACE`, `INC`, `DEC` y comentarios ignorados; extender `LOC` para admitir guion bajo.
+- Extender el analizador con Python y Lark sin alterar el reconocimiento de IMP básico.
 - Para trabajar el lexer de forma independiente puede utilizarse Lark con `parser=None`, `lexer="basic"` y el método `lex()`.
-- Probar entradas válidas y errores léxicos.
+- Probar entradas de IMP, entradas nuevas de IMP++ y errores léxicos.
 
-### Práctica 2. Analizador sintáctico para IMP
+### Práctica 2. Extensión del analizador sintáctico para IMP++
 
-- Especificar la gramática de IMP.
-- Construir el analizador sintáctico con Lark, preferentemente mediante `parser="lalr"` cuando la gramática lo permita.
-- Generar una representación estructurada o AST compatible con las prácticas posteriores.
-- Probar programas válidos y errores sintácticos.
+- Partir del analizador sintáctico y del AST funcionales para IMP desarrollados en notas y clase.
+- Extender la gramática y el AST para las construcciones de IMP++ introducidas en la Práctica 1.
+- Integrar el lexer extendido y usar Lark, preferentemente mediante `parser="lalr"` cuando la gramática lo permita.
+- Probar programas de IMP, programas de IMP++ y errores sintácticos.
 
-### Práctica 3. Verificador de tipos para IMP
+### Práctica 3. Extensión del análisis semántico para IMP++
 
-- Recorrer la representación sintáctica.
-- Gestionar símbolos y alcances.
-- Implementar las reglas de tipos de IMP.
-- Detectar y reportar errores semánticos.
+- Partir del verificador funcional para IMP desarrollado en notas y clase.
+- Definir e implementar las reglas semánticas o de tipos que requieran las construcciones de IMP++.
+- Recorrer el AST extendido y conservar la gestión de símbolos y alcances.
+- Probar casos correctos y errores semánticos de IMP++ sin romper los casos de IMP.
 
-### Práctica 4. Generación de código e integración
+### Práctica 4. Generación de código para IMP++ e integración
 
-- Traducir programas de IMP a C.
-- Integrar análisis léxico, sintáctico, verificación de tipos y generación de código.
+- Partir del generador de C para IMP desarrollado en notas y clase.
+- Traducir a C las construcciones incorporadas en IMP++.
+- Integrar las versiones extendidas del análisis léxico, sintáctico y semántico con la generación de código.
 - Compilar y ejecutar el C generado.
 - Comparar resultados obtenidos con el comportamiento esperado.
 - Entregar durante el periodo de certificación.
@@ -292,7 +412,8 @@ Lenguaje común: IMP.
 - El verificador de tipos y el generador de C deben implementarse explícitamente en Python mediante recorridos sobre la representación construida.
 - No permitir que `Transformer` o `Visitor` oculten la explicación conceptual: documentar qué información recibe y produce cada recorrido.
 - Cada práctica extiende la anterior y debe conservar interfaces claras entre fases.
-- Incluir ejemplos mínimos de IMP compartidos entre las prácticas para comprobar el pipeline completo.
+- La implementación básica proporcionada en clase debe ser funcional, breve y estar disponible como punto de partida antes de solicitar su extensión.
+- Incluir ejemplos mínimos compartidos de IMP e IMP++ para comprobar tanto la compatibilidad hacia atrás como el pipeline extendido.
 
 ## 9. Certificación y portafolio
 
@@ -315,7 +436,7 @@ Modalidad: Portafolio.
 - Estimación inicial y tiempo real de desarrollo.
 - Referencia al código fuente en el repositorio.
 
-### Repositorio Git personal y acumulativo
+### Repositorio Git privado, colaborativo y acumulativo
 
 Estructura sugerida:
 
@@ -332,6 +453,8 @@ requirements.txt
 ```
 
 El repositorio deberá incluir:
+- acceso para las personas integrantes del equipo y para `manu-msr`;
+- identificación del equipo en el `README.md`;
 - `README.md` con descripción, instalación y ejecución.
 - `requirements.txt` con la versión de Lark.
 - Código modular y con nombres descriptivos.
@@ -342,7 +465,7 @@ El repositorio deberá incluir:
 
 ### Producto final esperado
 
-`programa IMP -> análisis léxico -> análisis sintáctico -> verificación de tipos -> generación de C`
+`programa IMP++ -> análisis léxico -> análisis sintáctico -> verificación de tipos -> generación de C`
 
 El compilador debe procesar programas válidos, reportar los errores detectados y generar C que compile y se ejecute con los resultados esperados.
 
@@ -466,6 +589,7 @@ En `contenido_base` se encuentran las fuentes técnicas del curso. Los materiale
 ### 14.1 Notas de clase
 - Usar la plantilla de la sección 9.
 - Ubicar el tema dentro del pipeline sólo cuando ayude a comprenderlo.
+- Al terminar una nota, evaluar si ya contiene una fase funcional completa del compilador. Si es así, actualizar la versión correspondiente y el índice de `IMP/`, verificarla e informar al docente que está lista para subir.
 
 ### 14.2 Cuadernillos de ejercicios
 - Asociarlos a una nota específica y nombrarlos “Cuadernillo de ejercicios NN”.
@@ -519,7 +643,7 @@ En `contenido_base` se encuentran las fuentes técnicas del curso. Los materiale
 - Debe consultarse antes de crear, revisar, corregir o regenerar cualquier material, aunque la petición no lo mencione expresamente.
 - Las filas que se añadan al archivo se consideran retroalimentación acumulativa para entregas posteriores. Aplicar todas las correcciones pertinentes según la semana y el tipo de material, no sólo la entrada más reciente.
 - Si una observación es generalizable, aplicarla también a materiales equivalentes de otras semanas cuando corresponda.
-- Si una corrección entra en conflicto con el temario, la planeación, la especificación canónica de IMP o una instrucción explícita vigente del docente, no resolver el conflicto silenciosamente: señalarlo antes de producir el material.
+- Si una corrección entra en conflicto con el temario, la planeación, la definición base de IMP, la especificación aprobada de IMP++ o una instrucción explícita vigente del docente, no resolver el conflicto silenciosamente: señalarlo antes de producir el material.
 - No mencionar este registro interno ni quién detectó la observación en los materiales destinados al estudiantado.
 
 ### Corrección vigente
@@ -542,3 +666,4 @@ Ante cualquier petición:
 10. Entregar únicamente la pieza solicitada en su formato correspondiente.
 11. Revisar que la pieza contribuya a **notas → video complementario → actividad guiada → repaso/evaluación**, sin duplicar funciones.
 12. Si se modifica un material existente, comprobar que la adaptación al CIG preserve su propósito original y la continuidad con los materiales anteriores y posteriores.
+13. Si una nota completa una fase funcional del compilador, sincronizar `IMP/`, ejecutar sus pruebas e informar que la versión está lista para que el docente la suba.

@@ -153,7 +153,7 @@ Unidad 1: Introducción a la Programación de Sistemas y los Compiladores\\ \big
 En un curso inicial de programación solemos concentrarnos en escribir instrucciones que resuelvan un problema. Sin embargo, entre el texto escrito por una persona y su ejecución en una computadora intervienen otros programas: algunos traducen, otros reúnen partes separadas, otros preparan el programa en memoria y otros administran los recursos necesarios para ejecutarlo. En esta nota estudiaremos ese entorno como un panorama: definiremos la programación de sistemas, reconoceremos sus áreas principales y ubicaremos a los compiladores e intérpretes dentro de ella. Finalmente, explicaremos por qué la construcción de un compilador será el caso de estudio que articulará el curso.
 
 \begin{ruta}{Ruta de lectura (15--20 minutos)}
-\textbf{Lectura esencial:} sigue el caso inicial; localiza las definiciones y comparaciones de las secciones 1 y 3; reconoce las responsabilidades y el recorrido panorámico de la sección 2; y cierra con el esquema \textsc{IMP} \(\rightarrow\) \textsc{C} y las cuatro ideas de la sección 4.
+\textbf{Lectura esencial:} sigue el caso inicial; localiza las definiciones y comparaciones de las secciones 1 y 3; reconoce las responsabilidades y el recorrido panorámico de la sección 2; y cierra con el esquema \textsc{IMP}/\textsc{IMP++} \(\rightarrow\) \textsc{C} y las cuatro ideas de la sección 4.
 
 \textbf{Lectura complementaria:} vuelve después a los matices sobre la frontera entre aplicaciones y software de sistemas, las combinaciones entre traducción e interpretación y las observaciones que amplían el panorama. La conclusión sirve como comprobación final del recorrido esencial.
 \end{ruta}
@@ -327,17 +327,19 @@ El cálculo solicitado es el mismo; cambia la manera en que el procesador de len
 
 Un compilador es una herramienta adecuada para estudiar programación de sistemas porque conecta varios problemas en un solo producto. Debe reconocer un lenguaje fuente, detectar errores, construir y transformar representaciones, considerar el lenguaje destino y organizar componentes que colaboran mediante interfaces precisas. Su estudio relaciona lenguajes de programación, arquitectura de computadoras, teoría de lenguajes, algoritmos e ingeniería de software.
 
-En este curso construiremos progresivamente un compilador cuyo lenguaje fuente será \textsc{IMP} y cuyo lenguaje destino será \textsc{C}. Por ahora basta representar el objetivo general como una transformación:
+En las notas y clases construiremos progresivamente un compilador para el \textsc{IMP} de Winskel. Las prácticas partirán de esa versión funcional y la extenderán para construir \textsc{IMP++}. Ambos recorridos tendrán como lenguaje destino a \textsc{C}. Por ahora basta representar el objetivo general como una transformación:
 
 \begin{center}
 \begin{tikzpicture}[node distance=1.5cm, every node/.style={font=\small}]
-\node[draw, rounded corners, fill=grannysmithapple!30, minimum width=3cm] (imp) {programa en \textsc{IMP}};
+\node[draw, rounded corners, fill=grannysmithapple!30, align=center, minimum width=3cm] (imp) {programa en \textsc{IMP}\\o \textsc{IMP++}};
 \node[draw, rounded corners, fill=apricot!30, right=of imp, minimum width=3.4cm] (comp) {compilador del curso};
 \node[draw, rounded corners, fill=grannysmithapple!30, right=of comp, minimum width=3cm] (c) {programa en \textsc{C}};
 \draw[->, thick] (imp) -- (comp);
 \draw[->, thick] (comp) -- (c);
 \end{tikzpicture}
 \end{center}
+
+\textsc{IMP++} no será un compilador separado: conservará las construcciones de \textsc{IMP} y añadirá, de manera acumulativa, las extensiones aprobadas para las prácticas.
 
 La construcción acumulativa permitirá observar cuatro ideas propias de la programación de sistemas:
 
@@ -349,7 +351,7 @@ La construcción acumulativa permitirá observar cuatro ideas propias de la prog
 \end{enumerate}
 
 \begin{observacion}{Observación 3. El compilador es el hilo conductor}
-El curso no pretende revisar todas las áreas de la programación de sistemas con la misma profundidad. El compilador será el producto acumulativo que nos permitirá estudiar, de manera concreta, cómo se especifica, divide, implementa y prueba una herramienta de sistemas.
+El curso no pretende revisar todas las áreas de la programación de sistemas con la misma profundidad. La implementación guiada de \textsc{IMP} y su extensión a \textsc{IMP++} formarán un solo producto acumulativo para estudiar, de manera concreta, cómo se especifica, divide, implementa y prueba una herramienta de sistemas.
 \end{observacion}
 
 \section*{\cf{verde587246}{Conclusión}}

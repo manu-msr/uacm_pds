@@ -157,7 +157,7 @@ En esta nota estudiaremos la función del analizador léxico y distinguiremos tr
 \begin{ruta}{Ruta de lectura (15--20 minutos)}
 \textbf{Lectura esencial:} sigue el caso inicial desde los caracteres hasta la secuencia de tokens; distingue token, lexema, patrón y atributo mediante sus definiciones y ejemplos; identifica qué recibe y qué produce el analizador léxico; y resuelve el mini-checkpoint con \texttt{total = 25;}.
 
-\textbf{Lectura complementaria:} revisa después los matices sobre espacios y comentarios, las dos formas de observar la comunicación con el analizador sintáctico y la configuración de \textsc{Lark}. Retoma esta última parte al comenzar la Práctica 1.
+\textbf{Lectura complementaria:} revisa después los matices sobre espacios y comentarios, las dos formas de observar la comunicación con el analizador sintáctico y la configuración de \textsc{Lark}. Retoma esta última parte cuando construyamos el lexer de \textsc{IMP} y, después, cuando la Práctica 1 lo extienda para \textsc{IMP++}.
 \end{ruta}
 
 \begin{ejemplo}{Caso inicial. De caracteres a unidades}
@@ -373,7 +373,7 @@ La comunicación entre el analizador sintáctico y el léxico suele organizarse 
 Este modelo evita exigir que toda la secuencia se almacene antes de iniciar el análisis sintáctico. Sin embargo, para estudiar el analizador léxico de manera independiente también es útil recorrer una entrada completa y observar todos los tokens producidos.
 
 \begin{observacion}{Observación 3. Qué hará Lark y qué debemos especificar}
-En la primera práctica utilizaremos Lark para apoyar la implementación. Lark podrá leer la entrada y producir tokens a partir de las reglas proporcionadas, pero no decide por sí mismo cuáles son las categorías del lenguaje ni qué forma tiene cada una. Esas decisiones deben especificarse y justificarse. Para observar el analizador léxico de manera independiente podrá utilizarse Lark con \texttt{parser=None}, \texttt{lexer="basic"} y el método \texttt{lex()}.
+En notas y clase utilizaremos Lark para construir el lexer funcional del \textsc{IMP} base. La Práctica 1 partirá de esa implementación y agregará las categorías aprobadas de \textsc{IMP++}. Lark podrá leer la entrada y producir tokens a partir de las reglas proporcionadas, pero no decidirá por sí mismo cuáles son las categorías ni qué forma tiene cada una. Para observar el lexer de manera independiente podrá utilizarse Lark con \texttt{parser=None}, \texttt{lexer="basic"} y el método \texttt{lex()}.
 \end{observacion}
 
 Si ningún patrón permite reconocer el inicio de la entrada restante, el analizador no puede producir el siguiente token. Esa situación corresponde a un problema léxico. Su diagnóstico, recuperación y prueba se desarrollarán en otra nota.

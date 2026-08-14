@@ -1,38 +1,19 @@
-# Práctica 1: analizador léxico para IMP
+# Práctica 1: lexer de IMP++
 
-Esta carpeta contiene el punto de partida de la práctica. Los archivos tienen una
-versión mínima funcional y tareas marcadas con `TODO`. No contienen la solución
-completa.
+El proyecto contiene un analizador léxico funcional para IMP. La práctica
+consiste en extender `imp.lark` para reconocer IMP++ sin romper los casos base.
+Se trabaja en equipos de una a tres personas.
 
-## Convención concreta de trabajo
+## Equipo y repositorio
 
-La sintaxis abstracta de IMP se toma de Winskel. Para escribir archivos de texto
-usaremos esta convención ASCII:
+<!-- TODO: completa esta sección antes de entregar. -->
 
-- localidades: una o más letras, seguidas opcionalmente por dígitos;
-- numerales: uno o más dígitos; el signo `-` se reconoce por separado;
-- aritmética: `+`, `-`, `*`;
-- booleanos: `true`, `false`, `=`, `<=`, `!`, `&&`, `||`;
-- comandos: `skip`, `:=`, `;`, `if`, `then`, `else`, `while`, `do`;
-- agrupación: `(` y `)`;
-- espacios, tabuladores y saltos de línea: se reconocen, pero no se emiten.
-
-Esta convención concreta no añade comandos a IMP. Sólo fija cómo se escribirán sus
-símbolos durante el curso.
-
-## Archivos que se completan
-
-- `afd_localidades.py`: AFD manual para el patrón de las localidades.
-- `lexer_imp.py`: especificación léxica incremental con Lark y tabla inicial de
-  localidades.
-- `pruebas_lexer.py`: pruebas que se habilitan conforme avanza la práctica.
-
-`probar_lexer.py` es el controlador para observar la salida. La carpeta `ejemplos`
-contiene entradas para las distintas etapas.
+- Nombre del equipo:
+- Integrantes y usuarios de GitHub:
+- Enlace al repositorio privado:
+- Estado de la invitación a `manu-msr`:
 
 ## Preparación
-
-Crear y activar un entorno virtual:
 
 ```bash
 python -m venv .venv
@@ -50,34 +31,49 @@ En PowerShell:
 .venv\Scripts\Activate.ps1
 ```
 
-Instalar la dependencia registrada:
+Instala la dependencia:
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-## Primeras ejecuciones
+## Orden de trabajo
 
-El estado inicial sólo reconoce localidades:
+1. Ejecuta el ejemplo y las pruebas base. Deben pasar desde el inicio.
+2. Completa los `TODO` de `imp.lark` por bloques.
+3. Retira en `tests/test_lexer_imp_mas_mas.py` sólo el `@unittest.skip` de la
+   característica que acabas de implementar.
+4. Corrige la especificación hasta que pasen todas las pruebas.
+5. Agrega un caso válido propio y otro con un carácter no reconocido.
 
-```bash
-python probar_lexer.py ejemplos/minimo.imp
-```
-
-Ejecutar las pruebas habilitadas:
-
-```bash
-python -m unittest -v pruebas_lexer.py
-```
-
-Cuando se complete la gramática:
+## Comandos
 
 ```bash
-python probar_lexer.py ejemplos/flujo.imp --tabla
-python probar_lexer.py ejemplos/error.imp
+python lexer.py ejemplos/imp_base.imp
+python -m unittest -v
+python lexer.py ejemplos/imp_mas_mas.imp
+python lexer.py ejemplos/error_lexico.imp
 ```
 
-## Regla de trabajo
+Al inicio, las pruebas de IMP deben pasar y las de IMP++ deben aparecer como
+`skipped`. El ejemplo `error_lexico.imp` debe terminar con línea, columna y
+carácter no reconocido.
 
-Realiza un cambio pequeño, ejecuta una prueba, registra el resultado y crea un commit
-descriptivo. No habilites una prueba hasta llegar al paso indicado en su comentario.
+## Registro de trabajo
+
+<!-- TODO: completa esta sección antes de entregar. -->
+
+- Resultado final de las pruebas:
+- Decisión tomada sobre una regla léxica:
+- Estimación inicial:
+- Tiempo real:
+
+## Antes de entregar
+
+- [ ] El repositorio es privado y da acceso al equipo y a `manu-msr`.
+- [ ] El equipo tiene como máximo tres integrantes.
+- [ ] Una persona del equipo publicó la liga al repositorio en los comentarios de la actividad en Google Classroom.
+- [ ] Las pruebas de IMP y de IMP++ pasan.
+- [ ] No queda ningún `@unittest.skip` ni `TODO`.
+- [ ] Se agregó un caso válido y uno con error léxico.
+- [ ] `requirements.txt` conserva la versión de Lark.

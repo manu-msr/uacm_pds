@@ -1,0 +1,225 @@
+\documentclass[11pt,spanish]{article}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+\deactivatequoting
+\usepackage{geometry}
+\geometry{tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\usepackage[skip=0.55\baselineskip]{parskip}
+\usepackage{microtype}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{needspace}
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+
+\definecolor{rojo7a3c3d}{rgb}{0.478,0.235,0.239}
+\definecolor{verde587246}{rgb}{0.345,0.447,0.275}
+\definecolor{codegray}{rgb}{0.96,0.96,0.96}
+
+\newcommand{\cf}[2]{\colorbox{#1}{\textcolor{white}{\strut #2}}}
+\newcounter{ejercicio}
+\newcommand{\ejercicio}[1]{%
+  \stepcounter{ejercicio}%
+  \textbf{Ejercicio \theejercicio. #1}%
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codegray},
+  frame=single,
+  rulecolor=\color{black!25},
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible,
+  aboveskip=0.35em,
+  belowskip=0.25em,
+  literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {ñ}{{\~n}}1
+}
+
+\setlength{\parindent}{0pt}
+\setlist[enumerate]{leftmargin=*,itemsep=0.25em,topsep=0.3em}
+\setlist[itemize]{leftmargin=1.4em,itemsep=0.15em,topsep=0.25em,parsep=0pt}
+
+\begin{document}
+
+\lhead{PDS}
+\rhead{Práctica 01}
+\title{Programación de Sistemas\\ \bigskip
+\cf{rojo7a3c3d}{\textbf{\Large Práctica 01: Extensión del analizador léxico para \textsc{IMP++}}}}
+\author{Manuel Soto Romero \and Araceli Liliana Reyes Cabello}
+\date{Semestre 2026-2 \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+
+\section*{\cf{verde587246}{Descripción}}
+
+Extiendan el analizador léxico funcional de \textsc{IMP} desarrollado en clase
+para reconocer las construcciones de \textsc{IMP++}. Deberán modificar sus
+reglas léxicas, conservar la compatibilidad con \textsc{IMP} y comprobar el
+resultado con pruebas. Esta versión será la entrada de la Práctica 2.
+
+La práctica se realiza en equipos de una a tres personas.
+\ifdefined\incluirepositorio
+Cada equipo entregará su trabajo mediante un repositorio privado compartido.
+\fi
+
+\section*{\cf{verde587246}{Objetivos}}
+
+\begin{enumerate}
+  \item Extender la especificación léxica de \textsc{IMP} con los tokens de \textsc{IMP++}.
+  \item Resolver conflictos entre palabras reservadas, identificadores y operadores compuestos.
+  \item Verificar la extensión sin romper los programas válidos de \textsc{IMP}.
+\end{enumerate}
+
+\section*{\cf{verde587246}{Desarrollo}}
+
+\ifdefined\incluirepositorio
+\ejercicio{Creen el repositorio del equipo.}
+\begin{itemize}
+  \item Formen un equipo de una a tres personas y acuerden un nombre para identificarlo.
+  \item Una persona del equipo debe crear en \textsc{GitHub} un repositorio privado para las cuatro prácticas.
+  \item Añadan como colaboradores a todas las personas del equipo y al usuario \texttt{manu-msr}.
+  \item Registren en el \texttt{README.md} el nombre del equipo, los nombres de sus integrantes y sus usuarios de \textsc{GitHub}.
+  \item Copien la carpeta \path{scripts_estudiante} al repositorio y renómbrenla como \path{practica1_lexer_imp_mas_mas}.
+  \item Al terminar, el acceso registrado en \textsc{GitHub} debe cumplir:
+\begin{lstlisting}[language={}]
+Visibilidad: privada
+Equipo: 1 a 3 integrantes con acceso
+manu-msr: invitación pendiente o colaborador
+\end{lstlisting}
+  \item Para entregar, una persona del equipo debe pegar la liga al repositorio en los comentarios de la actividad en \textsc{Google Classroom}.
+\end{itemize}
+\fi
+\Needspace{6\baselineskip}
+\ejercicio{Verifiquen el punto de partida.}
+\begin{itemize}
+  \item Preparen el entorno con las instrucciones del \texttt{README.md}; todavía no modifiquen el lexer.
+  \Needspace{4\baselineskip}
+  \item Ejecuten el ejemplo base y las pruebas:
+\begin{lstlisting}[language={}]
+python lexer.py ejemplos/imp_base.imp
+python -m unittest -v
+\end{lstlisting}
+  \Needspace{10\baselineskip}
+  \item Deben aparecer 14 tokens. Ejemplo de salida:
+\begin{lstlisting}[language={}]
+LOC        'X'              1:1
+ASSIGN     ':='             1:3
+NUM        '0'              1:6
+SEMI       ';'              1:7
+...
+WHILE      'while'          2:1
+...
+Ran 10 tests in ...
+OK (skipped=5)
+\end{lstlisting}
+  \item Si el inicio, la posición de \texttt{while} o el resumen no coinciden, revisen la instalación o la copia de los archivos.
+\end{itemize}
+
+\Needspace{6\baselineskip}
+\ejercicio{Extiendan identificadores y comentarios.}
+\begin{itemize}
+  \item Abran \texttt{imp.lark} y modifiquen \texttt{LOC} con el patrón \texttt{[A-Za-z][A-Za-z0-9\_]\allowbreak*}. Comprueben que \texttt{contador\_1} se reconozca como un solo \texttt{LOC}.
+  \item Definan \texttt{COMMENT} para reconocer desde \texttt{//} hasta el final de la línea y agreguen la instrucción~\texttt{\%ignore COMMENT}.
+  \item Retiren los decoradores \texttt{@unittest.skip} de las pruebas de identificadores y comentarios.
+  \Needspace{4\baselineskip}
+  \item Ejecuten las pruebas:
+\begin{lstlisting}[language={}]
+python -m unittest -v
+\end{lstlisting}
+  \Needspace{7\baselineskip}
+  \item Ejemplo de salida:
+\begin{lstlisting}[language={}]
+test_comentario_se_ignora ... ok
+test_identificador_con_guion_bajo ... ok
+...
+Ran 10 tests in ...
+OK (skipped=3)
+\end{lstlisting}
+  \item Estas pruebas revisan que \texttt{contador\_1} produzca un solo \texttt{LOC}, que el comentario no produzca tokens y que \texttt{Y} conserve la posición línea 2, columna 1.
+\end{itemize}
+
+\Needspace{6\baselineskip}
+\ejercicio{Agreguen palabras y símbolos de \textsc{IMP++}.}
+\begin{itemize}
+  \item Agreguen en \texttt{imp.lark} las reglas para \texttt{int}, \texttt{bool}, \texttt{print} y \texttt{for}. Conserven los nombres de token indicados en el archivo.
+  \item Usen la misma prioridad y el mismo límite léxico de las palabras reservadas de \textsc{IMP}.
+  \item Agreguen las reglas para las llaves y para los operadores \texttt{++} y \texttt{-{}-}.
+  \Needspace{4\baselineskip}
+  \item Retiren los decoradores \texttt{@unittest.skip} restantes y ejecuten las pruebas:
+\begin{lstlisting}[language={}]
+python -m unittest -v
+\end{lstlisting}
+  \Needspace{8\baselineskip}
+  \item Ejemplo de salida:
+\begin{lstlisting}[language={}]
+test_incremento_y_decremento_son_tokens_completos ... ok
+test_palabras_reservadas_y_llaves ... ok
+test_programa_imp_mas_mas ... ok
+...
+Ran 10 tests in ...
+OK
+\end{lstlisting}
+  \item Las pruebas comparan, entre otros casos, \texttt{print printable} con \texttt{PRINT, LOC} y \texttt{X++ + Y-{}- - 1} con \texttt{LOC, INC, PLUS, LOC, DEC, MINUS, NUM}.
+\end{itemize}
+
+\Needspace{6\baselineskip}
+\ejercicio{Comprueben la compatibilidad y documenten.}
+\begin{itemize}
+  \Needspace{6\baselineskip}
+  \item Ejecuten el ejemplo completo y todas las pruebas:
+\begin{lstlisting}[language={}]
+python lexer.py ejemplos/imp_mas_mas.imp
+python lexer.py ejemplos/error_lexico.imp
+python -m unittest -v
+\end{lstlisting}
+  \Needspace{9\baselineskip}
+  \item \texttt{imp\_mas\_mas.imp} debe producir 30 tokens y no debe mostrar \texttt{COMMENT}. Ejemplo de salida:
+\begin{lstlisting}[language={}]
+INT        'int'            1:1
+LOC        'contador_1'     1:5
+ASSIGN     ':='             1:16
+NUM        '0'              1:19
+SEMI       ';'              1:20
+...
+PRINT      'print'          5:5
+LPAR       '('              5:10
+LOC        'contador_1'     5:11
+RPAR       ')'              5:21
+SEMI       ';'              5:22
+RBRACE     '}'              6:1
+\end{lstlisting}
+  \item Ejemplo de salida para el archivo con error:
+\begin{lstlisting}[language={}]
+Error léxico en línea 2, columna 8: '@'
+\end{lstlisting}
+  \item Agreguen una prueba que combine al menos dos elementos nuevos.
+  \item Agreguen otra para un carácter no reconocido y comprueben que produzca \texttt{UnexpectedCharacters}.
+  \item Ejecuten nuevamente las pruebas. Ejemplo del resumen después de agregar sólo los dos casos solicitados:
+\begin{lstlisting}[language={}]
+...
+Ran 12 tests in ...
+OK
+\end{lstlisting}
+  \item Completen el \texttt{README.md} con el resultado, una decisión léxica y el tiempo real de trabajo.
+  \item Entreguen la carpeta sin pruebas omitidas ni tareas \texttt{TODO} pendientes.
+\end{itemize}
+
+\section*{\cf{verde587246}{Referencias de consulta}}
+
+\begin{enumerate}[label=\textbf{[\arabic*]}]
+  \item Winskel, G. (1993). \textit{The Formal Semantics of Programming Languages: An Introduction}, sección 2.1. The MIT Press.
+  \item Lark. \textit{Grammar Reference y API Reference}. \url{https://lark-parser.readthedocs.io/}
+\end{enumerate}
+
+\end{document}

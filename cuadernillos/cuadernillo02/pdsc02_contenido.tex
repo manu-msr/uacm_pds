@@ -267,8 +267,8 @@ Correcciones:
 
 \section*{\cf{verde587246}{3. Integración del compilador del curso}}
 
-\begin{ejercicio}{Ejercicio 5. Completar el recorrido de \textsc{IMP} a \textsc{C} \hfill {\small [Esencial]}}
-Completa el flujo con las cuatro fases del banco.
+\begin{ejercicio}{Ejercicio 5. Completar el recorrido de \textsc{IMP}/\textsc{IMP++} a \textsc{C} \hfill {\small [Esencial]}}
+El recorrido interno será el mismo para el \textsc{IMP} base y para su extensión \textsc{IMP++}. Completa el flujo con las cuatro fases del banco.
 
 \begin{center}
 \small
@@ -282,7 +282,7 @@ generación de código & análisis léxico & verificación semántica & análisi
 \begin{center}
 \renewcommand{\arraystretch}{1.55}
 \begin{tabular}{c@{\(\longrightarrow\)}c@{\(\longrightarrow\)}c}
-programa \textsc{IMP} & \blank[3.3cm] & tokens \\[0.3cm]
+programa fuente & \blank[3.3cm] & tokens \\[0.3cm]
 tokens & \blank[3.3cm] & estructura o ASA\footnote{ASA significa \emph{árbol de sintaxis abstracta}. La denominación proviene del inglés \emph{Abstract Syntax Tree}, abreviado AST.} \\[0.3cm]
 estructura o ASA & \blank[3.3cm] & representación validada \\[0.3cm]
 representación validada & \blank[3.3cm] & programa \textsc{C}
@@ -292,8 +292,17 @@ representación validada & \blank[3.3cm] & programa \textsc{C}
 Responde brevemente.
 
 \begin{enumerate}[leftmargin=*]
-    \item ¿Qué fases serán apoyadas por Lark? \ifrespuestas\else\blank[7cm]\fi
-    \item ¿Qué fases se implementarán explícitamente mediante recorridos en Python? \ifrespuestas\else\blank[6cm]\fi
+    \item ¿Qué versión construiremos en notas y clase, y cuál desarrollaremos en las prácticas?
+
+    \ifrespuestas\else
+    \blank[14cm]
+    \fi
+
+    \item ¿Qué fases serán apoyadas por Lark?
+    \ifrespuestas\else\par\noindent\blank[10cm]\par\fi
+
+    \item ¿Qué fases programaremos mediante recorridos en Python?
+    \ifrespuestas\else\par\noindent\blank[10cm]\par\fi
     \item ¿El programa \textsc{C} producido ya es un archivo ejecutable? Explica.
 
     \ifrespuestas\else
@@ -317,8 +326,9 @@ Responde brevemente.
 En orden: análisis léxico; análisis sintáctico; verificación semántica; generación de código.
 
 \begin{enumerate}[leftmargin=*]
+    \item En notas y clase construiremos la versión base para \textsc{IMP}; en las prácticas extenderemos ese producto para \textsc{IMP++}.
     \item Lark apoyará el análisis léxico y el análisis sintáctico.
-    \item La verificación semántica y la generación de código se implementarán explícitamente en Python mediante recorridos sobre la representación construida.
+    \item La verificación semántica y la generación de código se implementarán explícitamente en \textsc{Python} mediante recorridos sobre la representación construida.
     \item No. El destino de nuestro compilador es un programa en \textsc{C}; después debe intervenir un compilador de \textsc{C} para continuar la cadena hacia un ejecutable.
     \item Puede ubicarse después de obtener una representación validada y antes de la generación de código. Su forma concreta se definirá en otra nota.
 \end{enumerate}
@@ -627,7 +637,7 @@ Correcciones esperadas:
     \item Dos lexemas pueden corresponder a \texttt{ID} porque satisfacen el mismo patrón, aunque tengan caracteres y atributos distintos.
     \item La optimización recibe una representación válida y la transforma sin cambiar el comportamiento definido; no repara la sintaxis del programa fuente.
     \item El programa \textsc{C} es el destino de nuestro compilador, pero necesita un compilador de \textsc{C} para continuar la cadena hacia un ejecutable.
-    \item El equipo debe especificar las categorías y reglas léxicas; Lark aplica esa especificación para producir tokens.
+    \item El equipo debe especificar las categorías y reglas léxicas; Lark aplica esa especificación para producir tokens. Primero construiremos las reglas de \textsc{IMP} en clase y después agregaremos las de \textsc{IMP++} en la práctica.
 \end{enumerate}
 \end{respuesta}
 \fi

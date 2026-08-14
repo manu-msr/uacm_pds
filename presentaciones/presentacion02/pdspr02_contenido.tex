@@ -388,7 +388,7 @@ Ejercicios 3 y 4};
 \begin{center}
 \resizebox{.96\textwidth}{!}{%
 \begin{tikzpicture}[node distance=.42cm]
-\node[mini, fill=pastelgreen, text width=2cm] (a) {programa\\\textsc{IMP}};
+\node[mini, fill=pastelgreen, text width=2cm] (a) {programa\\\textsc{IMP} o \textsc{IMP++}};
 \node[mini, fill=pastelpeach, right=of a, text width=2.45cm] (b) {compilador\\del curso};
 \node[mini, fill=pastelblue, right=of b, text width=2cm] (c) {programa\\\textsc{C}};
 \node[mini, fill=pastelyellow, right=of c, text width=2.45cm] (d) {compilador\\de \textsc{C}};
@@ -406,6 +406,10 @@ Ejercicios 3 y 4};
 \begin{block}{Destino de nuestro compilador}
 El programa \textsc{C} completa la traducción prevista para el curso. Todavía necesita un compilador de \textsc{C} para continuar la cadena hacia un ejecutable.
 \end{block}
+
+\begin{center}
+\small En clase construiremos la base \textsc{IMP}; en las prácticas la extenderemos para \textsc{IMP++}.
+\end{center}
 
 \vfill
 \end{frame}
@@ -475,7 +479,7 @@ Ejercicios 5 y 6};
 \bigskip
 
 \begin{itemize}
-\item \textbf{Esencial --- Ejercicio 5:} completar el recorrido de \textsc{IMP} a \textsc{C}.
+\item \textbf{Esencial --- Ejercicio 5:} completar el recorrido común de \textsc{IMP}/\textsc{IMP++} a \textsc{C}.
 \item \textbf{Extensión --- Ejercicio 6:} analizar las interfaces y el efecto de sus cambios.
 \end{itemize}
 
@@ -704,6 +708,10 @@ El analizador léxico consume sólo los caracteres necesarios para reconocer el 
 \small Esta configuración permite observar el analizador léxico de manera independiente.
 \end{center}
 
+\begin{center}
+\small Primero la usaremos para construir el lexer de \textsc{IMP}; la práctica extenderá sus reglas para \textsc{IMP++}.
+\end{center}
+
 \vfill
 \end{frame}
 
@@ -790,7 +798,7 @@ El compilador organiza transformaciones mediante fases con responsabilidades e i
 \bigskip
 
 \begin{center}
-\term{Comprender cada contrato permite construir y probar el compilador de manera acumulativa.}
+\term{Cada contrato se implementará primero para \textsc{IMP} y se extenderá después para \textsc{IMP++}.}
 \end{center}
 
 \vfill

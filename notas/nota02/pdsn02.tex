@@ -174,7 +174,7 @@ El ejemplo procede de los materiales de estructura de compiladores disponibles p
 
 \section*{\cf{verde587246}{1. Del código fuente al código destino: análisis y síntesis}}
 
-El punto de partida es un \textbf{programa fuente}: un texto escrito de acuerdo con las reglas de un lenguaje. El punto de llegada es un \textbf{programa destino}: otra representación del programa en un lenguaje diferente. El lenguaje destino puede ser lenguaje de máquina, ensamblador, un lenguaje intermedio o incluso otro lenguaje de alto nivel. Por ejemplo, el compilador que construiremos en el curso traducirá programas de \textsc{IMP} a programas en \textsc{C}.
+El punto de partida es un \textbf{programa fuente}: un texto escrito de acuerdo con las reglas de un lenguaje. El punto de llegada es un \textbf{programa destino}: otra representación del programa en un lenguaje diferente. El lenguaje destino puede ser lenguaje de máquina, ensamblador, un lenguaje intermedio o incluso otro lenguaje de alto nivel. En este curso construiremos en notas y clase el compilador de \textsc{IMP} y extenderemos ese mismo producto en las prácticas para traducir \textsc{IMP++}; ambos recorridos producirán programas en \textsc{C}.
 
 Entre los dos extremos se conserva una exigencia central: el programa destino debe corresponder al significado del programa fuente. Cambiar la representación no autoriza al compilador a cambiar lo que el programa debe hacer.
 
@@ -290,7 +290,7 @@ El compilador debe indicar la ubicación y la naturaleza del problema con la may
 \end{ejemplo}
 
 \begin{observacion}{Observación 2. Qué construimos y qué automatiza Lark}
-En las prácticas del curso, Lark apoyará el reconocimiento léxico y sintáctico. Esto no sustituye la definición de las reglas ni la comprensión de las transformaciones. El estudiantado especificará qué debe reconocerse y observará la salida producida. La verificación semántica se implementará explícitamente en Python mediante recorridos sobre la representación construida.
+En notas y clase utilizaremos Lark para implementar el reconocimiento léxico y sintáctico del \textsc{IMP} base. Las prácticas recibirán esas versiones funcionales y las extenderán para \textsc{IMP++}. En ambos casos, Lark aplicará las reglas especificadas, pero no decidirá las categorías ni la estructura del lenguaje. La verificación semántica se implementará explícitamente en \textsc{Python} mediante recorridos sobre la representación construida.
 \end{observacion}
 
 \section*{\cf{verde587246}{3. Representaciones intermedias, optimización y generación de código}}
@@ -331,7 +331,7 @@ En el compilador del curso, la salida de la generación de código será \textsc
 
 \begin{center}
 \begin{tikzpicture}[node distance=1.1cm, every node/.style={font=\small}]
-\node[draw, rounded corners, fill=grannysmithapple!30, minimum width=2.4cm] (imp) {programa \textsc{IMP}};
+\node[draw, rounded corners, fill=grannysmithapple!30, align=center, minimum width=2.4cm] (imp) {programa \textsc{IMP}\\o \textsc{IMP++}};
 \node[draw, rounded corners, fill=apricot!30, right=of imp, align=center, minimum width=2.8cm] (nuestro) {compilador\\del curso};
 \node[draw, rounded corners, fill=grannysmithapple!30, right=of nuestro, minimum width=2.3cm] (c) {programa \textsc{C}};
 \node[draw, rounded corners, fill=anti-flashwhite, right=of c, align=center, minimum width=2.8cm] (cc) {compilador\\de \textsc{C}};
@@ -390,7 +390,7 @@ Para el proyecto acumulativo del curso, la comunicación prevista puede resumirs
 \begin{center}
 \resizebox{0.98\textwidth}{!}{%
 \begin{tikzpicture}[node distance=0.7cm, every node/.style={font=\scriptsize}]
-\node[draw, rounded corners, fill=grannysmithapple!30, minimum width=1.55cm, minimum height=0.8cm] (imp) {\textsc{IMP}};
+\node[draw, rounded corners, fill=grannysmithapple!30, align=center, minimum width=1.55cm, minimum height=0.8cm] (imp) {\textsc{IMP}\\o \textsc{IMP++}};
 \node[draw, rounded corners, fill=apricot!25, right=of imp, align=center, minimum width=1.75cm, minimum height=0.8cm] (lex) {análisis\\léxico};
 \node[draw, rounded corners, fill=darkpastelblue!12, right=of lex, minimum width=1.45cm, minimum height=0.8cm] (tok) {tokens};
 \node[draw, rounded corners, fill=apricot!25, right=of tok, align=center, minimum width=1.75cm, minimum height=0.8cm] (sin) {análisis\\sintáctico};
@@ -411,7 +411,7 @@ Para el proyecto acumulativo del curso, la comunicación prevista puede resumirs
 }
 \end{center}
 
-El esquema no fija todavía las estructuras de datos ni la sintaxis de \textsc{IMP}. Establece la dirección de las dependencias: cada práctica extenderá la anterior y deberá conservar interfaces que las fases posteriores puedan utilizar.
+El esquema no fija todavía las estructuras de datos ni la sintaxis concreta. Establece la dirección de las dependencias. En cada fase, las notas y clases producirán primero una versión funcional para \textsc{IMP}; después, la práctica correspondiente extenderá esa base para \textsc{IMP++} y conservará las interfaces que utilizarán las fases posteriores.
 
 \begin{observacion}{Mini-checkpoint. Seguir la información}
 Al observar cualquier fase del compilador, conviene responder cuatro preguntas:
@@ -430,7 +430,7 @@ Si alguna respuesta no está definida, la comunicación entre los componentes to
 
 Un compilador transforma un programa fuente en un programa destino mediante una secuencia organizada de fases. El análisis léxico agrupa caracteres; el análisis sintáctico reconoce estructuras; y el análisis semántico comprueba restricciones que dependen del significado estático del programa. Después, las representaciones intermedias facilitan la separación entre el lenguaje fuente y el lenguaje destino, la optimización transforma el programa sin alterar su comportamiento y la generación de código produce la salida prevista.
 
-La arquitectura no consiste sólo en enumerar fases. Cada componente necesita una responsabilidad, una entrada y una salida claras; además, varias fases comparten información mediante estructuras como la tabla de símbolos y colaboran en el diagnóstico de errores. En el compilador acumulativo del curso, este flujo llevará de \textsc{IMP} a \textsc{C}. El siguiente tema concentrará la atención en el primer componente del recorrido: el analizador léxico y las unidades que reconoce.
+La arquitectura no consiste sólo en enumerar fases. Cada componente necesita una responsabilidad, una entrada y una salida claras; además, varias fases comparten información mediante estructuras como la tabla de símbolos y colaboran en el diagnóstico de errores. En el compilador acumulativo del curso, este flujo llevará primero de \textsc{IMP} a \textsc{C} y después conservará el mismo recorrido para las extensiones de \textsc{IMP++}. El siguiente tema concentrará la atención en el primer componente: el analizador léxico y las unidades que reconoce.
 
 \clearpage
 \section*{\cf{verde587246}{Referencias}}

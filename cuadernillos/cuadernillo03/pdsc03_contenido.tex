@@ -1,0 +1,753 @@
+\documentclass[11pt,spanish]{article}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm,columnsep=1cm,marginparwidth=1cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\headheight}{13.6pt}
+\usepackage[skip=\bigskipamount]{parskip}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+\usepackage{pifont}
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,arrows.meta}
+
+\definecolor{darkpastelblue}{rgb}{0.47, 0.62, 0.8}
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{rojo7a3c3d}{rgb}{0.478, 0.235, 0.239}
+\definecolor{verde587246}{rgb}{0.345, 0.447, 0.275}
+\definecolor{antiquefuchsia}{rgb}{0.57, 0.36, 0.51}
+\definecolor{pastelgreen}{rgb}{0.82,0.92,0.78}
+\definecolor{indiagreen}{rgb}{0.07,0.53,0.03}
+
+\newcommand{\blank}[1][4cm]{\rule{#1}{0.4pt}}
+\newcommand{\cuadro}{\(\square\)}
+\newcommand{\cf}[2]{\colorbox{#1}{\textcolor{white}{\strut #2}}}
+\ifrespuestas
+\newcommand{\espaciosalida}{0.10cm}
+\else
+\newcommand{\espaciosalida}{0.60cm}
+\fi
+
+\newtcolorbox{ejercicio}[1]{
+colback=antiquefuchsia!5!white,
+colframe=antiquefuchsia!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+
+\newtcolorbox{observacion}[1]{
+colback=amber!5!white,
+colframe=amber!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+
+\newtcolorbox{respuesta}[1]{
+colback=pastelgreen!35!white,
+colframe=indiagreen!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
+
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+
+\AtBeginDocument{
+  \def\labelitemi{\(\star\)}
+  \def\labelitemii{\(\ast\)}
+  \def\labelitemiii{\(\bullet\)}
+  \def\labelitemiv{\(\circ\)}
+}
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+\deactivatequoting
+
+\begin{document}
+
+\lhead{PDS}
+\rhead{Cuadernillo 03}
+\title{Programación de Sistemas\\
+Unidad 2: Análisis léxico\\ \bigskip
+\cf{rojo7a3c3d}{\textbf{Cuadernillo de ejercicios 03}}\\
+\bigskip
+\Large\textbf{Expresiones regulares y autómatas}
+\ifrespuestas\\[0.4em]\large Versión para docente\fi}
+\author{Manuel Soto Romero \and Araceli Liliana Reyes Cabello}
+\date{Semestre 2026-2 \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+Este cuadernillo acompaña la Nota 04. Su propósito es practicar la especificación de patrones mediante expresiones regulares, el reconocimiento con AFN y AFD, la construcción de subconjuntos y la minimización de autómatas. Las actividades avanzan de interpretar lenguajes pequeños a aplicar la ruta completa a los tokens del \textsc{IMP} básico.
+
+\begin{observacion}{Observación 1. Límite de trabajo}
+Responde únicamente con lo estudiado en la Nota 04. Utiliza las definiciones aprobadas \(\mathit{LOC}=\mathit{letra}^{+}\mathit{digito}^{*}\) y \(\mathit{NUM}=\mathit{digito}^{+}\). No necesitas implementar el analizador con \textsc{Lark}, coordinar todos los patrones ni diseñar recuperación de errores; esas tareas corresponden al tema siguiente.
+\end{observacion}
+
+\begin{observacion}{Observación 2. Ruta sugerida}
+Los ejercicios \textbf{1, 2, 4, 5, 6, 8 y 10 son esenciales}: comprueban la interpretación de expresiones, el funcionamiento de los autómatas y las dos conversiones principales. Los ejercicios \textbf{3, 7 y 9 son de extensión}: exigen detectar especificaciones incorrectas o ejecutar procedimientos con un autómata distinto al ejemplo central. Si el tiempo es limitado, completa primero los esenciales.
+\end{observacion}
+
+\section*{\cf{verde587246}{1. Expresiones regulares y tokens de IMP}}
+
+\begin{ejercicio}{Ejercicio 1. Cotejar cadenas con expresiones regulares \hfill {\small [Esencial]}}
+Sea \(\Sigma=\{a,b\}\). Escribe \textbf{Sí} cuando la cadena pertenezca al lenguaje de la expresión y \textbf{No} cuando no pertenezca.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Cadena} & \(a\mid b\) & \(ab\) & \(a^{*}\) & \(a(a\mid b)^{*}\) \tabularnewline
+\hline
+\(\varepsilon\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(a\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(b\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(ab\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(aa\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(ba\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\end{tabular}
+\end{center}
+
+Explica por qué \(\varepsilon\) pertenece a \(L(a^{*})\), pero no a \(L(a(a\mid b)^{*})\).
+
+\ifrespuestas\else
+\blank[14cm]
+
+\blank[14cm]
+\fi
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 1}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Cadena} & \(a\mid b\) & \(ab\) & \(a^{*}\) & \(a(a\mid b)^{*}\) \tabularnewline
+\hline
+\(\varepsilon\) & No & No & Sí & No \tabularnewline
+\hline
+\(a\) & Sí & No & Sí & Sí \tabularnewline
+\hline
+\(b\) & Sí & No & No & No \tabularnewline
+\hline
+\(ab\) & No & Sí & No & Sí \tabularnewline
+\hline
+\(aa\) & No & No & Sí & Sí \tabularnewline
+\hline
+\(ba\) & No & No & No & No \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+La cerradura \(a^{*}\) permite concatenar cero apariciones de \(a\), por lo que incluye \(\varepsilon\). En \(a(a\mid b)^{*}\), la primera \(a\) es obligatoria; la parte con cerradura puede ser vacía, pero la cadena completa no.
+\end{respuesta}
+\fi
+
+\begin{ejercicio}{Ejercicio 2. Clasificar lexemas de IMP \hfill {\small [Esencial]}}
+Clasifica cada cadena como \texttt{LOC}, \texttt{NUM} o \textbf{ninguna} cuando se considera como un solo lexema.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|c|c||c|c|}
+\hline
+\textbf{Cadena} & \textbf{Clasificación} & \textbf{Cadena} & \textbf{Clasificación} \tabularnewline
+\hline
+\texttt{x} & & \texttt{20x} & \tabularnewline[\espaciosalida]
+\hline
+\texttt{total} & & \texttt{x2y} & \tabularnewline[\espaciosalida]
+\hline
+\texttt{x20} & & \texttt{x\_1} & \tabularnewline[\espaciosalida]
+\hline
+\texttt{0} & & \texttt{-5} & \tabularnewline[\espaciosalida]
+\hline
+\texttt{205} & & \(\varepsilon\) & \tabularnewline[\espaciosalida]
+\hline
+\end{tabular}
+\end{center}
+
+Justifica las clasificaciones de \texttt{x2y} y \texttt{-5} a partir de los patrones aprobados.
+
+\ifrespuestas\else
+\blank[14cm]
+
+\blank[14cm]
+\fi
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 2}
+\texttt{x}, \texttt{total} y \texttt{x20} son \texttt{LOC}; \texttt{0} y \texttt{205} son \texttt{NUM}. \texttt{20x}, \texttt{x2y}, \texttt{x\_1}, \texttt{-5} y \(\varepsilon\) no satisfacen ninguno de los dos patrones como un solo lexema.
+
+En \texttt{x2y} aparece una letra después de comenzar la parte de dígitos, lo cual no permite \(\mathit{letra}^{+}\mathit{digito}^{*}\). En \texttt{-5}, el signo no es un dígito: durante el análisis léxico de un programa podría reconocerse como \texttt{MINUS} seguido de \texttt{NUM(5)}, pero la cadena completa no es un solo \texttt{NUM}.
+\end{respuesta}
+\fi
+
+\begin{ejercicio}{Ejercicio 3. Encontrar un contraejemplo \hfill {\small [Extensión]}}
+Cada propuesta intenta especificar un token de \textsc{IMP}, pero describe un lenguaje distinto al aprobado. Escribe una cadena que haga visible el error y corrige la expresión.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{|p{0.25\textwidth}|p{0.29\textwidth}|p{0.31\textwidth}|}
+\hline
+\textbf{Propuesta} & \textbf{Contraejemplo} & \textbf{Expresión corregida} \tabularnewline
+\hline
+\(\mathit{LOC}=\mathit{letra}\,\mathit{digito}^{*}\) & & \tabularnewline[0.9cm]
+\hline
+\(\mathit{LOC}=\mathit{letra}^{+}\mathit{digito}^{+}\) & & \tabularnewline[0.9cm]
+\hline
+\(\mathit{NUM}=\mathit{digito}^{*}\) & & \tabularnewline[0.9cm]
+\hline
+\end{tabular}
+\end{center}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 3}
+Ejemplos posibles:
+\begin{itemize}[leftmargin=*]
+    \item La primera propuesta rechaza \texttt{total} porque permite exactamente una letra antes de los dígitos. Debe ser \(\mathit{letra}^{+}\mathit{digito}^{*}\).
+    \item La segunda propuesta rechaza \texttt{x} porque exige al menos un dígito. Debe ser \(\mathit{letra}^{+}\mathit{digito}^{*}\).
+    \item La tercera propuesta acepta \(\varepsilon\), aunque \texttt{NUM} exige al menos un dígito. Debe ser \(\mathit{digito}^{+}\).
+\end{itemize}
+\end{respuesta}
+\fi
+
+\section*{\cf{verde587246}{2. Reconocimiento mediante AFN y AFD}}
+
+\begin{ejercicio}{Ejercicio 4. Distinguir AFN y AFD \hfill {\small [Esencial]}}
+Marca cada afirmación como \textbf{verdadera} o \textbf{falsa}. Corrige las afirmaciones falsas.
+
+\begin{enumerate}[leftmargin=*]
+    \item Un AFN puede incluir transiciones \(\varepsilon\). \hfill V \cuadro\quad F \cuadro
+    \item En un AFD puede haber dos estados siguientes para el mismo estado y símbolo. \hfill V \cuadro\quad F \cuadro
+    \item Un AFN acepta una cadena sólo cuando todos sus recorridos terminan en aceptación. \hfill V \cuadro\quad F \cuadro
+    \item Una cadena determina un único recorrido en un AFD. \hfill V \cuadro\quad F \cuadro
+    \item Para cada AFN existe un AFD que reconoce el mismo lenguaje. \hfill V \cuadro\quad F \cuadro
+    \item Las transiciones \(\varepsilon\) consumen el siguiente símbolo de la entrada. \hfill V \cuadro\quad F \cuadro
+\end{enumerate}
+
+\ifrespuestas\else
+\textbf{Correcciones:}
+
+\blank[14cm]
+
+\blank[14cm]
+
+\blank[14cm]
+\fi
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 4}
+1. Verdadera. 2. Falsa. 3. Falsa. 4. Verdadera. 5. Verdadera. 6. Falsa.
+
+Correcciones:
+\begin{itemize}[leftmargin=*]
+    \item En un AFD existe exactamente un estado siguiente para cada par estado--símbolo.
+    \item Un AFN acepta si existe al menos un recorrido que consume toda la entrada y termina en aceptación.
+    \item Una transición \(\varepsilon\) cambia de estado sin consumir un símbolo de la entrada.
+\end{itemize}
+\end{respuesta}
+\fi
+
+\begin{ejercicio}{Ejercicio 5. Construir un AFD para \texttt{LOC} \hfill {\small [Esencial]}}
+Construye un AFD para \(\mathit{LOC}=\mathit{letra}^{+}\mathit{digito}^{*}\). Utiliza el significado de los estados indicado y completa la tabla.
+
+\begin{itemize}[leftmargin=*]
+    \item \(q_0\): todavía no se consume ningún carácter.
+    \item \(q_L\): ya se consumió una o más letras y todavía pueden aparecer letras o comenzar los dígitos.
+    \item \(q_D\): ya comenzó la parte de dígitos; sólo pueden aparecer más dígitos.
+    \item \(q_X\): estado muerto.
+\end{itemize}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Estado} & \textbf{letra} & \textbf{dígito} & \textbf{otro} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(q_0\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(q_L\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(q_D\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(q_X\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\end{tabular}
+\end{center}
+
+Traza el recorrido de \texttt{x}, \texttt{x20}, \texttt{x2y} y \texttt{20}. Indica el estado final y si la cadena se acepta.
+
+\ifrespuestas\else
+\blank[14cm]
+
+\blank[14cm]
+
+\blank[14cm]
+\fi
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 5}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Estado} & \textbf{letra} & \textbf{dígito} & \textbf{otro} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(q_0\) & \(q_L\) & \(q_X\) & \(q_X\) & No \tabularnewline
+\hline
+\(q_L\) & \(q_L\) & \(q_D\) & \(q_X\) & Sí \tabularnewline
+\hline
+\(q_D\) & \(q_X\) & \(q_D\) & \(q_X\) & Sí \tabularnewline
+\hline
+\(q_X\) & \(q_X\) & \(q_X\) & \(q_X\) & No \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Recorridos:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{x}: \(q_0\to q_L\); acepta.
+    \item \texttt{x20}: \(q_0\to q_L\to q_D\to q_D\); acepta.
+    \item \texttt{x2y}: \(q_0\to q_L\to q_D\to q_X\); rechaza.
+    \item \texttt{20}: \(q_0\to q_X\to q_X\); rechaza.
+\end{itemize}
+\end{respuesta}
+\fi
+
+\section*{\cf{verde587246}{3. Construcción de subconjuntos}}
+
+\begin{ejercicio}{Ejercicio 6. Convertir el AFN de \(a\mid b\) \hfill {\small [Esencial]}}
+Considera el AFN de Thompson utilizado en la Nota 04.
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=2.0cm,on grid,auto,>=Stealth]
+\node[state,initial] (q0) {\(0\)};
+\node[state,above right=of q0] (q1) {\(1\)};
+\node[state,right=of q1] (q2) {\(2\)};
+\node[state,below right=of q0] (q3) {\(3\)};
+\node[state,right=of q3] (q4) {\(4\)};
+\node[state,accepting,below right=of q2] (q5) {\(5\)};
+\path[->]
+  (q0) edge node[above left] {\(\varepsilon\)} (q1)
+       edge node[below left] {\(\varepsilon\)} (q3)
+  (q1) edge node {\(a\)} (q2)
+  (q3) edge node {\(b\)} (q4)
+  (q2) edge node[above right] {\(\varepsilon\)} (q5)
+  (q4) edge node[below right] {\(\varepsilon\)} (q5);
+\end{tikzpicture}
+\end{center}
+
+Completa los cálculos.
+
+\begin{enumerate}[leftmargin=*]
+    \item \(A=\operatorname{cerradura}_{\varepsilon}(\{0\})=\blank[5cm]\).
+    \item \(\operatorname{mover}(A,a)=\blank[3cm]\) y su cerradura es \(B=\blank[4cm]\).
+    \item \(\operatorname{mover}(A,b)=\blank[3cm]\) y su cerradura es \(C=\blank[4cm]\).
+    \item Desde \(B\) o \(C\), leer \(a\) o \(b\) lleva a \(D=\blank[3cm]\).
+\end{enumerate}
+
+Completa la tabla del AFD. Marca como aceptación los conjuntos que contienen al estado \(5\).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Estado} & \textbf{Con \(a\)} & \textbf{Con \(b\)} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(A\) & & & \tabularnewline[\espaciosalida]
+\hline
+\(B\) & & & \tabularnewline[\espaciosalida]
+\hline
+\(C\) & & & \tabularnewline[\espaciosalida]
+\hline
+\(D\) & & & \tabularnewline[\espaciosalida]
+\hline
+\end{tabular}
+\end{center}
+
+¿Cuántos subconjuntos contiene \(\mathcal{P}(Q)\) y cuántos de ellos son alcanzables en este AFD?
+
+\ifrespuestas\else
+\blank[14cm]
+\fi
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 6}
+\begin{enumerate}[leftmargin=*]
+    \item \(A=\{0,1,3\}\).
+    \item \(\operatorname{mover}(A,a)=\{2\}\) y \(B=\{2,5\}\).
+    \item \(\operatorname{mover}(A,b)=\{4\}\) y \(C=\{4,5\}\).
+    \item \(D=\emptyset\).
+\end{enumerate}
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Estado} & \textbf{Con \(a\)} & \textbf{Con \(b\)} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(A\) & \(B\) & \(C\) & No \tabularnewline
+\hline
+\(B\) & \(D\) & \(D\) & Sí \tabularnewline
+\hline
+\(C\) & \(D\) & \(D\) & Sí \tabularnewline
+\hline
+\(D\) & \(D\) & \(D\) & No \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Como \(|Q|=6\), el conjunto potencia contiene \(2^6=64\) subconjuntos. La construcción descubre sólo cuatro subconjuntos alcanzables: \(A\), \(B\), \(C\) y \(D\).
+\end{respuesta}
+\fi
+
+\begin{ejercicio}{Ejercicio 7. Construir sólo los subconjuntos alcanzables \hfill {\small [Extensión]}}
+El siguiente AFN sobre \(\Sigma=\{0,1\}\) procede del material de Teoría de la Computación. No tiene transiciones \(\varepsilon\).
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=3.0cm,on grid,auto,>=Stealth]
+\node[state,initial] (q0) {\(q_0\)};
+\node[state,right=of q0] (q1) {\(q_1\)};
+\node[state,accepting,right=of q1] (q2) {\(q_2\)};
+\path[->]
+  (q0) edge[loop above] node {\(0,1\)} ()
+       edge node {\(0\)} (q1)
+  (q1) edge node {\(1\)} (q2);
+\end{tikzpicture}
+\end{center}
+
+Parte del subconjunto inicial \(A=\{q_0\}\). Calcula las transiciones, agrega sólo los subconjuntos alcanzables y completa la tabla. Usa \(B=\{q_0,q_1\}\) y \(C=\{q_0,q_2\}\).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Estado} & \textbf{Con 0} & \textbf{Con 1} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(A=\{q_0\}\) & & & \tabularnewline[\espaciosalida]
+\hline
+\(B=\{q_0,q_1\}\) & & & \tabularnewline[\espaciosalida]
+\hline
+\(C=\{q_0,q_2\}\) & & & \tabularnewline[\espaciosalida]
+\hline
+\end{tabular}
+\end{center}
+
+Traza \texttt{1101} en el AFD obtenido y describe el lenguaje reconocido.
+
+\ifrespuestas\else
+\blank[14cm]
+
+\blank[14cm]
+\fi
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 7}
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Estado} & \textbf{Con 0} & \textbf{Con 1} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(A=\{q_0\}\) & \(B\) & \(A\) & No \tabularnewline
+\hline
+\(B=\{q_0,q_1\}\) & \(B\) & \(C\) & No \tabularnewline
+\hline
+\(C=\{q_0,q_2\}\) & \(B\) & \(A\) & Sí \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+La traza es \(A\xrightarrow{1}A\xrightarrow{1}A\xrightarrow{0}B\xrightarrow{1}C\); por tanto, \texttt{1101} se acepta. El autómata reconoce las cadenas sobre \(\{0,1\}\) que terminan en \texttt{01}.
+\end{respuesta}
+\fi
+
+\section*{\cf{verde587246}{4. Minimización de autómatas}}
+
+\begin{ejercicio}{Ejercicio 8. Marcar pares distinguibles \hfill {\small [Esencial]}}
+Retoma el AFD de cuatro estados del Ejercicio 6: \(A\) y \(D\) no son de aceptación; \(B\) y \(C\) sí. Escribe:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{I} si el par se marca inicialmente porque sólo uno de sus estados es de aceptación;
+    \item \textbf{T} si se marca después porque alguna transición lleva a un par ya marcado;
+    \item \textbf{S} si permanece sin marca.
+\end{itemize}
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|c|c|p{0.50\textwidth}|}
+\hline
+\textbf{Par} & \textbf{I/T/S} & \textbf{Símbolo o razón} \tabularnewline
+\hline
+\(\{A,B\}\) & & \tabularnewline[\espaciosalida]
+\hline
+\(\{A,C\}\) & & \tabularnewline[\espaciosalida]
+\hline
+\(\{A,D\}\) & & \tabularnewline[\espaciosalida]
+\hline
+\(\{B,C\}\) & & \tabularnewline[\espaciosalida]
+\hline
+\(\{B,D\}\) & & \tabularnewline[\espaciosalida]
+\hline
+\(\{C,D\}\) & & \tabularnewline[\espaciosalida]
+\hline
+\end{tabular}
+\end{center}
+
+Indica qué estados son equivalentes y completa el AFD mínimo.
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Estado mínimo} & \textbf{Estados originales} & \textbf{Con \(a\) o \(b\)} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(S\) & & & \tabularnewline[\espaciosalida]
+\hline
+\(F\) & & & \tabularnewline[\espaciosalida]
+\hline
+\(M\) & & & \tabularnewline[\espaciosalida]
+\hline
+\end{tabular}
+\end{center}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 8}
+\begin{center}
+\small
+\begin{tabular}{|c|c|p{0.50\textwidth}|}
+\hline
+\textbf{Par} & \textbf{I/T/S} & \textbf{Símbolo o razón} \tabularnewline
+\hline
+\(\{A,B\}\) & I & Sólo \(B\) acepta. \tabularnewline
+\hline
+\(\{A,C\}\) & I & Sólo \(C\) acepta. \tabularnewline
+\hline
+\(\{A,D\}\) & T & Con \(a\) llega a \(\{B,D\}\), que está marcado. \tabularnewline
+\hline
+\(\{B,C\}\) & S & Ambos llegan a \(D\) con \(a\) o \(b\). \tabularnewline
+\hline
+\(\{B,D\}\) & I & Sólo \(B\) acepta. \tabularnewline
+\hline
+\(\{C,D\}\) & I & Sólo \(C\) acepta. \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+El único par equivalente es \(B\approx C\).
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Estado mínimo} & \textbf{Estados originales} & \textbf{Con \(a\) o \(b\)} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(S\) & \(\{A\}\) & \(F\) & No \tabularnewline
+\hline
+\(F\) & \(\{B,C\}\) & \(M\) & Sí \tabularnewline
+\hline
+\(M\) & \(\{D\}\) & \(M\) & No \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+\end{respuesta}
+\fi
+
+\begin{ejercicio}{Ejercicio 9. Refinar una partición \hfill {\small [Extensión]}}
+Minimiza el AFD de la tabla. El estado inicial es \(q_0\) y \(F=\{q_1,q_2,q_5\}\).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Estado} & \textbf{Con \(a\)} & \textbf{Con \(b\)} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(q_0\) & \(q_1\) & \(q_2\) & No \tabularnewline
+\hline
+\(q_1\) & \(q_3\) & \(q_4\) & Sí \tabularnewline
+\hline
+\(q_2\) & \(q_4\) & \(q_3\) & Sí \tabularnewline
+\hline
+\(q_3\) & \(q_5\) & \(q_5\) & No \tabularnewline
+\hline
+\(q_4\) & \(q_5\) & \(q_5\) & No \tabularnewline
+\hline
+\(q_5\) & \(q_5\) & \(q_5\) & Sí \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+
+Escribe la partición inicial y refínala hasta que no cambie.
+
+\[
+\Pi_0=\blank[10cm]
+\]
+
+\[
+\Pi_f=\blank[10cm]
+\]
+
+Completa la tabla del AFD mínimo usando un estado nuevo por cada grupo de \(\Pi_f\).
+
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Nuevo} & \textbf{Estados originales} & \textbf{Con \(a\)} & \textbf{Con \(b\)} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(P_0\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(P_1\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(P_2\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\(P_3\) & & & & \tabularnewline[\espaciosalida]
+\hline
+\end{tabular}
+\end{center}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 9}
+La partición inicial separa estados de aceptación y estados que no aceptan:
+\[
+\Pi_0=\big\{\{q_1,q_2,q_5\},\{q_0,q_3,q_4\}\big\}.
+\]
+
+Al refinar, \(q_5\) se separa de \(q_1,q_2\), y después \(q_0\) se separa de \(q_3,q_4\). La partición estable es
+\[
+\Pi_f=\big\{\{q_0\},\{q_1,q_2\},\{q_3,q_4\},\{q_5\}\big\}.
+\]
+
+\begin{center}
+\small
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Nuevo} & \textbf{Estados originales} & \textbf{Con \(a\)} & \textbf{Con \(b\)} & \textbf{¿Acepta?} \tabularnewline
+\hline
+\(P_0\) & \(\{q_0\}\) & \(P_1\) & \(P_1\) & No \tabularnewline
+\hline
+\(P_1\) & \(\{q_1,q_2\}\) & \(P_2\) & \(P_2\) & Sí \tabularnewline
+\hline
+\(P_2\) & \(\{q_3,q_4\}\) & \(P_3\) & \(P_3\) & No \tabularnewline
+\hline
+\(P_3\) & \(\{q_5\}\) & \(P_3\) & \(P_3\) & Sí \tabularnewline
+\hline
+\end{tabular}
+\end{center}
+\end{respuesta}
+\fi
+
+\ifrespuestas\else\newpage\fi
+\section*{\cf{verde587246}{5. Integración}}
+
+\begin{ejercicio}{Ejercicio 10. Del patrón a los tokens de IMP \hfill {\small [Esencial]}}
+Considera el siguiente fragmento de \textsc{IMP}:
+
+\begin{center}
+\texttt{if x20 <= 25 then x20 := x20 + 1 else skip}
+\end{center}
+
+Responde paso a paso.
+
+\begin{enumerate}[leftmargin=*]
+    \item Separa los lexemas con una barra vertical.
+
+    \ifrespuestas\else
+    \blank[14cm]
+    \fi
+
+    \item Escribe la secuencia conceptual de tokens. Conserva como atributos el texto de \texttt{LOC} y el valor de \texttt{NUM}.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+
+    \item Escribe el patrón que satisface \texttt{x20} y el que satisface \texttt{25}.
+
+    \ifrespuestas\else
+    \blank[14cm]
+    \fi
+
+    \item Ordena las representaciones para completar la ruta desde el patrón hasta el reconocedor reducido:
+
+    \begin{center}
+    \small
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    AFD & expresión regular & AFD mínimo & AFN \tabularnewline
+    \hline
+    \end{tabular}
+    \end{center}
+
+    \[
+    \text{patrón}\longrightarrow\blank[2.7cm]
+    \longrightarrow\blank[2.7cm]
+    \longrightarrow\blank[2.7cm]
+    \longrightarrow\blank[2.7cm]
+    \]
+
+    \item Explica qué trabajo falta para pasar de reconocedores individuales al analizador léxico funcional del tema 2.3.
+
+    \ifrespuestas\else
+    \blank[14cm]
+
+    \blank[14cm]
+    \fi
+\end{enumerate}
+\end{ejercicio}
+
+\ifrespuestas
+\begin{respuesta}{Respuesta 10}
+\begin{enumerate}[leftmargin=*]
+    \item \texttt{if | x20 | <= | 25 | then | x20 | := | x20 | + | 1 | else | skip}.
+    \item \texttt{IF LOC(x20) LE NUM(25) THEN LOC(x20) ASSIGN LOC(x20) PLUS NUM(1) ELSE SKIP}.
+    \item \texttt{x20} satisface \(\mathit{letra}^{+}\mathit{digito}^{*}\); \texttt{25} satisface \(\mathit{digito}^{+}\).
+    \item Patrón \(\longrightarrow\) expresión regular \(\longrightarrow\) AFN \(\longrightarrow\) AFD \(\longrightarrow\) AFD mínimo.
+    \item Falta coordinar todas las reglas, resolver coincidencias como una palabra reservada frente a \texttt{LOC}, identificar el lexema adecuado dentro del flujo, omitir los espacios permitidos, reportar errores y expresar la especificación en \textsc{Lark}.
+\end{enumerate}
+\end{respuesta}
+\fi
+
+\end{document}
