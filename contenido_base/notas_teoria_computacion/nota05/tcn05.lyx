@@ -1,0 +1,4586 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\raggedcolumns
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-bytype
+theorems-sec-bytype
+\end_modules
+\maintain_unincluded_children false
+\language spanish-mexico
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "cmr" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\boxbgcolor #cccccc
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "mathescape=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Teoría de la Computación, 2021-1
+\begin_inset Newline newline
+\end_inset
+
+Nota de clase 5: Autómatas Finitos con 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+-transiciones
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Tomada de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+literal "false"
+
+\end_inset
+
+ con ligeras modificaciones.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Manuel Soto Romero
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today 
+\backslash
+
+\backslash
+ Colegio de Ciencia y Tecnología UACM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*{
+\backslash
+thefootnote}{
+\backslash
+arabic{footnote}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{footnote}{0}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{5}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*
+\backslash
+lstlistingname{C
+\backslash
+'odigo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Definición
+\end_layout
+
+\begin_layout Standard
+Un 
+\emph on
+autómata finito con 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+-transiciones (AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+) 
+\emph default
+es un autómata no determinista 
+\begin_inset Formula $M=\left\langle \Sigma,Q,q_{0},F,\delta\right\rangle $
+\end_inset
+
+ en el que la función de transición está definida como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\delta:Q\times\left(\Sigma\cup\left\{ \varepsilon\right\} \right)\rightarrow\mathcal{P}\left(Q\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La transición 
+\begin_inset Formula $\delta\left(q,\varepsilon\right)=\left\{ p_{i1},...,p_{in}\right\} $
+\end_inset
+
+, llamada 
+\emph on
+transición 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+
+\emph default
+ o 
+\emph on
+transición espontánea, 
+\emph default
+tiene el siguiente significado computacional: estando en el estado 
+\begin_inset Formula $q$
+\end_inset
+
+, el autómata puede cambiar a uno cualquier de los estados 
+\begin_inset Formula $p_{i1},...,p_{in}$
+\end_inset
+
+, independientemente del símbolo leído.
+ Dicho de otra manera, las transiciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ permiten al autómata cambiar internamente de estado sin consumir el símbolo
+ leído.
+\end_layout
+
+\begin_layout Standard
+En el diagrama del autómata, las transiciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ dan lugar a aristas con etiquetas 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+ Una cadena de entrada 
+\begin_inset Formula $w$
+\end_inset
+
+ es aceptada por un AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ si existe por lo menos una trayectoria, desde el estado 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+, cuyas etiquetas son exactamente los símbolos de 
+\begin_inset Formula $w$
+\end_inset
+
+, intercalados con cero, uno o más 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+s.
+\end_layout
+
+\begin_layout Standard
+En los autómatas AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+, al igual que en los AFN, puede haber múltiples camnios para una misma
+ cadena de entrada.
+ Veamos un ejemplo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (0) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0, above of=0] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, accepting, accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0, below of=0] (3) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=3, accepting] (4) {$q_4$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[bend right] node{$a$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{$a$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend left] node{$b$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop above] node{$b$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[loop below] node{$b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[bend right] node{$
+\backslash
+varepsilon$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (4) edge[loop below] node{$a$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ejemplos de cadenas aceptadas por este autómata son:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $aab$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $abaa$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $abbaa$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Los AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ nos dan más libertada en el diseño de autómatas, especialmente cuando tenemos
+ varias concatenaciones.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset CommandInset label
+LatexCommand label
+name "exa:.Ejemplo 1"
+
+\end_inset
+
+
+\begin_inset Formula $\Sigma=\left\{ a,b,c\right\} $
+\end_inset
+
+.
+ 
+\begin_inset Formula $L=a^{*}b^{*}c^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+AFN que acepta a 
+\begin_inset Formula $L$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[loop above] node{$a$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[bend left] node{$b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[bend right=45] node{$c$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{$b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend left] node{$c$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop above] node{$c$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ que acepta a 
+\begin_inset Formula $L$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[loop above] node{$a$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{$b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend left] node{$
+\backslash
+varepsilon$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop above] node{$c$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este autómata es muy similar a la expresión regular 
+\begin_inset Formula $a^{*}b^{*}c^{*}$
+\end_inset
+
+: las concatenaciones son reemplazadas por transiciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula $\Sigma=\left\{ a,b\right\} $
+\end_inset
+
+.
+ 
+\begin_inset Formula $L=\text{lenguaje de todas las cadenas sobre \ensuremath{\Sigma} que tienen un número par de as o un número par de bs.}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+AFD que acepta el lenguaje de las cadenas con un número par de 
+\begin_inset Formula $a$
+\end_inset
+
+s:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$a$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[loop above] node{$b$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend left] node{$a$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{$b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+AFD que acepta el lenguaje de las cadenas con un número par de 
+\begin_inset Formula $b$
+\end_inset
+
+s:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[loop above] node{$a$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend left] node{$b$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{$a$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ que acepta el lenguaje de las cadenas con un número par de 
+\begin_inset Formula $a$
+\end_inset
+
+s o número par de 
+\begin_inset Formula $b$
+\end_inset
+
+s:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0, above of=0,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1,] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0, below of=0,accepting] (3) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=3] (4) {$q_4$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[bend right] node{$
+\backslash
+varepsilon$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{$b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend left] node{$a$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop above] node{$b$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[bend left] node{$a$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[loop above] node{$a$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[bend left] node{$b$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (4) edge[loop above] node{$a$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (4) edge[bend left] node{$b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A diferencia de los AFD y los AFN, en los AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ pueden existir cómputos infinitos, es decir, cómputos que nunca terminan.
+ Esto puede suceder si el autómata ingresa a un estado desde el cual haya
+ varias transiciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ encadenadas que regresen al mismo estado.
+ Por ejemplo, el siguiente autómata: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state] (0) {$$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0] (1) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend left] node{$
+\backslash
+varepsilon$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (2) edge[bend left] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Diseñar un AFN-
+\begin_inset Formula $\text{\ensuremath{\varepsilon}}$
+\end_inset
+
+ que acepte el lenguaje 
+\begin_inset Formula $\left(ab+b\right)^{*}ab^{*}$
+\end_inset
+
+, sobre 
+\begin_inset Formula $\Sigma=\left\{ a,b\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Equivalencia entre AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ y AFN
+\end_layout
+
+\begin_layout Standard
+En esta sección mostraremos que el modelo AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ es computacionalmente equivalente al modelo AFN.
+ Es decir, se pueden quitar las transiciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ y añadir nuevas que las simulen sin alterar el lenguaje aceptado.
+ Comencemos con la siguiente observación.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Un AFN puede ser visto como un AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ en el que, simplemente hay 
+\emph on
+cero
+\emph default
+ transiciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Con esta observación, tenemos el siguiente teorema:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Dado un AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 
+\begin_inset Formula $M$
+\end_inset
+
+, se puede construir un AFN 
+\begin_inset Formula $M'$
+\end_inset
+
+ equivalente a 
+\begin_inset Formula $M$
+\end_inset
+
+ tal que 
+\begin_inset Formula $L\left(M\right)=L\left(M'\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La demostración del teorema queda fuera de los alcances de este curso, por
+ lo que en su lugar, presentaremos un método de tranformación.
+ Necesitamos primero que nada definir el concepto de 
+\emph on
+
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+-cerradura
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Para un estado 
+\begin_inset Formula $q$
+\end_inset
+
+, la 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+, denotada 
+\begin_inset Formula $ECLOSURE\left(q\right)$
+\end_inset
+
+ es el conjunto de estados de un AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ a los que se puede llegar desde 
+\begin_inset Formula $q$
+\end_inset
+
+ por 0, 1 o más transiciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+ Nótar además que 
+\begin_inset Formula $ECLOSURE\left(q\right)\neq\delta\left(q,\varepsilon\right).$
+\end_inset
+
+ Por definición 
+\begin_inset Formula $q\in ECLOSURE\left(q\right)$
+\end_inset
+
+.
+ De esta forma, la 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+-cerradura de un conjunto de estados 
+\begin_inset Formula $\left\{ q_{1},...,q_{k}\right\} $
+\end_inset
+
+ se define por:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+ECLOSURE\left(\left\{ q_{1},...,q_{k}\right\} \right)=ECLOSURE\left(q_{1}\right)\cup...\cup ECLOSURE\left(q_{k}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Además, 
+\begin_inset Formula $ECLOSURE\left(\varnothing\right)=\varnothing.$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+De esta manera, podemos construir un AFN 
+\begin_inset Formula $M'=\left\langle \Sigma,Q,q_{0},F',\delta'\right\rangle $
+\end_inset
+
+ a partir del AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 
+\begin_inset Formula $M=\left\langle \Sigma,Q,q_{0},F,\delta\right\rangle $
+\end_inset
+
+, mediante la siguiente función de transición:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+\delta':Q\times\Sigma & \rightarrow & \mathcal{P}\left(Q\right)\\
+\left(q,a\right) & \rightarrow & \delta'\left(q,a\right)=ECLOSURE\left(\delta\left(ECLOSURE\left(q\right),a\right)\right)
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $M'$
+\end_inset
+
+ simula así las transiciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ de 
+\begin_inset Formula $M$
+\end_inset
+
+ teniendo en cuenta todas las posibles trayectorias.
+ 
+\begin_inset Formula $F'$
+\end_inset
+
+ se define como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F'=\left\{ q\in Q:ECLOSURE\left(q\right)\text{ contiene al menos un estado de aceptación}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es decir, los estados de aceptación de 
+\begin_inset Formula $M'$
+\end_inset
+
+ incluyen los estados de aceptación de 
+\begin_inset Formula $M$
+\end_inset
+
+ y aquellos estados desde los cuales se puede llegar a un estado de aceptación
+ por medio de una o más transiciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Veamos un ejemplo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Vamos a ilustrar el método anterior con el autómata del Ejemplo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "exa:.Ejemplo 1"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ al que llamaremos 
+\begin_inset Formula $M$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[loop above] node{$a$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{$b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend left] node{$
+\backslash
+varepsilon$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop above] node{$c$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Recordemos que 
+\begin_inset Formula $L$
+\end_inset
+
+
+\begin_inset Formula $\left(M\right)=a^{*}b^{*}c^{*}$
+\end_inset
+
+.
+ Comencemos entonces calculando la 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ cerradura de cada estado de nuestro autómata.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{lcl}
+ECLOSURE\left(q_{0}\right) & = & \left\{ q_{0},q_{1},q_{2}\right\} \\
+ECLOSURE\left(q_{1}\right) & = & \left\{ q_{1},q_{2}\right\} \\
+ECLOSURE\left(q_{2}\right) & = & \left\{ q_{2}\right\} 
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A partir de aquí construimos las transiciones correspondientes, abreviamos
+ 
+\emph on
+ECLOSURE como EC
+\emph default
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{lcl}
+\delta'\left(q_{0},a\right) & = & EC\left(\delta\left(EC\left(q_{0}\right),a\right)\right)=EC\left(\delta\left(\left\{ q_{0},q_{1},q_{2}\right\} ,a\right)\right)=EC\left(\left\{ q_{0}\right\} \right)=\left\{ q_{0},q_{1},q_{2}\right\} \\
+\delta'\left(q_{0},b\right) & = & EC\left(\delta\left(EC\left(q_{0}\right),b\right)\right)=EC\left(\delta\left(\left\{ q_{0},q_{1},q_{2}\right\} ,b\right)\right)=EC\left(\left\{ q_{1}\right\} \right)=\left\{ q_{1},q_{2}\right\} \\
+\delta'\left(q_{0},c\right) & = & EC\left(\delta\left(EC\left(q_{0}\right),c\right)\right)=EC\left(\delta\left(\left\{ q_{0},q_{1},q_{2}\right\} ,c\right)\right)=EC\left(\left\{ q_{2}\right\} \right)=\left\{ q_{2}\right\} \\
+\delta'\left(q_{1},a\right) & = & EC\left(\delta\left(EC\left(q_{1}\right),a\right)\right)=EC\left(\delta\left(\left\{ q_{1},q_{2}\right\} ,a\right)\right)=EC\left(\varnothing\right)=\varnothing\\
+\delta'\left(q_{1},b\right) & = & EC\left(\delta\left(EC\left(q_{1}\right),b\right)\right)=EC\left(\delta\left(\left\{ q_{1},q_{2}\right\} ,b\right)\right)=EC\left(\left\{ q_{1}\right\} \right)=\left\{ q_{1},q_{2}\right\} \\
+\delta'\left(q_{1},c\right) & = & EC\left(\delta\left(EC\left(q_{1}\right),c\right)\right)=EC\left(\delta\left(\left\{ q_{1},q_{2}\right\} ,c\right)\right)=EC\left(\left\{ q_{2}\right\} \right)=\left\{ q_{2}\right\} \\
+\delta\left(q_{2},a\right) & = & EC\left(\delta\left(EC\left(q_{2}\right),a\right)\right)=EC\left(\delta\left(\left\{ q_{2}\right\} ,a\right)\right)=EC\left(\varnothing\right)=\varnothing\\
+\delta\left(q_{2},b\right) & = & EC\left(\delta\left(EC\left(q_{2}\right),b\right)\right)=EC\left(\delta\left(\left\{ q_{2}\right\} ,b\right)\right)=EC\left(\varnothing\right)=\varnothing\\
+\delta\left(q_{2},c\right) & = & EC\left(\delta\left(EC\left(q_{2}\right),c\right)\right)=EC\left(\delta\left(\left\{ q_{2}\right\} ,c\right)\right)=EC\left(\left\{ q_{2}\right\} \right)=\left\{ q_{2}\right\} 
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El conjunto de estados finales es 
+\begin_inset Formula $\left\{ q_{0,}q_{1},q_{2}\right\} $
+\end_inset
+
+ dado que las cerraduras de todos los estados contienen estados finales.
+ De esta forma, el autómata AFN queda como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[loop above] node{$a$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[] node{$a,b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (0) edge[bend left=50] node{$a,b,c$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop below] node{$b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$b,c$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop above] node{$c$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Construye un AFN equivalente al siguiente AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=3cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below of=0] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2] (3) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[] node{$a,
+\backslash
+varepsilon$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[bend left] node{$b$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$
+\backslash
+varepsilon$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[] node{$b$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Teorema de Kleene
+\end_layout
+
+\begin_layout Standard
+En las notas y secciones anteriores, se ha mostrado la equivalencia computaciona
+l entre los AFD, AFN y AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+, lo cual puede ser descrito de la siguiente forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{AFD}\equiv\text{AFN}\equiv\text{AFN-}\varepsilon
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esto quiere decir que para cada uno de estos tipos de autómatas se pueden
+ construir otro tipo de autómatas equivalentes.
+ Por lo tanto, estos tres modelos aceptan exactamente los mismos modelos.
+ El Teorema de Kleene establece que tales lenguajes son precisamente los
+ lenguajes regulares.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Un lenguaje es regular si y sólo si es aceptado por un autómata finito (AFD
+ o AFN o AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La demostración de este teorema queda fuera de los alcances del curso.
+ Sin embargo, la misma demostración nos permite analizar la equivalencia
+ que hay entre las expresiones regulares y los autómatas finitos (en ambos
+ sentidos) por medio de dos partes: La Parte I demuestra que dada una expresión
+ regular 
+\begin_inset Formula $R$
+\end_inset
+
+ sobre un alfabeto 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+, se puede construir un AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 
+\begin_inset Formula $M$
+\end_inset
+
+ tal que el lenguaje aceptado por 
+\begin_inset Formula $M$
+\end_inset
+
+ sea exactamente el lenguaje representado por 
+\begin_inset Formula $R$
+\end_inset
+
+.
+ Por otro lado, la Parte II demuestra que para todo 
+\begin_inset Formula $AFN$
+\end_inset
+
+ 
+\begin_inset Formula $M$
+\end_inset
+
+ existe una expresión regular 
+\begin_inset Formula $R$
+\end_inset
+
+ tal que 
+\begin_inset Formula $L(M)=R$
+\end_inset
+
+.
+ Para los fines de este curso nos enfocaremos en la Parte I de la demostración
+ desde un enfoque algorítmico.
+\end_layout
+
+\begin_layout Standard
+Recordemos que una expresión regular se define recursivamente como:
+\end_layout
+
+\begin_layout Standard
+Sea 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ un alfabeto.
+ La 
+\emph on
+expresión regular
+\emph default
+ sobre 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ y los conjuntos que ellas denotan son definidos recursivamente como sigue:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\varnothing$
+\end_inset
+
+ es una expresión regular y denota el conjunto vacío.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ es una expresión regular y denota el conjunto 
+\begin_inset Formula $\left\{ \varepsilon\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Para cada 
+\begin_inset Formula $a$
+\end_inset
+
+ en 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+, 
+\begin_inset Formula $a$
+\end_inset
+
+ es una expresión regular y denota el conjunto 
+\begin_inset Formula $\left\{ a\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Si 
+\begin_inset Formula $r$
+\end_inset
+
+ y 
+\begin_inset Formula $s$
+\end_inset
+
+ son expresiones regulares denotando el lenguaje 
+\begin_inset Formula $R$
+\end_inset
+
+ y 
+\begin_inset Formula $S$
+\end_inset
+
+ respectivamente entonces 
+\begin_inset Formula $\left(r+s\right),rs,r^{*}$
+\end_inset
+
+ son expresiones regulares que denotan los conjuntos 
+\begin_inset Formula $R\cup S,RS$
+\end_inset
+
+ y 
+\begin_inset Formula $R^{*}$
+\end_inset
+
+, respectivamente.
+\end_layout
+
+\begin_layout Standard
+De esta forma, a partir de cada una de las construcciones anteriores, podemos
+ construir también autómatas que acepten los lenguajes que representan cada
+ una de éstas.
+ Veamos cada uno de estos casos.
+ Es importante notar que el autómata obtenido será un AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+Caso 1 (
+\begin_inset Formula $\varnothing$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+El siguiente autómata acepta el lenguaje 
+\begin_inset Formula $\varnothing$
+\end_inset
+
+, es decir el lenguaje representado por la expresión regular 
+\begin_inset Formula $R=\varnothing$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+columnbreak
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Autómata
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename imagenes/automata1.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+Caso 2 (
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+El siguiente autómata acepta el lenguaje 
+\begin_inset Formula $\left\{ \varepsilon\right\} $
+\end_inset
+
+, es decir, el lenguaje representado por la expresión regular 
+\begin_inset Formula $R=\varepsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+columnbreak
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Autómata
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename imagenes/automata2.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+Caso 3 (
+\begin_inset Formula $a$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+El siguiente autómata acepta el lenguaje 
+\begin_inset Formula $\left\{ a\right\} $
+\end_inset
+
+, 
+\begin_inset Formula $a\in\Sigma$
+\end_inset
+
+, es decir, el lenguaje representado por la expresión regular 
+\begin_inset Formula $R=a$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+columnbreak
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Autómata
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename imagenes/automata3.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para los siguientes casos, supóngase que para las expresiones regulares
+ 
+\begin_inset Formula $R$
+\end_inset
+
+ y 
+\begin_inset Formula $S$
+\end_inset
+
+ existen AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ y 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+ tales que 
+\begin_inset Formula $L\left(M_{1}\right)=L\left(R\right)$
+\end_inset
+
+ y 
+\begin_inset Formula $L\left(M_{2}\right)=S$
+\end_inset
+
+.
+ Esquemáticamente vamos a presentar los autómatas 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ y 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+ de la siguiente forma:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename imagenes/automata4.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+Caso 4 (
+\begin_inset Formula $R+S$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+Los autómatas 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ y 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+ se conectan en paralelo y los estados finales del nuevo autómata son los
+ estados de 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ junto con los de 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+columnbreak
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Autómata
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename imagenes/automata5.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+Caso 5 (
+\begin_inset Formula $RS$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+Los autómatas 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ y 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+ se conectan en serie y los estados finales del nuevo autómata son únicamente
+ los estados finales de 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+columnbreak
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Autómata
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename imagenes/automata6.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+
+\series bold
+Caso 6 (
+\begin_inset Formula $R^{*}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+Los estados finales del nuevo autómata son los estados finales de 
+\begin_inset Formula $M_{1}$
+\end_inset
+
+ junto con el estado inicial.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+columnbreak
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Autómata
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename imagenes/automata7.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Ejemplo
+\end_layout
+
+\begin_layout Standard
+De acuerdo con las construcciones presentadas, a continuación veremos algunos
+ ejemplos, sin embargo antes de empezar, analicemos el siguiente autómata
+ que acepta el lenguaje 
+\begin_inset Formula $a^{*}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=3cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,accepting] (1) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[] node{$a$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend right=60] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para simplificar las próximas construcciones, usaremos en su lugar el ciclo
+ de un estado:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=3cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[loop above] node{$a$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Vamos a utilizar el procedimiento anterior para construir un AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ que acepte el lenguaje 
+\begin_inset Formula $a^{*}\left(ab+ba\right)^{*}+a\left(b+a^{*}\right)$
+\end_inset
+
+ sobre el alfabeto 
+\begin_inset Formula $\left\{ a,b\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Autómata que acepta 
+\begin_inset Formula $ab$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (0) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0] (1) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2, accepting] (3) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[] node{$a$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$
+\backslash
+varepsilon$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Autómata que acepta 
+\begin_inset Formula $ba$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (0) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0] (1) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2, accepting] (3) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[] node{$b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$
+\backslash
+varepsilon$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$a$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Autómata que acepta 
+\begin_inset Formula $ab+ba$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (0) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,above of=0] (1) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2] (3) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=3, accepting] (4) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,below of=0] (5) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=5] (6) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=6] (7) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=7, accepting] (8) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (0) edge[bend right] node{$
+\backslash
+varepsilon$} (5)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$a$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$
+\backslash
+varepsilon$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[] node{$b$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (5) edge[] node{$b$} (6)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (6) edge[] node{$
+\backslash
+varepsilon$} (7)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (7) edge[] node{$a$} (8)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Autómata que acepta 
+\begin_inset Formula $\left(ab+ba\right)$
+\end_inset
+
+
+\begin_inset Formula $^{*}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (0) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,above of=0] (1) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2] (3) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=3, accepting] (4) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,below of=0] (5) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=5] (6) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=6] (7) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=7, accepting] (8) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (0) edge[bend right] node{$
+\backslash
+varepsilon$} (5)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$a$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$
+\backslash
+varepsilon$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[] node{$b$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (4) edge[bend right=80] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (5) edge[] node{$b$} (6)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (6) edge[] node{$
+\backslash
+varepsilon$} (7)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (7) edge[] node{$a$} (8)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (8) edge[bend left=80] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Autómata que acepta 
+\begin_inset Formula $a^{*}\left(ab+ba\right)$
+\end_inset
+
+
+\begin_inset Formula $^{*}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state,accepting] (0) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,above of=0] (1) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2] (3) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=3, accepting] (4) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,below of=0] (5) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=5] (6) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=6] (7) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=7, accepting] (8) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, left of=0,initial,initial text=] (9) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (0) edge[bend right] node{$
+\backslash
+varepsilon$} (5)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$a$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$
+\backslash
+varepsilon$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[] node{$b$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (4) edge[bend right=80] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (5) edge[] node{$b$} (6)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (6) edge[] node{$
+\backslash
+varepsilon$} (7)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (7) edge[] node{$a$} (8)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (8) edge[bend left=80] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (9) edge[loop above] node{$a$} (9)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (9) edge[] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Autómata que acepta 
+\begin_inset Formula $b+a^{*}:$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (0) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,above of=0] (1) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,below of=0,accepting] (2) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, accepting] (3) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[bend right] node{$
+\backslash
+varepsilon$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop below] node{$a$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Autómata que acepta 
+\begin_inset Formula $a\left(b+a^{*}\right):$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state] (0) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,above of=0] (1) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,below of=0,accepting] (2) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, accepting] (3) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, left of=0] (4) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, left of=4,initial,initial text=] (5) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[bend right] node{$
+\backslash
+varepsilon$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop below] node{$a$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (5) edge[] node{$a$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (4) edge[] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Autómata que acepta 
+\begin_inset Formula $a^{*}\left(ab+ba\right)^{*}+a\left(b+a^{*}\right)$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state,left of=9,below of=9,initial,initial text=] (16) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state,accepting] (0) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,above of=0] (1) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2] (3) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=3, accepting] (4) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0,below of=0] (5) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=5] (6) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=6] (7) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=7, accepting] (8) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, left of=0] (9) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below=5cm of 16,right of=16] (10) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=10] (11) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=11] (12) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=12, above of=12] (13) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=13, accepting] (14) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=12, below of=12,accepting] (15) {$$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (0) edge[bend right] node{$
+\backslash
+varepsilon$} (5)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$a$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$
+\backslash
+varepsilon$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[] node{$b$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (4) edge[bend right=80] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (5) edge[] node{$b$} (6)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (6) edge[] node{$
+\backslash
+varepsilon$} (7)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (7) edge[] node{$a$} (8)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (8) edge[bend left=80] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (9) edge[loop above] node{$a$} (9)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (9) edge[] node{$
+\backslash
+varepsilon$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+      (16) edge[bend left] node{$
+\backslash
+varepsilon$} (9)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (16) edge[bend right] node{$
+\backslash
+varepsilon$} (10)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+      (10) edge[] node{$a$} (11)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (11) edge[] node{$
+\backslash
+varepsilon$} (12)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (12) edge[bend left] node{$
+\backslash
+varepsilon$} (13)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (13) edge[] node{$b$} (14)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (12) edge[bend right] node{$
+\backslash
+varepsilon$} (15)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (15) edge[loop below] node{$a$} (15)
+\end_layout
+
+\begin_layout Plain Layout
+
+     
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Diseñar autómatas AFN-
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ que acepten los siguientes lenguajes sobre el alfabeto 
+\begin_inset Formula $\Sigma=\left\{ a,b,c\right\} $
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a^{*}\left(b+ab^{*}+ab^{*}a\right)c^{*}+\left(a+b\right)\left(a+ac\right)^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $c^{*}a\left(a+ba\right)^{*}\left(abc\right)^{*}+c^{*}\left(a+cb^{*}c\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+Rodrigo De Castro, 
+\emph on
+Notas de Clase de Teoría de la Computación: Lenguajes, autómatas, gramáticas,
+\emph default
+ Universidad Nacional de Colombia, Facultas de Ciencias, 2004.
+\end_layout
+
+\end_body
+\end_document

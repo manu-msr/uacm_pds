@@ -95,18 +95,22 @@ Este cuadernillo acompaña las notas 02 y 03. Su propósito es practicar la estr
 Responde únicamente con lo estudiado en las notas 02 y 03. Los fragmentos de código son ilustrativos: no definen la sintaxis de \textsc{IMP}. No necesitas escribir expresiones regulares, construir autómatas, proponer reglas oficiales de \textsc{IMP} ni diseñar estrategias de recuperación de errores.
 \end{observacion}
 
+\begin{observacion}{Observación 2. Ruta sugerida}
+Los ejercicios \textbf{1, 3, 5, 7, 8 y 9 son esenciales}: cubren los contratos del compilador y la transformación de caracteres en tokens. Los ejercicios \textbf{2, 4, 6 y 10 son de extensión}: profundizan o integran lo aprendido. Si el tiempo es limitado, completa primero los esenciales; ningún ejercicio se elimina del cuadernillo.
+\end{observacion}
+
 \section*{\cf{verde587246}{1. Estructura y fases del compilador}}
 
-\begin{ejercicio}{Ejercicio 1. Reconocer los contratos entre fases}
+\begin{ejercicio}{Ejercicio 1. Reconocer los contratos entre fases \hfill {\small [Esencial]}}
 Completa la columna de salida con las expresiones del banco. Cada expresión se usa una sola vez.
 
 \begin{center}
 \small
 \begin{tabular}{|c|c|c|}
 \hline
-secuencia de tokens & representación estructurada & representación validada \tabularnewline
+programa destino & representación estructurada & secuencia de tokens \tabularnewline
 \hline
-representación intermedia & representación intermedia equivalente & programa destino \tabularnewline
+representación intermedia equivalente & representación validada & representación intermedia \tabularnewline
 \hline
 \end{tabular}
 \end{center}
@@ -141,7 +145,7 @@ En orden: secuencia de tokens; representación estructurada; representación val
 \fi
 
 \ifrespuestas\else\newpage\fi
-\begin{ejercicio}{Ejercicio 2. Análisis o síntesis}
+\begin{ejercicio}{Ejercicio 2. Análisis o síntesis \hfill {\small [Extensión]}}
 Escribe \textbf{A} si la tarea corresponde a la etapa general de análisis y \textbf{S} si corresponde a la etapa general de síntesis.
 
 \begin{center}
@@ -184,7 +188,7 @@ La representación producida por el análisis comunica una versión estructurada
 
 \section*{\cf{verde587246}{2. Responsabilidades y diagnósticos}}
 
-\begin{ejercicio}{Ejercicio 3. ¿Qué fase debe responder?}
+\begin{ejercicio}{Ejercicio 3. ¿Qué fase debe responder? \hfill {\small [Esencial]}}
 Escribe \textbf{L} para análisis léxico, \textbf{S} para análisis sintáctico o \textbf{M} para análisis semántico.
 
 \begin{center}
@@ -225,7 +229,7 @@ El analizador léxico reconoce y clasifica el lexema como identificador. Comprob
 \end{respuesta}
 \fi
 
-\begin{ejercicio}{Ejercicio 4. Delimitación de responsabilidades}
+\begin{ejercicio}{Ejercicio 4. Delimitación de responsabilidades \hfill {\small [Extensión]}}
 Marca cada afirmación como \textbf{verdadera} o \textbf{falsa}. Corrige las afirmaciones falsas.
 
 \begin{enumerate}[leftmargin=*]
@@ -263,14 +267,14 @@ Correcciones:
 
 \section*{\cf{verde587246}{3. Integración del compilador del curso}}
 
-\begin{ejercicio}{Ejercicio 5. Completar el recorrido de \textsc{IMP} a \textsc{C}}
+\begin{ejercicio}{Ejercicio 5. Completar el recorrido de \textsc{IMP} a \textsc{C} \hfill {\small [Esencial]}}
 Completa el flujo con las cuatro fases del banco.
 
 \begin{center}
 \small
 \begin{tabular}{|c|c|c|c|}
 \hline
-análisis léxico & análisis sintáctico & verificación semántica & generación de código \tabularnewline
+generación de código & análisis léxico & verificación semántica & análisis sintáctico \tabularnewline
 \hline
 \end{tabular}
 \end{center}
@@ -321,7 +325,7 @@ En orden: análisis léxico; análisis sintáctico; verificación semántica; ge
 \end{respuesta}
 \fi
 
-\begin{ejercicio}{Ejercicio 6. Interfaces y cambios}
+\begin{ejercicio}{Ejercicio 6. Interfaces y cambios \hfill {\small [Extensión]}}
 Un equipo define esta interfaz:
 
 \begin{center}
@@ -373,7 +377,7 @@ Responde.
 
 \section*{\cf{verde587246}{4. Fundamentos del análisis léxico}}
 
-\begin{ejercicio}{Ejercicio 7. Token, lexema, patrón o atributo}
+\begin{ejercicio}{Ejercicio 7. Token, lexema, patrón o atributo \hfill {\small [Esencial]}}
 Relaciona cada término con su descripción. Escribe la letra correspondiente.
 
 \begin{center}
@@ -420,16 +424,16 @@ Relaciones: el patrón describe una \textbf{forma}; el lexema \textbf{satisface}
 \end{respuesta}
 \fi
 
-\begin{ejercicio}{Ejercicio 8. Analizar un fragmento ilustrativo}
+\begin{ejercicio}{Ejercicio 8. Analizar un fragmento ilustrativo \hfill {\small [Esencial]}}
 Considera el fragmento \texttt{total = 25;}. No supongas que pertenece a \textsc{IMP}. Completa la tabla con los datos del banco.
 
 \begin{center}
 \small
 \begin{tabular}{|c|c|c|c|}
 \hline
-\texttt{ID} & \texttt{ASIG} & \texttt{ENTERO} & \texttt{PYC} \tabularnewline
+\texttt{PYC} & \texttt{ID} & \texttt{ENTERO} & \texttt{ASIG} \tabularnewline
 \hline
-\(\langle\texttt{ID},\texttt{total}\rangle\) & \(\langle\texttt{ASIG}\rangle\) & \(\langle\texttt{ENTERO},25\rangle\) & \(\langle\texttt{PYC}\rangle\) \tabularnewline
+\(\langle\texttt{ENTERO},25\rangle\) & \(\langle\texttt{PYC}\rangle\) & \(\langle\texttt{ID},\texttt{total}\rangle\) & \(\langle\texttt{ASIG}\rangle\) \tabularnewline
 \hline
 \end{tabular}
 \end{center}
@@ -504,14 +508,14 @@ Por filas:
 
 \section*{\cf{verde587246}{5. Comunicación y revisión integradora}}
 
-\begin{ejercicio}{Ejercicio 9. Solicitar el siguiente token}
+\begin{ejercicio}{Ejercicio 9. Solicitar el siguiente token \hfill {\small [Esencial]}}
 Completa el párrafo con las expresiones del banco. Cada expresión se usa una sola vez.
 
 \begin{center}
 \small
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-token & caracteres & lexema & nombre de token & atributo \tabularnewline
+atributo & lexema & caracteres & token & nombre de token \tabularnewline
 \hline
 \end{tabular}
 \end{center}
@@ -560,7 +564,7 @@ En orden: token; caracteres; lexema; nombre de token; atributo.
 \fi
 
 \ifrespuestas\else\newpage\fi
-\begin{ejercicio}{Ejercicio 10. Detectar y corregir confusiones}
+\begin{ejercicio}{Ejercicio 10. Detectar y corregir confusiones \hfill {\small [Extensión]}}
 Cada afirmación contiene un error. Subraya la parte incorrecta y reescribe la oración de forma adecuada.
 
 \begin{enumerate}[leftmargin=*]

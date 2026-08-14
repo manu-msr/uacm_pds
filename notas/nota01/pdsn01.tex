@@ -84,6 +84,12 @@ colframe=amber!85!black,
 fonttitle=\bfseries,
 title=#1,
 breakable}
+\newtcolorbox{ruta}[1]{
+colback=darkpastelblue!5!white,
+colframe=darkpastelblue!85!black,
+fonttitle=\bfseries,
+title=#1,
+breakable}
 \newtcolorbox{teorema}[1]{
 colback=bubblegum!5!white,
 colframe=bubblegum!85!black,
@@ -145,6 +151,12 @@ Unidad 1: Introducción a la Programación de Sistemas y los Compiladores\\ \big
 \setcounter{footnote}{0}
 
 En un curso inicial de programación solemos concentrarnos en escribir instrucciones que resuelvan un problema. Sin embargo, entre el texto escrito por una persona y su ejecución en una computadora intervienen otros programas: algunos traducen, otros reúnen partes separadas, otros preparan el programa en memoria y otros administran los recursos necesarios para ejecutarlo. En esta nota estudiaremos ese entorno como un panorama: definiremos la programación de sistemas, reconoceremos sus áreas principales y ubicaremos a los compiladores e intérpretes dentro de ella. Finalmente, explicaremos por qué la construcción de un compilador será el caso de estudio que articulará el curso.
+
+\begin{ruta}{Ruta de lectura (15--20 minutos)}
+\textbf{Lectura esencial:} sigue el caso inicial; localiza las definiciones y comparaciones de las secciones 1 y 3; reconoce las responsabilidades y el recorrido panorámico de la sección 2; y cierra con el esquema \textsc{IMP} \(\rightarrow\) \textsc{C} y las cuatro ideas de la sección 4.
+
+\textbf{Lectura complementaria:} vuelve después a los matices sobre la frontera entre aplicaciones y software de sistemas, las combinaciones entre traducción e interpretación y las observaciones que amplían el panorama. La conclusión sirve como comprobación final del recorrido esencial.
+\end{ruta}
 
 \begin{ejemplo}{Caso inicial. Del archivo fuente a la ejecución}
 Supongamos que una persona escribe este programa en \textsc{C}:

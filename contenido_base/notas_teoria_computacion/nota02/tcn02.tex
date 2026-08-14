@@ -1,0 +1,564 @@
+%% LyX 2.3.4.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,spanish]{article}
+\renewcommand{\rmdefault}{cmr}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem{xca}{\protect\exercisename}[section]
+\theoremstyle{definition}
+\newtheorem{defn}{\protect\definitionname}[section]
+\theoremstyle{definition}
+\newtheorem{example}{\protect\examplename}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+
+\usepackage{listings}
+\lstset{mathescape=true}
+\providecommand{\definitionname}{Definición}
+\providecommand{\examplename}{Ejemplo}
+\providecommand{\exercisename}{Ejercicio}
+\renewcommand{\lstlistingname}{\inputencoding{latin9}Listado de c�digo}
+
+\begin{document}
+\title{Teoría de la Computación, 2021-1\\
+Nota de clase 2: Gramáticas Regulares}
+\author{Manuel Soto Romero}
+\date{\today \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+\setcounter{section}{2}
+\renewcommand*\lstlistingname{C\'odigo}
+
+\subsection{Introducción a las gramáticas y lenguajes formales}
+
+Como concluimos en la sección anterior, una vez que definimos un lenguaje
+formal, nuestra mayor preocupación será si una cadena pertenece o
+no a este. Dicho de otra forma, queremos ver si una cadena está bien
+escrita de acuerdo a dicho lenguaje. Un ejemplo de lenguaje formal
+que seguramente conociste en el curso de Matemáticas Discretas es
+el Lenguaje de la Lógica Proposicional, mejor conocido como \textsc{LProp}.
+Por cierto, es común que a las cadenas también se les llamen \emph{expresiones}.
+
+El alfabeto de la Lógica proposicional es el siguiente:
+\begin{itemize}
+\item \emph{Constantes lógicas: }$\bot,\top$ (Otra notación es la de usar
+$0$ y $1$ o también $F$ y $T$)
+\item \emph{Variables proposicionales: $p,q,r,s,...,p_{1},q_{2},...$}
+\item \emph{Conectivos lógicos: $\lnot,\lor,\land,\rightarrow,\leftrightarrow$}
+\item \emph{Paréntesis}: $(,)$
+\end{itemize}
+Con este alfabeto, el Lenguaje de la Lógica Proposicional (\textsc{LProp})
+se define de la siguiente manera:
+\begin{enumerate}
+\item Las constantes lógicas son expresiones de \textsc{LProp}.
+\item Las variables proposicionales son expresiones de \textsc{LProp}.
+\item Si $\varphi$ es una expresión de \textsc{LProp}, entonces $\left(\lnot\varphi\right)$
+lo es también (\emph{negación}).
+\item Si $\varphi$ y $\psi$ son expresiones de \textsc{LProp}, entonces
+las siguientes también lo son (\emph{operadores lógicos}):
+\begin{enumerate}
+\item $\left(\varphi\lor\psi\right)$ \emph{disyunción}
+\item $\left(\varphi\land\psi\right)$ \emph{conjunción}
+\item $\left(\varphi\rightarrow\psi\right)$ \emph{condicional}
+\item $\left(\varphi\leftrightarrow\psi\right)$ \emph{bicondicional}
+\end{enumerate}
+\item Son todas.
+\end{enumerate}
+A partir de este Lenguaje Formal, veamos si las siguientes cadenas
+(expresiones) forman parte de él.
+\begin{enumerate}
+\item $\left(\lnot p\right)$
+\begin{itemize}
+\item Por la regla 2, $p$ está \textsc{LProp} puesto que es una variable
+proposicional.
+\item Por la regla 3 y dado que $p$ está \textsc{LProp}, entonces $\left(\lnot p\right)$
+está \textsc{LProp}.
+\end{itemize}
+\item $\left(q\land r\right)$
+\begin{itemize}
+\item Por la regla 2, tanto $q$ como $r$ están en \textsc{LProp}
+\item Por la regla 4b, y dado que $q$ y $r$ están en \textsc{LProp},
+entonces $\left(q\land r\right)$ está en \textsc{LProp}.
+\end{itemize}
+\item $\left(\left(\lnot p\right)\rightarrow\left(q\land r\right)\right)$
+\begin{enumerate}
+\item Como vimos anteriormente, $p,q$ y $r$ están en \textsc{LProp}.
+\item De la misma forma $\left(\lnot p\right)$ está en \textsc{LProp}.
+\item Igualmente vimos que $\left(q\land r\right)$ está en \textsc{LProp}.
+\item Por la regla 4c y porque tanto $\left(\lnot p\right)$ y $\left(q\land r\right)$
+están en \textsc{LProp}, entonces $\left(\left(\lnot p\right)\rightarrow\left(q\land r\right)\right)$
+está en \textsc{LProp}.
+\end{enumerate}
+\item $(\left((p\land q)\land r\right)\rightarrow\left(\lnot p\right))$
+\begin{enumerate}
+\item Como vimos anteriormente, $p,q$ y $r$ están en \textsc{LProp}.
+\item Por la regla 4b y porque $p$ y $q$ están en \textsc{LProp}, entonces
+$\left(p\land q\right)$ está en \textsc{LProp}.
+\item Por la regla 4b y porque $\left(p\land q\right)$ y $r$ están en
+\textsc{LProp}, entonces $\left(\left(p\land q\right)\land r\right)$
+está en \textsc{LProp}.
+\item Como vimos anteriormente $\left(\lnot p\right)$ está en \textsc{LProp}.
+\item Por la regla 4c y porque $\left(\left(p\land q\right)\land r\right)$
+y $\left(\lnot p\right)$ están en \textsc{LProp}, entonces $(\left((p\land q)\land r\right)\rightarrow\left(\lnot p\right))$
+está en \textsc{LProp}.
+\end{enumerate}
+\end{enumerate}
+\bigskip{}
+
+\begin{xca}
+Se deja como ejercicio al lector la verificación de que la fórmula
+$\left(\lnot\left(p\land\left(q\lor r\right)\right)\right)$ siguiente
+está en \textsc{LProp}:
+\end{xca}
+%
+
+\subsubsection{Gramáticas}
+
+Otra forma de mostrar cómo se construyen las expresiones es mediante
+lo que se conoce como \emph{gramática formal}, que es un mecanismo
+sencillo de especificación de reglas de construcción, llamadas \emph{producciones}
+o \emph{reglas de reescritura, }con las cuales se pueden generar expresiones
+de un lenguaje. 
+
+Las producciones tienen la siguiente forma:
+
+\[
+\texttt{símbolo ::= cadena}
+\]
+
+El símbolo \texttt{::=} se lee como ``se reescribe como'' y al
+aplicar una regla particular sustituimos el lado izquierdo de este
+símbolo por la cadena que se encuentra del lado derecho. Usando este
+notación podemos describir el lenguaje de la lógica proposicional
+con la siguiente gramática: 
+
+\bigskip{}
+
+\inputencoding{latin9}\begin{lstlisting}[mathescape=true,xleftmargin=5cm]
+S ::= E
+E ::= var
+E ::= const
+E ::= $\vartriangleright$ E
+E ::= E $\star$ E
+E ::= (E)
+var ::= p | q | ...
+const ::= $\bot$ | $\top$
+$\vartriangleright$ ::= $\lnot$
+$\star$ ::= $\lor$ | $\land$ | $\rightarrow$ | $\leftrightarrow$
+\end{lstlisting}
+\inputencoding{utf8}
+A una colección de reglas de reescritura como la anterior, le llamamos
+\emph{gramática} porque nos describe la \emph{forma }o \emph{reglas
+sintácticas} que deben tener las expresiones lógicas bien construidas.
+Para producir expresiones (cadenas) correctas de acuerdo a la gramática,
+empezamos con el símbolo de la izquierda del \texttt{::=} de la primera
+regla, y utilizamos las reglas de reescritura, que nos dicen que en
+cualquier momento podemos sustituir parte de (o toda) la expresión,
+si en ella localizamos una subexpresión que corresponda al lado izquierdo
+de cualquiera de las reglas y la sustituimos por el lado derecho.
+Veamos algunos ejemplos.
+\begin{itemize}
+\item Proceso de generación de la expresión $p$
+\begin{itemize}
+\item $\texttt{S}$
+\item $\texttt{E}$
+\item $\texttt{var}$
+\item $p$
+\end{itemize}
+\item Proceso de generación de la expresión $\left(\top\lor\bot\right)$
+\begin{itemize}
+\item $\texttt{S}$
+\item $\texttt{E}$
+\item $\left(\texttt{E}\right)$
+\item $\left(\texttt{E}\star\texttt{E}\right)$
+\item $\left(\texttt{const}\star\texttt{E}\right)$
+\item $\left(\texttt{const}\lor\texttt{E}\right)$
+\item $\left(\texttt{const}\lor\texttt{const}\right)$
+\item $\left(\top\lor\texttt{const}\right)$
+\item $\left(\top\lor\bot\right)$
+\end{itemize}
+\item Proceso de generación de la expresión $\lnot\left(p\land\left(q\lor r\right)\right)$
+\begin{itemize}
+\item $\texttt{S}$
+\item $\texttt{E}$
+\item $\vartriangleright\texttt{E}$
+\item $\lnot\texttt{E}$
+\item $\lnot\left(\texttt{E}\right)$
+\item $\lnot\left(\texttt{E}\star\texttt{E}\right)$
+\item $\lnot\left(\texttt{var}\star\texttt{E}\right)$
+\item $\lnot\left(\texttt{var}\land E\right)$
+\item $\lnot\left(\texttt{var\ensuremath{\land\left(\texttt{E}\right)}}\right)$
+\item $\lnot\left(p\land\left(\texttt{E}\right)\right)$
+\item $\lnot\left(p\land\left(\texttt{E}\star\texttt{E}\right)\right)$
+\item $\lnot\left(p\land\left(\texttt{var}\star\texttt{E}\right)\right)$
+\item $\lnot\left(p\land\left(\texttt{var}\lor\texttt{E}\right)\right)$
+\item $\lnot\left(p\land\left(\texttt{var}\lor\texttt{var}\right)\right)$
+\item $\lnot\left(p\land\left(q\lor\texttt{var}\right)\right)$
+\item $\lnot\left(p\land\left(q\lor r\right)\right)$
+\end{itemize}
+\end{itemize}
+Una secuencia de aplicación de reglas de reescritura, como las de
+los ejemplos anteriores, se conocen como \emph{derivación} de una
+expresión (cadena); esta expresión es la que figura en el último de
+los pasos. Estas derivaciones pueden presentarse así o gráficamente
+utilizando un \emph{árbol}.
+
+\bigskip{}
+
+\begin{xca}
+Dada la siguiente gramática que define paréntesis bien balanceados:\bigskip{}
+\end{xca}
+\inputencoding{latin9}\begin{lstlisting}[mathescape=true,xleftmargin=5cm]
+E ::= ()
+E ::= (E)
+E ::= EE
+\end{lstlisting}
+\inputencoding{utf8}
+Realiza la derivación de las siguientes expresiones:
+\begin{itemize}
+\item $\texttt{(())}$
+\item $\texttt{(()())}$
+\end{itemize}
+
+\subsubsection{Árboles de derivación}
+
+Para representar arboles de derivación, consideramos lo siguiente:
+\begin{itemize}
+\item Cada nodo tiene un símbolo asociado.
+\item Para que de un nodo salgan aristas se requiere que el símbolo que
+está en ese nodo aparezca del lado izquierdo de alguna producción.
+\item Las aristas apuntan a cada uno de los símbolos que aparecen del lado
+derecho de la producción utilizada.
+\item Es importante observar que un nodo tiene un único símbolo asociado.
+\item Si el símbolo en un nodo se reescribe en una sucesión de tres símbolos,
+deberán salir tres líneas de él, una por cada símbolo.
+\item Aquellos nodos de los que no salen líneas son llamados \emph{hojas}.
+\item Para determinar cuál es la expresión (cadena) que corresponde a un
+determinado árbol, vamos listando las hojas del árbol de izquierda
+a derecha. A la cadena que se obtiene de esta manera le vamos a llamar
+el \emph{resultado del árbol}.
+\end{itemize}
+Veamos algunos ejemplos.
+\begin{itemize}
+\item $p$\begin{center}
+\begin{forest}	
+	[\texttt{S}
+		[\texttt{E}
+			[\texttt{var}
+				[$p$]
+			]
+		]
+	]
+\end{forest}
+\end{center}
+\item $\left(\top\lor\bot\right)$\begin{center}
+\begin{forest}	
+	[\texttt{S}
+		[\texttt{E}
+			[\texttt{(}]
+			[\texttt{E}
+				[\texttt{E}
+					[\texttt{const}
+						[$\top$]
+					]
+				]
+				[$\star$
+					[$\lor$]
+				]
+				[\texttt{E}
+					[\texttt{const}
+						[$\bot$]
+					]
+				]
+			]
+			[\texttt{)}]
+		]
+	]
+\end{forest}
+\end{center}
+\item $\lnot\left(p\land\left(q\lor r\right)\right)$\begin{center}
+\begin{forest}	
+	[\texttt{S}
+		[\texttt{E}
+			[$\vartriangleright$
+				[$\lnot$]
+			]
+			[\texttt{E}
+				[\texttt{(}]
+				[\texttt{E}
+					[\texttt{E}
+						[\texttt{var}
+							[$p$]
+						]
+					]
+					[$\star$
+						[$\land$]
+					]
+					[\texttt{E}
+						[\texttt{(}]
+						[\texttt{E}
+							[\texttt{E}
+								[\texttt{var}
+									[$q$]
+								]
+							]
+							[$\star$
+								[$\lor$]
+							]
+							[\texttt{E}
+								[\texttt{var}
+									[$r$]
+								]
+							]
+						]
+						[\texttt{)}]
+					]
+				]
+				[\texttt{)}]
+			]
+		]
+	]
+\end{forest}
+\end{center}
+\end{itemize}
+\bigskip{}
+
+\begin{xca}
+Realiza la derivación de las expresiones del Ejercicio 1.5.
+\end{xca}
+
+\subsubsection{La Jerarquía de Chomksy}
+
+La jerarquía de Chomsky es una clasificación jerárquica de distintos
+tipos de gramáticas que generan lenguajes formales. Esta jerarquía
+fue descrita por Noam Chomsky en 1956. La Jerarquía de Chomsky consta
+de cuatro niveles:
+\begin{itemize}
+\item \textbf{Gramáticas de tipo 0} (sin restricciones), que incluye a todas
+las gramáticas formales. 
+\item \textbf{Gramáticas de tipo 1} (gramáticas sensibles al contexto) generan
+los lenguajes sensibles al contexto. 
+\item \textbf{Gramáticas de tipo 2} (gramáticas libres del contexto) generan
+los lenguajes independientes del contexto. 
+\item \textbf{Gramáticas de tipo 3} (gramáticas regulares) generan los lenguajes
+regulares. 
+\end{itemize}
+A lo largo del curso estudiaremos cada uno de estos tipos de gramática,
+de momento basta con que sepas acerca de su existencia.
+
+\subsection{Lenguajes Regulares}
+
+Los lenguajes regulares se encuentran en la clase más pequeña que
+incluye a los lenguajes más simples. Por ejemplo, el conjunto de todos
+los números binarios. De hecho deben su nombre a la \emph{regularidad}
+o repeticiones que ocurren entre sus cadenas. Por ejemplo:
+
+\[
+L_{1}=\left\{ abc,cc,abab,abccc,ababc\right\} 
+\]
+
+La regularidad consiste en que sus palabras inician con repeticiones
+de $ab$ seguidas de repeticiones de $c$. De hecho, los lenguajes
+finitos son también lenguajes regulares por definición:
+
+\[
+L_{2}=\left\{ el,coche,verde\right\} 
+\]
+
+La combinación de lenguajes regulares (unión o concatenación) también
+producen un lenguaje regular. En general, diremos que un lenguaje
+$L$ es regular si y sólo si se cumple al menos una de las siguientes
+condiciones:
+\begin{itemize}
+\item $L$ es finito
+\item $L$ es la unión o la concatenación de otros lenguajes regulares $R_{1}$
+y $R_{2}$, $L=R_{1}\cup R_{2}$ o $L=R_{1}R_{2}$ respectivamente.
+\item $L$ es la cerradura de Kleene de algún lenguaje regular, $L=R^{*}$.
+\end{itemize}
+Por ejemplo, sea el lenguaje $L$ de palabras formadas por $a$ y
+$b$ que empiezan con $a$, tales como $aab,ab,a,abaa,$etc. Podemos
+probar que este lenguaje es regular como sigue:
+
+El alfabeto es $\Sigma=\left\{ a,b\right\} $. El lenguaje $L$ puede
+ser visto como la concatenación de una $a$ con cadenas cualesquiera
+de $a$ y $b$; ahora bien, éstas últimas son elementos de $\left\{ a,b\right\} ^{*}$,
+mientras que el lenguaje que sólo contiene la palabra $a$ es $\left\{ a\right\} $.
+Ambos lenguajes son regulares, es decir, $\left\{ a\right\} $ es
+finito, por lo tanto regular, mientras que $\left\{ a,b\right\} ^{*}$
+es la cerradura de $\left\{ a,b\right\} $, que es regulare por ser
+finito también. Entonces la concatenación es $\left\{ a\right\} \left\{ a,b\right\} ^{*}$,
+es regular.
+
+En esta nota estudiaremos a los lenguajes regulares mediante algunos
+mecanismos como son las gramáticas, los autómatas finitos y las expresiones
+regulares.
+
+\subsection{Gramáticas Regulares}
+
+Aunque en la nota pasada usamos la notación $S:=E$ para representar
+las reglas de producción, ésta es más utilizada en el ámbito del diseño
+de lenguajes de programación. En Teoría de la Computación se prefiere
+la notación $S\rightarrow E$. 
+
+Decimos entonces que las gramáticas regulares son gramáticas cuyas
+reglas son de la forma $A\rightarrow aB$ o bien $A\rightarrow a$,
+donde $A$ y $B$ son símbolos no terminales y $a$ es un símbolo
+terminal. Por ejemplo:
+
+\[
+\begin{array}{rcl}
+S & \rightarrow & aA\\
+S & \rightarrow & bA\\
+A & \rightarrow & aB\\
+A & \rightarrow & bB\\
+A & \rightarrow & a\\
+B & \rightarrow & aA\\
+B & \rightarrow & bA
+\end{array}
+\]
+
+En este caso, dado que en los símbolos no terminales se encuentran
+a la derecha, decimos que es una \emph{gramática} \emph{regular derecha},
+y cuando colocamos el símbolo no terminal a la izquierda, diremos
+evidentemente que, es \emph{regular izquierda. }Por ejemplo:
+
+\[
+\begin{array}{rcl}
+S & \rightarrow & Aa\\
+S & \rightarrow & Ab\\
+A & \rightarrow & Ba\\
+A & \rightarrow & Bb\\
+A & \rightarrow & a\\
+B & \rightarrow & Aa\\
+B & \rightarrow & Ab
+\end{array}
+\]
+
+\bigskip{}
+
+\begin{defn}
+\emph{(Gramática Regular) Una gramática regular es una cuadrupla $\left\langle V,\Sigma,R,S\right\rangle $
+en donde:}
+\end{defn}
+\begin{itemize}
+\item $V$ \emph{es el alfabeto de variables}
+\item $\Sigma$ \emph{es el alfabeto de constantes}
+\item $R$ \emph{es el conjunto de reglas de producción que además es un
+subconjunto de $V\times\left(\Sigma V\cup\Sigma\right)$}
+\item $S$ \emph{es el símbolo inicial, un elemento de $V$}
+\end{itemize}
+%
+\textbf{Derivación}
+\begin{itemize}
+\item Una cadena $uXu$ deriva en un paso una cadena $u\alpha v$, escrito
+como $uXv\Rightarrow u\alpha v$, si hay una regla de producción $X\rightarrow\alpha\in R$
+en la gramática. 
+\item Una cadena $w\in\Sigma^{*}$ (formada sólo por símbolos terminales)
+es derivable a partir de una gramática $G$ si existe una secuencia
+de pasos de derivación $S\Rightarrow\alpha_{1}\Rightarrow...\Rightarrow w$.
+\item A una secuencia de pasos de derivación le llamamos simplemente derivación.
+\item Dicho de otra forma, una palabra $w\in\Sigma^{*}$ es derivable a
+partir de $G$ si podemos llegar a ella a partir de $S$ y escribimos
+
+\[
+S\Rightarrow^{*}w
+\]
+
+\end{itemize}
+\bigskip{}
+
+\begin{defn}
+\emph{(Lenguaje de una Gramática) El Lenguaje generado por una gramática
+$G$, $L\left(G\right)$, es igual al conjunto de las cadenas derivables
+a partir de su símbolo inicial. Es decir:}
+
+\[
+L\left(G\right)=\left\{ w\in\Sigma^{\text{*}}:S\Rightarrow^{\text{*}}w\right\} 
+\]
+\end{defn}
+%
+Por ejemplo, el lenguaje reconocido por nuestra primera gramática
+es el de las palabras en $\left\{ a,b\right\} $ de longitud par terminadas
+en $a$. Veamos otro ejemplo.
+
+\bigskip{}
+
+\begin{example}
+Diseñar una gramática que genere el lenguaje de las palabras en $\left\{ a,b\right\} $
+que contiene la subcadena $bb$, tales como $abb$, $ababba$, etc.
+
+\emph{Solución:}
+
+Podemos usar los símbolos no terminales para \emph{recordar} situaciones.
+Es decir:
+\end{example}
+\begin{itemize}
+\item Un símbolo $A$ que recuerda que aún no se ha producido ninguna $b$.
+\item Un símbolo $B$ que recuerda que se produjo una $b$.
+\item Un símbolo $C$ que recuerda que ya se produjeron las dos $b$.
+\end{itemize}
+\[
+\begin{array}{rcl}
+A & \rightarrow & aA\\
+A & \rightarrow & bB\\
+B & \rightarrow & aA\\
+B & \rightarrow & bC\\
+B & \rightarrow & b\\
+C & \rightarrow & aC\\
+C & \rightarrow & bC\\
+C & \rightarrow & a\\
+C & \rightarrow & b
+\end{array}
+\]
+
+\bigskip{}
+
+\begin{xca}
+Diseña una gramática que dado el siguiente alfabeto $\left\{ a,b,c,1,2,3\right\} $
+permita construir identificadores válidos. Decimos que un identificador
+es válido si éste es una combinación de letras y números pero con
+la restricción de que nunca debe empezar por un número. Por ejemplo
+$abc$, $a12$, $a1b$.
+\end{xca}
+%
+\begin{thebibliography}{1}
+\bibitem{key-1}Favio E. Miranda, Elisa Viso, \emph{Matemáticas Discretas,
+}Las Prensas de Ciencias, Facultad de Ciencias UNAM, 2010.
+\end{thebibliography}
+
+\end{document}

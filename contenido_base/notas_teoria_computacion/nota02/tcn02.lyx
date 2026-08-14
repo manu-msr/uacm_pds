@@ -1,0 +1,2725 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-bytype
+theorems-sec-bytype
+\end_modules
+\maintain_unincluded_children false
+\language spanish-mexico
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "cmr" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\boxbgcolor #cccccc
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "mathescape=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Teoría de la Computación, 2021-1
+\begin_inset Newline newline
+\end_inset
+
+Nota de clase 2: Gramáticas Regulares
+\end_layout
+
+\begin_layout Author
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Manuel Soto Romero
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today 
+\backslash
+
+\backslash
+ Colegio de Ciencia y Tecnología UACM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*{
+\backslash
+thefootnote}{
+\backslash
+arabic{footnote}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{footnote}{0}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{2}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*
+\backslash
+lstlistingname{C
+\backslash
+'odigo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Introducción a las gramáticas y lenguajes formales
+\end_layout
+
+\begin_layout Standard
+Como concluimos en la sección anterior, una vez que definimos un lenguaje
+ formal, nuestra mayor preocupación será si una cadena pertenece o no a
+ este.
+ Dicho de otra forma, queremos ver si una cadena está bien escrita de acuerdo
+ a dicho lenguaje.
+ Un ejemplo de lenguaje formal que seguramente conociste en el curso de
+ Matemáticas Discretas es el Lenguaje de la Lógica Proposicional, mejor
+ conocido como 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+ Por cierto, es común que a las cadenas también se les llamen 
+\emph on
+expresiones
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+El alfabeto de la Lógica proposicional es el siguiente:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Constantes lógicas: 
+\emph default
+
+\begin_inset Formula $\bot,\top$
+\end_inset
+
+ (Otra notación es la de usar 
+\begin_inset Formula $0$
+\end_inset
+
+ y 
+\begin_inset Formula $1$
+\end_inset
+
+ o también 
+\begin_inset Formula $F$
+\end_inset
+
+ y 
+\begin_inset Formula $T$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Variables proposicionales: 
+\begin_inset Formula $p,q,r,s,...,p_{1},q_{2},...$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Conectivos lógicos: 
+\begin_inset Formula $\lnot,\lor,\land,\rightarrow,\leftrightarrow$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Paréntesis
+\emph default
+: 
+\begin_inset Formula $(,)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Con este alfabeto, el Lenguaje de la Lógica Proposicional (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+) se define de la siguiente manera:
+\end_layout
+
+\begin_layout Enumerate
+Las constantes lógicas son expresiones de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Las variables proposicionales son expresiones de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Si 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ es una expresión de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+, entonces 
+\begin_inset Formula $\left(\lnot\varphi\right)$
+\end_inset
+
+ lo es también (
+\emph on
+negación
+\emph default
+).
+\end_layout
+
+\begin_layout Enumerate
+Si 
+\begin_inset Formula $\varphi$
+\end_inset
+
+ y 
+\begin_inset Formula $\psi$
+\end_inset
+
+ son expresiones de 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+, entonces las siguientes también lo son (
+\emph on
+operadores lógicos
+\emph default
+):
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\left(\varphi\lor\psi\right)$
+\end_inset
+
+ 
+\emph on
+disyunción
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(\varphi\land\psi\right)$
+\end_inset
+
+ 
+\emph on
+conjunción
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(\varphi\rightarrow\psi\right)$
+\end_inset
+
+ 
+\emph on
+condicional
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(\varphi\leftrightarrow\psi\right)$
+\end_inset
+
+ 
+\emph on
+bicondicional
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Son todas.
+\end_layout
+
+\begin_layout Standard
+A partir de este Lenguaje Formal, veamos si las siguientes cadenas (expresiones)
+ forman parte de él.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(\lnot p\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Por la regla 2, 
+\begin_inset Formula $p$
+\end_inset
+
+ está 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+ puesto que es una variable proposicional.
+\end_layout
+
+\begin_layout Itemize
+Por la regla 3 y dado que 
+\begin_inset Formula $p$
+\end_inset
+
+ está 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+, entonces 
+\begin_inset Formula $\left(\lnot p\right)$
+\end_inset
+
+ está 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\left(q\land r\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Por la regla 2, tanto 
+\begin_inset Formula $q$
+\end_inset
+
+ como 
+\begin_inset Formula $r$
+\end_inset
+
+ están en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Por la regla 4b, y dado que 
+\begin_inset Formula $q$
+\end_inset
+
+ y 
+\begin_inset Formula $r$
+\end_inset
+
+ están en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+, entonces 
+\begin_inset Formula $\left(q\land r\right)$
+\end_inset
+
+ está en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula $\left(\left(\lnot p\right)\rightarrow\left(q\land r\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Como vimos anteriormente, 
+\begin_inset Formula $p,q$
+\end_inset
+
+ y 
+\begin_inset Formula $r$
+\end_inset
+
+ están en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+De la misma forma 
+\begin_inset Formula $\left(\lnot p\right)$
+\end_inset
+
+ está en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Igualmente vimos que 
+\begin_inset Formula $\left(q\land r\right)$
+\end_inset
+
+ está en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Por la regla 4c y porque tanto 
+\begin_inset Formula $\left(\lnot p\right)$
+\end_inset
+
+ y 
+\begin_inset Formula $\left(q\land r\right)$
+\end_inset
+
+ están en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+, entonces 
+\begin_inset Formula $\left(\left(\lnot p\right)\rightarrow\left(q\land r\right)\right)$
+\end_inset
+
+ está en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula $(\left((p\land q)\land r\right)\rightarrow\left(\lnot p\right))$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Como vimos anteriormente, 
+\begin_inset Formula $p,q$
+\end_inset
+
+ y 
+\begin_inset Formula $r$
+\end_inset
+
+ están en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Por la regla 4b y porque 
+\begin_inset Formula $p$
+\end_inset
+
+ y 
+\begin_inset Formula $q$
+\end_inset
+
+ están en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+, entonces 
+\begin_inset Formula $\left(p\land q\right)$
+\end_inset
+
+ está en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Por la regla 4b y porque 
+\begin_inset Formula $\left(p\land q\right)$
+\end_inset
+
+ y 
+\begin_inset Formula $r$
+\end_inset
+
+ están en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+, entonces 
+\begin_inset Formula $\left(\left(p\land q\right)\land r\right)$
+\end_inset
+
+ está en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Como vimos anteriormente 
+\begin_inset Formula $\left(\lnot p\right)$
+\end_inset
+
+ está en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Por la regla 4c y porque 
+\begin_inset Formula $\left(\left(p\land q\right)\land r\right)$
+\end_inset
+
+ y 
+\begin_inset Formula $\left(\lnot p\right)$
+\end_inset
+
+ están en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+, entonces 
+\begin_inset Formula $(\left((p\land q)\land r\right)\rightarrow\left(\lnot p\right))$
+\end_inset
+
+ está en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Se deja como ejercicio al lector la verificación de que la fórmula 
+\begin_inset Formula $\left(\lnot\left(p\land\left(q\lor r\right)\right)\right)$
+\end_inset
+
+ siguiente está en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{LProp}
+\end_layout
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Gramáticas
+\end_layout
+
+\begin_layout Standard
+Otra forma de mostrar cómo se construyen las expresiones es mediante lo
+ que se conoce como 
+\emph on
+gramática formal
+\emph default
+, que es un mecanismo sencillo de especificación de reglas de construcción,
+ llamadas 
+\emph on
+producciones
+\emph default
+ o 
+\emph on
+reglas de reescritura, 
+\emph default
+con las cuales se pueden generar expresiones de un lenguaje.
+ 
+\end_layout
+
+\begin_layout Standard
+Las producciones tienen la siguiente forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\texttt{símbolo ::= cadena}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El símbolo 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{::=}
+\end_layout
+
+\end_inset
+
+ se lee como 
+\begin_inset Quotes eld
+\end_inset
+
+se reescribe como
+\begin_inset Quotes erd
+\end_inset
+
+ y al aplicar una regla particular sustituimos el lado izquierdo de este
+ símbolo por la cadena que se encuentra del lado derecho.
+ Usando este notación podemos describir el lenguaje de la lógica proposicional
+ con la siguiente gramática: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "mathescape=true,xleftmargin=5cm"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+S ::= E
+\end_layout
+
+\begin_layout Plain Layout
+
+E ::= var
+\end_layout
+
+\begin_layout Plain Layout
+
+E ::= const
+\end_layout
+
+\begin_layout Plain Layout
+
+E ::= $
+\backslash
+vartriangleright$ E
+\end_layout
+
+\begin_layout Plain Layout
+
+E ::= E $
+\backslash
+star$ E
+\end_layout
+
+\begin_layout Plain Layout
+
+E ::= (E)
+\end_layout
+
+\begin_layout Plain Layout
+
+var ::= p | q | ...
+\end_layout
+
+\begin_layout Plain Layout
+
+const ::= $
+\backslash
+bot$ | $
+\backslash
+top$
+\end_layout
+
+\begin_layout Plain Layout
+
+$
+\backslash
+vartriangleright$ ::= $
+\backslash
+lnot$
+\end_layout
+
+\begin_layout Plain Layout
+
+$
+\backslash
+star$ ::= $
+\backslash
+lor$ | $
+\backslash
+land$ | $
+\backslash
+rightarrow$ | $
+\backslash
+leftrightarrow$
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A una colección de reglas de reescritura como la anterior, le llamamos 
+\emph on
+gramática
+\emph default
+ porque nos describe la 
+\emph on
+forma 
+\emph default
+o 
+\emph on
+reglas sintácticas
+\emph default
+ que deben tener las expresiones lógicas bien construidas.
+ Para producir expresiones (cadenas) correctas de acuerdo a la gramática,
+ empezamos con el símbolo de la izquierda del 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{::=}
+\end_layout
+
+\end_inset
+
+ de la primera regla, y utilizamos las reglas de reescritura, que nos dicen
+ que en cualquier momento podemos sustituir parte de (o toda) la expresión,
+ si en ella localizamos una subexpresión que corresponda al lado izquierdo
+ de cualquiera de las reglas y la sustituimos por el lado derecho.
+ Veamos algunos ejemplos.
+\end_layout
+
+\begin_layout Itemize
+Proceso de generación de la expresión 
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\texttt{S}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\texttt{E}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\texttt{var}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Proceso de generación de la expresión 
+\begin_inset Formula $\left(\top\lor\bot\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\texttt{S}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\texttt{E}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\texttt{E}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\texttt{E}\star\texttt{E}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\texttt{const}\star\texttt{E}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\texttt{const}\lor\texttt{E}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\texttt{const}\lor\texttt{const}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\top\lor\texttt{const}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\top\lor\bot\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Proceso de generación de la expresión 
+\begin_inset Formula $\lnot\left(p\land\left(q\lor r\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\texttt{S}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\texttt{E}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\vartriangleright\texttt{E}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\texttt{E}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(\texttt{E}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(\texttt{E}\star\texttt{E}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(\texttt{var}\star\texttt{E}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(\texttt{var}\land E\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(\texttt{var\ensuremath{\land\left(\texttt{E}\right)}}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(p\land\left(\texttt{E}\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(p\land\left(\texttt{E}\star\texttt{E}\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(p\land\left(\texttt{var}\star\texttt{E}\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(p\land\left(\texttt{var}\lor\texttt{E}\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(p\land\left(\texttt{var}\lor\texttt{var}\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(p\land\left(q\lor\texttt{var}\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(p\land\left(q\lor r\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Una secuencia de aplicación de reglas de reescritura, como las de los ejemplos
+ anteriores, se conocen como 
+\emph on
+derivación
+\emph default
+ de una expresión (cadena); esta expresión es la que figura en el último
+ de los pasos.
+ Estas derivaciones pueden presentarse así o gráficamente utilizando un
+ 
+\emph on
+árbol
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Dada la siguiente gramática que define paréntesis bien balanceados:
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "mathescape=true,xleftmargin=5cm"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+E ::= ()
+\end_layout
+
+\begin_layout Plain Layout
+
+E ::= (E)
+\end_layout
+
+\begin_layout Plain Layout
+
+E ::= EE
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Realiza la derivación de las siguientes expresiones:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\texttt{(())}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\texttt{(()())}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Árboles de derivación
+\end_layout
+
+\begin_layout Standard
+Para representar arboles de derivación, consideramos lo siguiente:
+\end_layout
+
+\begin_layout Itemize
+Cada nodo tiene un símbolo asociado.
+\end_layout
+
+\begin_layout Itemize
+Para que de un nodo salgan aristas se requiere que el símbolo que está en
+ ese nodo aparezca del lado izquierdo de alguna producción.
+\end_layout
+
+\begin_layout Itemize
+Las aristas apuntan a cada uno de los símbolos que aparecen del lado derecho
+ de la producción utilizada.
+\end_layout
+
+\begin_layout Itemize
+Es importante observar que un nodo tiene un único símbolo asociado.
+\end_layout
+
+\begin_layout Itemize
+Si el símbolo en un nodo se reescribe en una sucesión de tres símbolos,
+ deberán salir tres líneas de él, una por cada símbolo.
+\end_layout
+
+\begin_layout Itemize
+Aquellos nodos de los que no salen líneas son llamados 
+\emph on
+hojas
+\emph default
+.
+\end_layout
+
+\begin_layout Itemize
+Para determinar cuál es la expresión (cadena) que corresponde a un determinado
+ árbol, vamos listando las hojas del árbol de izquierda a derecha.
+ A la cadena que se obtiene de esta manera le vamos a llamar el 
+\emph on
+resultado del árbol
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+Veamos algunos ejemplos.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{forest}	
+\end_layout
+
+\begin_layout Plain Layout
+
+	[
+\backslash
+texttt{S}
+\end_layout
+
+\begin_layout Plain Layout
+
+		[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+			[
+\backslash
+texttt{var}
+\end_layout
+
+\begin_layout Plain Layout
+
+				[$p$]
+\end_layout
+
+\begin_layout Plain Layout
+
+			]
+\end_layout
+
+\begin_layout Plain Layout
+
+		]
+\end_layout
+
+\begin_layout Plain Layout
+
+	]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{forest}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\top\lor\bot\right)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{forest}	
+\end_layout
+
+\begin_layout Plain Layout
+
+	[
+\backslash
+texttt{S}
+\end_layout
+
+\begin_layout Plain Layout
+
+		[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+			[
+\backslash
+texttt{(}]
+\end_layout
+
+\begin_layout Plain Layout
+
+			[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+				[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+					[
+\backslash
+texttt{const}
+\end_layout
+
+\begin_layout Plain Layout
+
+						[$
+\backslash
+top$]
+\end_layout
+
+\begin_layout Plain Layout
+
+					]
+\end_layout
+
+\begin_layout Plain Layout
+
+				]
+\end_layout
+
+\begin_layout Plain Layout
+
+				[$
+\backslash
+star$
+\end_layout
+
+\begin_layout Plain Layout
+
+					[$
+\backslash
+lor$]
+\end_layout
+
+\begin_layout Plain Layout
+
+				]
+\end_layout
+
+\begin_layout Plain Layout
+
+				[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+					[
+\backslash
+texttt{const}
+\end_layout
+
+\begin_layout Plain Layout
+
+						[$
+\backslash
+bot$]
+\end_layout
+
+\begin_layout Plain Layout
+
+					]
+\end_layout
+
+\begin_layout Plain Layout
+
+				]
+\end_layout
+
+\begin_layout Plain Layout
+
+			]
+\end_layout
+
+\begin_layout Plain Layout
+
+			[
+\backslash
+texttt{)}]
+\end_layout
+
+\begin_layout Plain Layout
+
+		]
+\end_layout
+
+\begin_layout Plain Layout
+
+	]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{forest}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\lnot\left(p\land\left(q\lor r\right)\right)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{forest}	
+\end_layout
+
+\begin_layout Plain Layout
+
+	[
+\backslash
+texttt{S}
+\end_layout
+
+\begin_layout Plain Layout
+
+		[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+			[$
+\backslash
+vartriangleright$
+\end_layout
+
+\begin_layout Plain Layout
+
+				[$
+\backslash
+lnot$]
+\end_layout
+
+\begin_layout Plain Layout
+
+			]
+\end_layout
+
+\begin_layout Plain Layout
+
+			[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+				[
+\backslash
+texttt{(}]
+\end_layout
+
+\begin_layout Plain Layout
+
+				[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+					[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+						[
+\backslash
+texttt{var}
+\end_layout
+
+\begin_layout Plain Layout
+
+							[$p$]
+\end_layout
+
+\begin_layout Plain Layout
+
+						]
+\end_layout
+
+\begin_layout Plain Layout
+
+					]
+\end_layout
+
+\begin_layout Plain Layout
+
+					[$
+\backslash
+star$
+\end_layout
+
+\begin_layout Plain Layout
+
+						[$
+\backslash
+land$]
+\end_layout
+
+\begin_layout Plain Layout
+
+					]
+\end_layout
+
+\begin_layout Plain Layout
+
+					[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+						[
+\backslash
+texttt{(}]
+\end_layout
+
+\begin_layout Plain Layout
+
+						[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+							[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+								[
+\backslash
+texttt{var}
+\end_layout
+
+\begin_layout Plain Layout
+
+									[$q$]
+\end_layout
+
+\begin_layout Plain Layout
+
+								]
+\end_layout
+
+\begin_layout Plain Layout
+
+							]
+\end_layout
+
+\begin_layout Plain Layout
+
+							[$
+\backslash
+star$
+\end_layout
+
+\begin_layout Plain Layout
+
+								[$
+\backslash
+lor$]
+\end_layout
+
+\begin_layout Plain Layout
+
+							]
+\end_layout
+
+\begin_layout Plain Layout
+
+							[
+\backslash
+texttt{E}
+\end_layout
+
+\begin_layout Plain Layout
+
+								[
+\backslash
+texttt{var}
+\end_layout
+
+\begin_layout Plain Layout
+
+									[$r$]
+\end_layout
+
+\begin_layout Plain Layout
+
+								]
+\end_layout
+
+\begin_layout Plain Layout
+
+							]
+\end_layout
+
+\begin_layout Plain Layout
+
+						]
+\end_layout
+
+\begin_layout Plain Layout
+
+						[
+\backslash
+texttt{)}]
+\end_layout
+
+\begin_layout Plain Layout
+
+					]
+\end_layout
+
+\begin_layout Plain Layout
+
+				]
+\end_layout
+
+\begin_layout Plain Layout
+
+				[
+\backslash
+texttt{)}]
+\end_layout
+
+\begin_layout Plain Layout
+
+			]
+\end_layout
+
+\begin_layout Plain Layout
+
+		]
+\end_layout
+
+\begin_layout Plain Layout
+
+	]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{forest}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Realiza la derivación de las expresiones del Ejercicio 1.5.
+\end_layout
+
+\begin_layout Subsubsection
+La Jerarquía de Chomksy
+\end_layout
+
+\begin_layout Standard
+La jerarquía de Chomsky es una clasificación jerárquica de distintos tipos
+ de gramáticas que generan lenguajes formales.
+ Esta jerarquía fue descrita por Noam Chomsky en 1956.
+ La Jerarquía de Chomsky consta de cuatro niveles:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Gramáticas de tipo 0
+\series default
+ (sin restricciones), que incluye a todas las gramáticas formales.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Gramáticas de tipo 1
+\series default
+ (gramáticas sensibles al contexto) generan los lenguajes sensibles al contexto.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Gramáticas de tipo 2
+\series default
+ (gramáticas libres del contexto) generan los lenguajes independientes del
+ contexto.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Gramáticas de tipo 3
+\series default
+ (gramáticas regulares) generan los lenguajes regulares.
+ 
+\end_layout
+
+\begin_layout Standard
+A lo largo del curso estudiaremos cada uno de estos tipos de gramática,
+ de momento basta con que sepas acerca de su existencia.
+\end_layout
+
+\begin_layout Subsection
+Lenguajes Regulares
+\end_layout
+
+\begin_layout Standard
+Los lenguajes regulares se encuentran en la clase más pequeña que incluye
+ a los lenguajes más simples.
+ Por ejemplo, el conjunto de todos los números binarios.
+ De hecho deben su nombre a la 
+\emph on
+regularidad
+\emph default
+ o repeticiones que ocurren entre sus cadenas.
+ Por ejemplo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L_{1}=\left\{ abc,cc,abab,abccc,ababc\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La regularidad consiste en que sus palabras inician con repeticiones de
+ 
+\begin_inset Formula $ab$
+\end_inset
+
+ seguidas de repeticiones de 
+\begin_inset Formula $c$
+\end_inset
+
+.
+ De hecho, los lenguajes finitos son también lenguajes regulares por definición:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L_{2}=\left\{ el,coche,verde\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La combinación de lenguajes regulares (unión o concatenación) también producen
+ un lenguaje regular.
+ En general, diremos que un lenguaje 
+\begin_inset Formula $L$
+\end_inset
+
+ es regular si y sólo si se cumple al menos una de las siguientes condiciones:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L$
+\end_inset
+
+ es finito
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L$
+\end_inset
+
+ es la unión o la concatenación de otros lenguajes regulares 
+\begin_inset Formula $R_{1}$
+\end_inset
+
+ y 
+\begin_inset Formula $R_{2}$
+\end_inset
+
+, 
+\begin_inset Formula $L=R_{1}\cup R_{2}$
+\end_inset
+
+ o 
+\begin_inset Formula $L=R_{1}R_{2}$
+\end_inset
+
+ respectivamente.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L$
+\end_inset
+
+ es la cerradura de Kleene de algún lenguaje regular, 
+\begin_inset Formula $L=R^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, sea el lenguaje 
+\begin_inset Formula $L$
+\end_inset
+
+ de palabras formadas por 
+\begin_inset Formula $a$
+\end_inset
+
+ y 
+\begin_inset Formula $b$
+\end_inset
+
+ que empiezan con 
+\begin_inset Formula $a$
+\end_inset
+
+, tales como 
+\begin_inset Formula $aab,ab,a,abaa,$
+\end_inset
+
+etc.
+ Podemos probar que este lenguaje es regular como sigue:
+\end_layout
+
+\begin_layout Standard
+El alfabeto es 
+\begin_inset Formula $\Sigma=\left\{ a,b\right\} $
+\end_inset
+
+.
+ El lenguaje 
+\begin_inset Formula $L$
+\end_inset
+
+ puede ser visto como la concatenación de una 
+\begin_inset Formula $a$
+\end_inset
+
+ con cadenas cualesquiera de 
+\begin_inset Formula $a$
+\end_inset
+
+ y 
+\begin_inset Formula $b$
+\end_inset
+
+; ahora bien, éstas últimas son elementos de 
+\begin_inset Formula $\left\{ a,b\right\} ^{*}$
+\end_inset
+
+, mientras que el lenguaje que sólo contiene la palabra 
+\begin_inset Formula $a$
+\end_inset
+
+ es 
+\begin_inset Formula $\left\{ a\right\} $
+\end_inset
+
+.
+ Ambos lenguajes son regulares, es decir, 
+\begin_inset Formula $\left\{ a\right\} $
+\end_inset
+
+ es finito, por lo tanto regular, mientras que 
+\begin_inset Formula $\left\{ a,b\right\} ^{*}$
+\end_inset
+
+ es la cerradura de 
+\begin_inset Formula $\left\{ a,b\right\} $
+\end_inset
+
+, que es regulare por ser finito también.
+ Entonces la concatenación es 
+\begin_inset Formula $\left\{ a\right\} \left\{ a,b\right\} ^{*}$
+\end_inset
+
+, es regular.
+\end_layout
+
+\begin_layout Standard
+En esta nota estudiaremos a los lenguajes regulares mediante algunos mecanismos
+ como son las gramáticas, los autómatas finitos y las expresiones regulares.
+\end_layout
+
+\begin_layout Subsection
+Gramáticas Regulares
+\end_layout
+
+\begin_layout Standard
+Aunque en la nota pasada usamos la notación 
+\begin_inset Formula $S:=E$
+\end_inset
+
+ para representar las reglas de producción, ésta es más utilizada en el
+ ámbito del diseño de lenguajes de programación.
+ En Teoría de la Computación se prefiere la notación 
+\begin_inset Formula $S\rightarrow E$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Decimos entonces que las gramáticas regulares son gramáticas cuyas reglas
+ son de la forma 
+\begin_inset Formula $A\rightarrow aB$
+\end_inset
+
+ o bien 
+\begin_inset Formula $A\rightarrow a$
+\end_inset
+
+, donde 
+\begin_inset Formula $A$
+\end_inset
+
+ y 
+\begin_inset Formula $B$
+\end_inset
+
+ son símbolos no terminales y 
+\begin_inset Formula $a$
+\end_inset
+
+ es un símbolo terminal.
+ Por ejemplo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & aA\\
+S & \rightarrow & bA\\
+A & \rightarrow & aB\\
+A & \rightarrow & bB\\
+A & \rightarrow & a\\
+B & \rightarrow & aA\\
+B & \rightarrow & bA
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En este caso, dado que en los símbolos no terminales se encuentran a la
+ derecha, decimos que es una 
+\emph on
+gramática
+\emph default
+ 
+\emph on
+regular derecha
+\emph default
+, y cuando colocamos el símbolo no terminal a la izquierda, diremos evidentement
+e que, es 
+\emph on
+regular izquierda.
+ 
+\emph default
+Por ejemplo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & Aa\\
+S & \rightarrow & Ab\\
+A & \rightarrow & Ba\\
+A & \rightarrow & Bb\\
+A & \rightarrow & a\\
+B & \rightarrow & Aa\\
+B & \rightarrow & Ab
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Gramática Regular) Una gramática regular es una cuadrupla 
+\begin_inset Formula $\left\langle V,\Sigma,R,S\right\rangle $
+\end_inset
+
+ en donde:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $V$
+\end_inset
+
+ 
+\emph on
+es el alfabeto de variables
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ 
+\emph on
+es el alfabeto de constantes
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $R$
+\end_inset
+
+ 
+\emph on
+es el conjunto de reglas de producción que además es un subconjunto de 
+\begin_inset Formula $V\times\left(\Sigma V\cup\Sigma\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $S$
+\end_inset
+
+ 
+\emph on
+es el símbolo inicial, un elemento de 
+\begin_inset Formula $V$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Derivación
+\end_layout
+
+\begin_layout Itemize
+Una cadena 
+\begin_inset Formula $uXu$
+\end_inset
+
+ deriva en un paso una cadena 
+\begin_inset Formula $u\alpha v$
+\end_inset
+
+, escrito como 
+\begin_inset Formula $uXv\Rightarrow u\alpha v$
+\end_inset
+
+, si hay una regla de producción 
+\begin_inset Formula $X\rightarrow\alpha\in R$
+\end_inset
+
+ en la gramática.
+ 
+\end_layout
+
+\begin_layout Itemize
+Una cadena 
+\begin_inset Formula $w\in\Sigma^{*}$
+\end_inset
+
+ (formada sólo por símbolos terminales) es derivable a partir de una gramática
+ 
+\begin_inset Formula $G$
+\end_inset
+
+ si existe una secuencia de pasos de derivación 
+\begin_inset Formula $S\Rightarrow\alpha_{1}\Rightarrow...\Rightarrow w$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+A una secuencia de pasos de derivación le llamamos simplemente derivación.
+\end_layout
+
+\begin_layout Itemize
+Dicho de otra forma, una palabra 
+\begin_inset Formula $w\in\Sigma^{*}$
+\end_inset
+
+ es derivable a partir de 
+\begin_inset Formula $G$
+\end_inset
+
+ si podemos llegar a ella a partir de 
+\begin_inset Formula $S$
+\end_inset
+
+ y escribimos
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S\Rightarrow^{*}w
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Lenguaje de una Gramática) El Lenguaje generado por una gramática 
+\begin_inset Formula $G$
+\end_inset
+
+, 
+\begin_inset Formula $L\left(G\right)$
+\end_inset
+
+, es igual al conjunto de las cadenas derivables a partir de su símbolo
+ inicial.
+ Es decir:
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+L\left(G\right)=\left\{ w\in\Sigma^{\text{*}}:S\Rightarrow^{\text{*}}w\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, el lenguaje reconocido por nuestra primera gramática es el
+ de las palabras en 
+\begin_inset Formula $\left\{ a,b\right\} $
+\end_inset
+
+ de longitud par terminadas en 
+\begin_inset Formula $a$
+\end_inset
+
+.
+ Veamos otro ejemplo.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Diseñar una gramática que genere el lenguaje de las palabras en 
+\begin_inset Formula $\left\{ a,b\right\} $
+\end_inset
+
+ que contiene la subcadena 
+\begin_inset Formula $bb$
+\end_inset
+
+, tales como 
+\begin_inset Formula $abb$
+\end_inset
+
+, 
+\begin_inset Formula $ababba$
+\end_inset
+
+, etc.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución:
+\end_layout
+
+\begin_layout Example
+Podemos usar los símbolos no terminales para 
+\emph on
+recordar
+\emph default
+ situaciones.
+ Es decir:
+\end_layout
+
+\begin_layout Itemize
+Un símbolo 
+\begin_inset Formula $A$
+\end_inset
+
+ que recuerda que aún no se ha producido ninguna 
+\begin_inset Formula $b$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Un símbolo 
+\begin_inset Formula $B$
+\end_inset
+
+ que recuerda que se produjo una 
+\begin_inset Formula $b$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Un símbolo 
+\begin_inset Formula $C$
+\end_inset
+
+ que recuerda que ya se produjeron las dos 
+\begin_inset Formula $b$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+A & \rightarrow & aA\\
+A & \rightarrow & bB\\
+B & \rightarrow & aA\\
+B & \rightarrow & bC\\
+B & \rightarrow & b\\
+C & \rightarrow & aC\\
+C & \rightarrow & bC\\
+C & \rightarrow & a\\
+C & \rightarrow & b
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Diseña una gramática que dado el siguiente alfabeto 
+\begin_inset Formula $\left\{ a,b,c,1,2,3\right\} $
+\end_inset
+
+ permita construir identificadores válidos.
+ Decimos que un identificador es válido si éste es una combinación de letras
+ y números pero con la restricción de que nunca debe empezar por un número.
+ Por ejemplo 
+\begin_inset Formula $abc$
+\end_inset
+
+, 
+\begin_inset Formula $a12$
+\end_inset
+
+, 
+\begin_inset Formula $a1b$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+literal "false"
+
+\end_inset
+
+Favio E.
+ Miranda, Elisa Viso, 
+\emph on
+Matemáticas Discretas, 
+\emph default
+Las Prensas de Ciencias, Facultad de Ciencias UNAM, 2010.
+\end_layout
+
+\end_body
+\end_document

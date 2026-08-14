@@ -1,0 +1,1629 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\raggedcolumns
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-bytype
+theorems-sec-bytype
+\end_modules
+\maintain_unincluded_children false
+\language spanish-mexico
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "cmr" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\boxbgcolor #cccccc
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "mathescape=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Teoría de la Computación, 2021-1
+\begin_inset Newline newline
+\end_inset
+
+Nota de clase 7: Autómatas de Pila
+\end_layout
+
+\begin_layout Author
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Manuel Soto Romero
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today 
+\backslash
+
+\backslash
+ Colegio de Ciencia y Tecnología UACM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*{
+\backslash
+thefootnote}{
+\backslash
+arabic{footnote}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{footnote}{0}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{7}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*
+\backslash
+lstlistingname{C
+\backslash
+'odigo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hemos visto que los lenguajes regulares son reconocidos por máquinas llamadas
+ autómatas finitos, los cuales son dispositivos cuya memoria es limitada:
+ sólo son útiles al recordar estado por estado alguna propiedad sin poder
+ hacerlo a lo largo de todo una secuencia de estados.
+\end_layout
+
+\begin_layout Standard
+Para poder reconocer lenguajes más expresivos, como los lenguajes libres
+ de contexto podemos pensar en alguna generalización de los autómatas finitos,
+ la cual puede realizarse de diversos modos.
+ Nosotros escogeremos agregar un dispositivo de memoria, en este caso una
+ pila.
+ 
+\end_layout
+
+\begin_layout Subsection
+Autómatas de Pila
+\end_layout
+
+\begin_layout Standard
+Los autómatas de pila son una generalización de los autómatas finitos, el
+ dispositivo de memoria es una pila, que como recordarás de tu curso de
+ estructura de datos es una estructura que puede almacenar elementos por
+ medio de una operación 
+\emph on
+push
+\emph default
+, acceder a ellos mediante una operación 
+\emph on
+pop 
+\emph default
+o simplemente observarlos 
+\emph on
+top
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Autómata de Pila No Determinista) Un autómata de pila no determinista es
+ una séptupla:
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+M=\left\langle Q,\Sigma,\Gamma,\delta,q_{0},Z_{0},F\right\rangle 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+donde
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Q\neq\varnothing$
+\end_inset
+
+ 
+\emph on
+es un conjunto finito de estados
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ 
+\emph on
+es el alfabeto de entrada
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ 
+\emph on
+es el alfabeto de la pila
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\delta:Q\times\left(\Sigma\cup\left\{ \varepsilon\right\} \right)\times\Gamma\rightarrow\mathcal{P}\left(Q\times\Gamma^{*}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ 
+\emph on
+es el estado inicial
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Z_{0}$
+\end_inset
+
+ 
+\emph on
+es el símbolo inicial de la pila
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F\subseteq Q$
+\end_inset
+
+ 
+\emph on
+es el conjunto de estados finales
+\end_layout
+
+\begin_layout Standard
+Analicemos con detalle la función de transición:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\delta:Q\times\left(\Sigma\cup\left\{ \varepsilon\right\} \right)\times\Gamma\rightarrow\mathcal{P}\left(Q\times\Gamma^{*}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+esta función recibe tres argumentos: un estado, un símbolo o la cadena vacía
+ y el símbolo al tope de la pila; devuelve un par con el nuevo estado y
+ los símbolos que serán el nuevo tope de la pila.
+ Las transiciones son los pares que devuelve la función 
+\begin_inset Formula $\delta$
+\end_inset
+
+: si 
+\begin_inset Formula $\left(p,\gamma\right)\in\delta\left(q,a,\sigma\right)$
+\end_inset
+
+ entonces estado en el estado 
+\begin_inset Formula $q$
+\end_inset
+
+ y leyendo a 
+\begin_inset Formula $a$
+\end_inset
+
+ con 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ en el tope de la pila, el autómata hace lo siguiente:
+\end_layout
+
+\begin_layout Enumerate
+Consume el símbolo 
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Elimina 
+\begin_inset Formula $s$
+\end_inset
+
+ del tope de la pila, es decir 
+\begin_inset Formula $pop\left(\sigma\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Escribe 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ en el tope de la pila, es decir 
+\begin_inset Formula $push\left(\gamma\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Cambia al estado 
+\begin_inset Formula $p$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Además es posible consumir, leer o escribir la cadena vacía 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Transiciones especiales
+\end_layout
+
+\begin_layout Standard
+Los siguientes tipos de transiciones son de especial interés:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(q',\sigma\right)\in\delta\left(q,a,\sigma\right)$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+en este caso el contenido de la pila no se ha alterado.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(q',\varepsilon\right)\in\delta\left(q,a,\sigma\right)$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+el símbolo 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ se borra y el autómata tiene un nuevo tope en la pila, es decir, el símbolo
+ colocado inmediatamente abajo de 
+\begin_inset Formula $\sigma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(q',\gamma\right)\in\delta\left(q,\varepsilon,\sigma\right)$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+esta es una 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+-transición, el símbolo de entrada no se procesa, se cambió de estado y
+ además el tope de la pila 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ se remplaza por 
+\begin_inset Formula $\gamma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Aceptación de cadenas por un autómata
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Descripción instantánea) Una configuración o descripción instantánea de
+ un autómata de pila es una terna
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+\left\langle q,aw,\sigma\beta\right\rangle 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+que representa lo siguiente:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+El autómata está en el estado q.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+aw es la parte aún no procesada de la cadena de entrada, siendo a el siguiente
+ símbolo a leer.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+\begin_inset Formula $\sigma\beta$
+\end_inset
+
+ es el contenido total de la pila, siendo 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ el símbolo colocado en el tope.
+\end_layout
+
+\begin_layout Standard
+La noción informal de cómputo se formaliza mediante una relación 
+\begin_inset Formula $\vdash_{M}$
+\end_inset
+
+ entre configuraciones, llamada 
+\emph on
+paso de computación
+\emph default
+ tal que
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left\langle q,aw,\sigma\beta\right\rangle \vdash_{M}\left\langle p,w,\gamma\beta\right\rangle \text{ si y sólo si }\left(p,\gamma\right)\in\delta\left(q,a,\sigma\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es importante remarcar que del lado derecho, el contenido de la pila, que
+ es 
+\begin_inset Formula $\gamma\beta$
+\end_inset
+
+, se entiende que el tope de la pila contiene al primer símbolo de 
+\begin_inset Formula $\gamma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Existen diferentes tipos de configuraciones que debemos enfatizar:
+\end_layout
+
+\begin_layout Itemize
+Configuración inicial: 
+\begin_inset Formula $\left\langle q_{0},w,Z_{0}\right\rangle $
+\end_inset
+
+ para cualquier 
+\begin_inset Formula $w\in\Sigma^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Configuración de aceptación con estados finales: 
+\begin_inset Formula $\left\langle q_{f},\varepsilon,\beta\right\rangle $
+\end_inset
+
+ con 
+\begin_inset Formula $q_{f}\in F$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Configuración de aceptación por pila vacía: 
+\begin_inset Formula $\left\langle q_{f},\varepsilon,\varepsilon\right\rangle $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Las configuraciones descritas son importantes y las dos últimas distinguen
+ dos formas de aceptar cadenas, una verificando el estado de la máquina
+ y la otra considerando el contenido de la pila.
+ Al igual que con otros tipos de autómatas visto, el lenguaje del autómata
+ se define como el conjunto de cadenas que al ser procesadas por el autómata
+ han alcanzado un estado final o se llega a tener la pila vacía.
+ Estos dos tipos de aceptación son equivalentes.
+ 
+\end_layout
+
+\begin_layout Standard
+Por estado final:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L\left(M\right)=\left\{ w\in\Sigma^{*}:\left\langle q_{0},w,Z_{0}\right\rangle \vdash_{M}^{*}\left\langle q_{f},\varepsilon,\beta\right\rangle \;y\;q_{f}\in F\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por pila vacía:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+V\left(M\right)=\left\{ w\in\Sigma^{*}:\left\langle q_{0},w,Z_{0}\right\rangle \vdash_{M}^{*}\left\langle p,\varepsilon,\varepsilon\right\rangle \right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Ejemplos
+\end_layout
+
+\begin_layout Example
+Consideremos el lenguaje 
+\begin_inset Formula $L_{1}=\left\{ a^{i}b^{i}|i\geq0\right\} $
+\end_inset
+
+, el siguiente autómata de pila reconoce a 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+M_{1}=\left\langle \left\{ q_{0},q_{1},q_{2}\right\} ,\left\{ a,b\right\} ,\left\{ X,Z_{0}\right\} ,\delta,q_{0},Z_{0},\left\{ q_{2}\right\} \right\rangle 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+donde
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+\begin{array}{lcl}
+\delta\left(q_{0},a,Z_{0}\right) & = & \left\{ \left(q_{0},XZ_{0}\right)\right\} \\
+\delta\left(q_{0},\varepsilon,Z_{0}\right) & = & \left\{ \left(q_{2},\varepsilon\right)\right\} \\
+\delta\left(q_{1},b,X\right) & = & \left\{ \left(q_{1},\varepsilon\right)\right\} \\
+\delta\left(q_{0},a,X\right) & = & \left\{ \left(q_{0},XX\right)\right\} \\
+\delta\left(q_{0},b,X\right) & = & \left\{ \left(q_{1},\varepsilon\right)\right\} \\
+\delta\left(q_{1},\varepsilon,Z_{0}\right) & = & \left\{ \left(q_{2},\varepsilon\right)\right\} 
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+La aceptación es por medio de estados finales.
+ La representación del autómata se muestra en el siguiente diagrama.
+ La diferencia con los autómatas que ya conocemos es que las etiquetas son
+ etiquetadas por los pares que representan el símbolo a procesar y el antes/desp
+ués del tope de la pila.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=3cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial,initial text=] (0) {$q_0$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below of=1,accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[loop above] node{$a, Z_0/XZ_0$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[loop below] node{$a, X/XX$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[] node{$b, X/
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[] node{$
+\backslash
+varepsilon, Z_0/
+\backslash
+varepsilon$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[loop above] node{$b, X/
+\backslash
+varepsilon$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$
+\backslash
+varepsilon, Z_0/
+\backslash
+varepsilon$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La siguiente tabla muestra el procesamiento de la cadena 
+\begin_inset Formula $aabb$
+\end_inset
+
+ y las configuraciones en cada paso.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Paso
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Transición
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Configuración
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Inicialización
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\langle q_{0},aabb,Z_{0}\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta\left(q_{o},a,Z_{0}\right)\rightarrow\left(q_{0},XZ_{0}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\langle q_{0},abb,XZ_{0}\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta\left(q_{o},a,X\right)\rightarrow\left(q_{0},XX\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\langle q_{0},bb,XXZ_{0}\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta\left(q_{o},b,X\right)\rightarrow\left(q_{1},\varepsilon\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\langle q_{1},b,XZ_{0}\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta\left(q_{1},b,X\right)\rightarrow\left(q_{1},\varepsilon\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\langle q_{1},\varepsilon,Z_{0}\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta\left(q_{1},\varepsilon,Z_{0}\right)\rightarrow\left(q_{2},\varepsilon\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\langle q_{2},\varepsilon,\varepsilon\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ACEPTACIÓN
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La cadena es aceptada pues termina en un estado final.
+ Veamos ahora el procesamiento para 
+\begin_inset Formula $aab$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Paso
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Transición
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Configuración
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Inicialización
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\langle q_{0},aab,Z_{0}\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta\left(q_{o},a,Z_{0}\right)\rightarrow\left(q_{0},XZ_{0}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\langle q_{0},ab,XZ_{0}\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta\left(q_{o},a,X\right)\rightarrow\left(q_{0},XX\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\langle q_{0},b,XXZ_{0}\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta\left(q_{o},b,X\right)\rightarrow\left(q_{1},\varepsilon\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\langle q_{1},\varepsilon,XZ_{0}\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\delta\left(q_{1},\varepsilon,X\right)\rightarrow stuck$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+¿?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RECHAZO
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Dado el siguiente autómata que reconoce a 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ por medio de pila vacía:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+M_{1}^{'}=\left\langle \left\{ q_{0},q_{1}\right\} ,\left\{ a,b\right\} ,\left\{ X,Z_{0}\right\} ,\delta,q_{0},Z_{0},\varnothing\right\rangle 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+donde
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{lcl}
+\delta\left(q_{0},a,Z_{0}\right) & = & \left\{ \left(q_{0},XZ_{0}\right)\right\} \\
+\delta\left(q_{0},\varepsilon,Z_{0}\right) & = & \left\{ \left(q_{0},\varepsilon\right)\right\} \\
+\delta\left(q_{1},b,X\right) & = & \left\{ \left(q_{1},\varepsilon\right)\right\} \\
+\delta\left(q_{0},a,X\right) & = & \left\{ \left(q_{0},XX\right)\right\} \\
+\delta\left(q_{0},b,X\right) & = & \left\{ \left(q_{1},\varepsilon\right)\right\} \\
+\delta\left(q_{1},\varepsilon,Z_{0}\right) & = & \left\{ \left(q_{1},\varepsilon\right)\right\} 
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Dibuja el diagrama correspondiente al autómata.
+\end_layout
+
+\begin_layout Itemize
+Muestra el proceso de las cadenas 
+\begin_inset Formula $aab$
+\end_inset
+
+ y 
+\begin_inset Formula $aab$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Nota que en este caso el autómata acepta por pila vacía, es decir, si llegamos
+ a la pila vacía, la cadena es aceptada, en caso contrario es rechazada.
+ Nota además que el autómata no tiene estados finales.
+\end_layout
+
+\begin_layout Subsection
+Equivalencia
+\end_layout
+
+\begin_layout Standard
+Los dos tipos de aceptación en un autómata de pila, por estados finales
+ o por pila vacía son equivalentes.
+ Esto viene dado por los siguientes lemas, la demostración de los mismas
+ queda fuera del alcance de este curso.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+De estados finales a pila vacía
+\end_layout
+
+\begin_layout Lemma
+Dado un lenguaje L tal que L = L(M) para algún autómata de pila M, existe
+ un autómata de pila M' tal que L = V(M').
+ Es decir, todo lenguaje aceptado por estados finales es aceptado por pila
+ vacía.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+De pila vacía a estados finales
+\end_layout
+
+\begin_layout Lemma
+Dado un lenguaje L tal que L = V(M) para algún autómata de pila M, existe
+ un autómata de pila M' tal que L = L(M').
+ Es decir, todo lenguaje aceptado por pila vacía es aceptado por estados
+ finales.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+Un lenguaje 
+\begin_inset Formula $L\subseteq\Sigma^{*}$
+\end_inset
+
+ es de tipo 2 (libre de contexto) si 
+\begin_inset Formula $L$
+\end_inset
+
+ es aceptado por un autómata de pila.
+\end_layout
+
+\begin_layout Subsection
+Determinismo
+\end_layout
+
+\begin_layout Standard
+Para que un autómata sea determinista, simplemente restringimos la función
+ de transición para que sólo haya un estado en la transición de cualquier
+ estado leyendo un símbolo del alfabeto.
+ Tal y como hacíamos con los AFD.
+ Es decir:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\delta:Q\times\left(\Sigma\cup\left\{ \varepsilon\right\} \right)\times\Gamma\rightarrow Q\times\Gamma^{*}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es decir, a lo más hay una transición en un estado y símbolo dados.
+\end_layout
+
+\begin_layout Standard
+Al permitirse las 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+-transiciones se establece la siguiente convención para mantener el determinismo
+ cuando son retiradas: Si 
+\begin_inset Formula $\delta\left(q,a,s\right)$
+\end_inset
+
+ está definida entonces 
+\begin_inset Formula $\delta\left(q,\varepsilon,s\right)$
+\end_inset
+
+ está indefinida y viceversa.
+ Es decir, ambas transiciones no pueden estar definidas al mismo tiempo.
+\end_layout
+
+\begin_layout Standard
+Un autómata de pila determinista es un caso de uno no-determinista.
+ A diferencia de los autómatas finitos, en el caso de los autómatas de pila,
+ no hay equivalencia entre los autómatas deterministas y los no-deterministas.
+ Existen lenguajes que sólo pueden ser reconocidos mediante un autómata
+ de pila no-determinista.
+ Por ejemplo 
+\begin_inset Formula $L=\left\{ w\in\left\{ a,b\right\} ^{*}:w=w^{R}\right\} $
+\end_inset
+
+ el lenguaje de los palíndromos.
+ Esto implica que hay lenguajes libres de contexto que no pueden ser reconocidos
+ por un autómata de pila determinista.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+Favio E.
+ Miranda, A.
+ Liliana Reyes, et.al, 
+\emph on
+Notas de Clase para el curso de Autómatas y Lenguajes Formales
+\emph default
+, Facultad de Ciencias, UNAM, Revisión 2019-2.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+literal "false"
+
+\end_inset
+
+Rodrigo De Castro, 
+\emph on
+Notas de Clase de Teoría de la Computación: Lenguajes, autómatas, gramáticas,
+\emph default
+ Universidad Nacional de Colombia, Facultas de Ciencias, 2004.
+\end_layout
+
+\end_body
+\end_document

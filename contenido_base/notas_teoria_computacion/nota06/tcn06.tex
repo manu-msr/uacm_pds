@@ -1,0 +1,641 @@
+%% LyX 2.3.4.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,spanish]{article}
+\renewcommand{\rmdefault}{cmr}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem{defn}{\protect\definitionname}[section]
+\theoremstyle{remark}
+\newtheorem{rem}{\protect\remarkname}[section]
+\theoremstyle{definition}
+\newtheorem{xca}{\protect\exercisename}[section]
+\theoremstyle{definition}
+\newtheorem{example}{\protect\examplename}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\raggedcolumns
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+
+\usepackage{listings}
+\lstset{mathescape=true}
+\providecommand{\definitionname}{Definición}
+\providecommand{\examplename}{Ejemplo}
+\providecommand{\exercisename}{Ejercicio}
+\providecommand{\remarkname}{Observación}
+
+\begin{document}
+\title{Teoría de la Computación, 2021-1\\
+Nota de clase 6: Gramáticas Libres de Contexto}
+\author{Manuel Soto Romero}
+\date{\today \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+\setcounter{section}{6}
+\renewcommand*\lstlistingname{C\'odigo}
+
+\subsection{Introducción}
+
+Como hemos visto, un mecanismo relevante para generar un lenguaje
+es mediante el concepto de gramática formal. Las gramáticas formales
+fueron introducidas por Noam Chomsky en 1956. La intención era tener
+un modelo para la descripción de lenguajes naturales. Posteriormente
+una clase especial de estos formalismos, llamados gramáticas libres
+de contexto, se utilizaron como herramienta para presentar la sintaxis
+de lenguajes de programación y para el diseño de analizadores léxicos
+de compiladores.
+
+\bigskip{}
+
+\begin{defn}
+(GLC) \emph{Una gramática libre de contexto (GLC) es una cuaterna
+$G=\left\langle V,T,S,P\right\rangle $ tal que:}
+\end{defn}
+\begin{itemize}
+\item \emph{V es un alfabeto de variables o símbolos no terminales, los
+cuales se denotan por mayúsculas A, B, C, ...}
+\item \emph{T es un alfabeto de constantes símbolos terminales, los cuales
+se denotan por minúsculas a, b, c con la condición de que $T\cap V=\varnothing$.}
+\item \emph{$S\in V$ es una variable distinguida llamada el símbolo inicial.}
+\item $P$ \emph{es un conjunto finito de reglas de producción, donde cada
+regla es de la forma}
+
+\[
+A\rightarrow\alpha
+\]
+
+y $A\in V,\alpha\in\left(V\cup T\right)^{*}$.
+\end{itemize}
+Veamos algunos ejemplos:
+\begin{itemize}
+\item Gramática que reconoce el lenguaje $a^{*}$:
+
+\[
+\begin{array}{rcl}
+S & \rightarrow & aS\\
+S & \rightarrow & \varepsilon
+\end{array}
+\]
+
+\item Gramática que reconoce al lenguaje $a^{*}b^{*}$:
+
+\[
+\begin{array}{rcl}
+S & \rightarrow & aS\\
+S & \rightarrow & bA\\
+S & \rightarrow & \varepsilon\\
+A & \rightarrow & bA\\
+A & \rightarrow & b\\
+A & \rightarrow & \varepsilon
+\end{array}
+\]
+
+\item Gramática que reconoce al lenguaje $0^{*}10^{*}10^{*}$:
+
+\[
+\begin{array}{rcl}
+S & \rightarrow & A1A1A\\
+A & \rightarrow & 0A\\
+A & \rightarrow & \varepsilon
+\end{array}
+\]
+
+\item Gramática que genere el lenguaje $L=\left\{ a^{i}b^{i}:i\geq0\right\} $:
+
+\[
+\begin{array}{rcl}
+S & \rightarrow & aSb\\
+S & \rightarrow & \varepsilon
+\end{array}
+\]
+
+\end{itemize}
+\bigskip{}
+
+\begin{rem}
+Es importante notar que toda gramática regular es libre de contexto
+pero no al revés.
+\end{rem}
+%
+\bigskip{}
+
+\begin{xca}
+Encontrar una GLC que genere el lenguaje de todos los palíndromos
+sobre $\Sigma=\left\{ a,b\right\} $.
+\end{xca}
+\bigskip{}
+
+\begin{xca}
+Encontrar una GLC que genere el lenguaje de todas las cadenas sobre
+$\Sigma=\left\{ a,b\right\} $ que tienen un número par de símbolos.
+\end{xca}
+
+\subsection{Gramáticas ambiguas}
+
+Recordemos que dada una gramática podemos dar una derivación que permita
+analizar la forma en que una cadena puede ser construida así como
+analizar su respectivo árbol de derivación. En este caso, una derivación
+usando gramáticas libres de contexto no suele ser única pues cada
+paso depende de la variable elegida para su reescritura. Esto genera
+un no determinismo que puede eliminarse usando una convención, la
+cual suele ser de dos tipos, eligiendo siempre la variable más a la
+izquierda o bien más a la derecha para el proceso de reescritura. 
+
+\bigskip{}
+
+\begin{defn}
+\emph{(Derivación por la izquierda) Una derivación es por la izquierda
+si en cada paso se reescribe la variable más a la izquierda en la
+cadena.}
+\end{defn}
+\bigskip{}
+
+\begin{defn}
+\emph{(Derivación por la derecha) Una derivación es por la derecha
+si en cada paso se reescribe la variable más a la derecha en la cadena.}
+\end{defn}
+%
+\bigskip{}
+
+\begin{example}
+En la gramática
+\end{example}
+\[
+\begin{array}{rcl}
+S & \rightarrow & aSb\\
+S & \rightarrow & a\\
+A & \rightarrow & SbA\\
+A & \rightarrow & SS\\
+A & \rightarrow & ba
+\end{array}
+\]
+
+\begin{enumerate}
+\item La siguiente derivación por la izquierda de la cadena $aabbaa$:
+
+\[
+S\rightarrow aAS\rightarrow aSbAS\rightarrow aabAS\rightarrow aabbaS\rightarrow aabbaa
+\]
+
+\item La siguiente derivación por la derecha de la cadena $aabbaa$:
+
+\[
+S\rightarrow aAS\rightarrow aAa\rightarrow aSbAa\rightarrow aSbbaa\rightarrow aabbaa
+\]
+
+\end{enumerate}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Gramática ambigua) Una GLC es ambigua si existe una cadena
+para la cual existen dos derivaciones diferentes. De la misma forma,
+podemos decir que es ambigua si existen dos árboles de derivación
+diferentes para la misma cadena.}
+\end{defn}
+%
+\bigskip{}
+
+\begin{example}
+Consideremos el alfabeto $\Sigma=\left\{ 0,1,+,*,(,)\right\} $. La
+siguiente gramática para generar número naturales, sumas y productos,
+en numeración binaria es ambigua, recordemos que el símbolo $|$ se
+lee como ``o'' y permite simplificar las reglas de escritura:
+\end{example}
+\[
+S\rightarrow S+S\;|\;S*S\;|\;\left(S\right)\;|\;0S\;|\;1S\;|\;0S\;|\;1S\;|\;0\;|\;1
+\]
+
+La cadena $1+1*0$ tiene dos derivaciones por la izquierda diferentes:
+
+\[
+S\rightarrow S+S\rightarrow1+S\rightarrow1+S*S\rightarrow1+1*S\rightarrow1+1*0
+\]
+
+\[
+S\rightarrow S*S\rightarrow S+S*S\rightarrow1+S*S\rightarrow1+1*S\rightarrow1+1*0
+\]
+
+Los árboles de derivación correspondientes a la derivaciones anteriores
+son:
+
+\begin{multicols}{2}
+
+\begin{center}
+\begin{forest}	
+	[S
+		[S
+			[1]
+		]
+		[+]
+		[S
+			[S
+				[1]
+			]
+			[*]
+			[S
+				[0]
+			]
+		]
+	]
+\end{forest}
+\end{center}
+
+\columnbreak
+
+\begin{center}
+\begin{forest}	
+	[S
+		[S
+			[S
+				[1]
+			]
+			[+]
+			[S
+				[1]
+			]
+		]
+		[*]
+		[S
+			[0]
+		]
+	]
+\end{forest}
+\end{center}
+
+\end{multicols}
+
+La ambigüedad se puede eliminar introduciendo paréntesis:
+
+\[
+S\rightarrow\left(S+S\right)\;|\;\left(S*S\right)\;|\;\left(S\right)\;|\;0S\;|\;1S\;|\;0S\;|\;1S\;|\;0\;|\;1
+\]
+
+Sin embargo, aunque la adición de los paréntesis elimina la ambigüedad,
+las expresiones generadas tienen un excesivo número de paréntesis
+lo que dificulta el análisis sintáctico (en un compilador por ejemplo).
+Lo más común en estos casos es utilizar gramáticas como la original
+siempre y cuando se establezca un orden de precedencia para los operadores.
+Lo usual es establecer que {*} tenga una mayor precedencia que +.
+Por ejemplo, la expresión 1{*}1+0 se interpreta como (1{*}1)+0 y la
+expresión 10+11{*}110+1 se interpreta como 10+(11{*}110)+1.
+
+\bigskip{}
+
+\begin{xca}
+Indica si la siguiente gramática es ambigua. Justifica tu respuesta.
+\end{xca}
+\[
+\begin{array}{rcl}
+S & \rightarrow & aSa\;|\;\varepsilon\\
+A & \rightarrow & bA\;|\;\varepsilon
+\end{array}
+\]
+
+
+\subsection{Normalización de gramáticas}
+
+La normalización de gramáticas consiste en transformar todas las producciones
+de una gramática de manera que tengan cierta forma sintáctica en particular.
+Así la normalización de gramáticas libres de contexto es útil para
+homogeneizar la forma de las producciones, además para optimizar los
+procesos de derivación de cadenas. Con las \emph{Formas Normales},
+se facilita una solución al problema de la pertenencia, es decir,
+decidir si una cadena pertenece o no a un lenguaje:
+\begin{center}
+\emph{Dada una gramática G y una cadena w, ¿se cumple que $w\in L\left(G\right)$? }
+\par\end{center}
+\begin{itemize}
+\item Si la palabra $w$ es generada por $G$, el proceso para la construcción
+de un árbol de derivación terminará eventualmente.
+\item En caso contrario \textbf{no} podemos saber cuando parar en la construcción
+de un árbol de derivación.
+\item Pero si la gramática está en cierta forma normal, sí es posible saber
+cuando parar en la búsqueda de árboles de derivación para contestar
+el problema de la pertenencia.
+\end{itemize}
+Para obtener gramáticas normales, son necesarias varias transformaciones
+que simplificarán y reorganizarán las producciones.
+
+\subsubsection{Eliminación de variables inútiles}
+
+En una GLC puede haber dos tipos de variables inútiles: aquéllas que
+nunca aparecen en el proceso de ninguna derivación y aquéllas que
+no se pueden convertir en cadenas terminales.
+
+\bigskip{}
+
+\begin{defn}
+\emph{(Variable alcanzable) Una variable A es alcanzable si existen
+$u,v\in\left(V\cup\Sigma\right)^{*}$ tales que $S\Rightarrow^{*}uAv$.
+La variable inicial S es alcanzable por definición.}
+\end{defn}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Variable terminal) Una variable A es terminal si existen $w\in\Sigma^{*}$
+tales que $A\Rightarrow^{*}w$. En particular si $A\rightarrow\varepsilon$
+es una producción, entonces A es terminal.}
+\end{defn}
+%
+\textbf{Algoritmo para encontrar las variables terminales}
+
+El siguiente algoritmo sirve para encontrar todas las variables terminales
+de una GLC.
+
+\textbf{TERM$_{1}:=\left\{ A\in V:\text{Existe una producción de la forma }A\rightarrow w,w\in\Sigma^{*}\right\} $.}\\
+\textbf{TERM$_{i+1}:=$ TERM$_{i}\cup\left\{ A\in V:\exists\text{ producción }A\rightarrow w,w\in\left(\Sigma\cup TERM_{i}\right)^{*}\right\} $.}
+
+De esta forma obtenemos una sucesión creciente de conjuntos de variables:
+
+\[
+TERM_{1}\subseteq TERM_{2}\subseteq TERM_{3}\subseteq...
+\]
+
+El algoritmo se presenta entonces como:
+\begin{itemize}
+\item Inicializar: \textbf{TERM $:=\left\{ A\in V:\text{Existe una producción de la forma }A\rightarrow w,w\in\Sigma^{*}\right\} $.}
+\item Repetir: \textbf{TERM $:=$ TERM} \textbf{$\cup\left\{ A\in V:\exists\text{ producción }A\rightarrow w,w\in\left(\Sigma\cup TERM\right)^{*}\right\} $.}
+\item Hasta: No se añaden nuevas variables a \textbf{TERM.}
+\end{itemize}
+\bigskip{}
+
+\begin{example}
+Encontrar las variables terminales de la siguiente gramática
+\end{example}
+\[
+\begin{array}{rcl}
+S & \rightarrow & ACD\;|\;bBd\;|\;ab\\
+A & \rightarrow & aB\;|\;aA\;|C\\
+B & \rightarrow & aDS\;|\;aB\\
+C & \rightarrow & aCS\;|\;CB\;|\;CC\\
+D & \rightarrow & bD\;|\;ba\\
+E & \rightarrow & AB\;|\;aDb
+\end{array}
+\]
+
+\emph{Solución}
+
+\textbf{TERM$_{1}=\left\{ S,D\right\} $}\\
+\textbf{TERM$_{2}=\left\{ S,D\right\} \cup\left\{ B,E\right\} =\left\{ S,D,B,E\right\} $}\\
+\textbf{TERM$_{3}=\left\{ S,D,B,E\right\} \cup\left\{ A\right\} =\left\{ S,D,B,E,A\right\} $}\\
+\textbf{TERM$_{4}=\left\{ S,D,B,E,A\right\} \cup\varnothing=\left\{ S,D,B,E,A\right\} $}
+
+$\therefore$ El conjunto de variables no terminales es $\left\{ C\right\} $
+
+\textbf{Algoritmo para encontrar las variables alcanzables}
+
+El siguiente algoritmo sirve para encontrar todas las variables alcanzables
+de una GLC.
+
+\textbf{ALC$_{1}:=\left\{ S\right\} $.}\\
+\textbf{ALC$_{i+1}:=$ ALC$_{i}\cup\left\{ A\in V:\exists\text{ producción }B\rightarrow uAv,B\in ALC_{i}\;u,v\in\left(V\cup\Sigma\right)^{*}\right\} $.}
+
+De esta forma obtenemos una sucesión creciente de conjuntos de variables:
+
+\[
+ALC_{1}\subseteq ALC_{2}\subseteq ALC_{3}\subseteq...
+\]
+
+El algoritmo se presenta entonces como:
+\begin{itemize}
+\item Inicializar: \textbf{ALC $:=\left\{ S\right\} $.}
+\item Repetir: \textbf{ALC} \textbf{$:=$ ALC $\cup\left\{ A\in V:\exists\text{ producción }B\rightarrow uAv,B\in ALC\;u,v\in\left(V\cup\Sigma\right)^{*}\right\} $..}
+\item Hasta: No se añaden nuevas variables a \textbf{ALC.}
+\end{itemize}
+\bigskip{}
+
+\begin{example}
+Encontrar las variables terminales de la siguiente gramática
+\end{example}
+\[
+\begin{array}{rcl}
+S & \rightarrow & aS\;|\;AaB\;|\;ACS\\
+A & \rightarrow & aS\;|\;AaB\;|\;AC\\
+B & \rightarrow & bB\;|\;DB\;|\:BB\\
+C & \rightarrow & aDa\;|\;ABD\;|\;ab\\
+D & \rightarrow & aD\;|\;DD\;|\;ab\\
+E & \rightarrow & FF\;|\;aa\\
+F & \rightarrow & aE\;|\;EF
+\end{array}
+\]
+
+\emph{Solución}
+
+\textbf{ALC$_{1}=\left\{ S\right\} $}\\
+\textbf{ALC$_{2}=\left\{ S\right\} \cup\left\{ A,B,C\right\} =\left\{ S,A,B,C\right\} $}\\
+\textbf{ALC$_{3}=\left\{ S,A,B,C\right\} \cup\left\{ D\right\} =\left\{ S,A,B,C,D\right\} $}\\
+\textbf{ALC$_{4}=\left\{ S,A,B,C,D\right\} \cup\varnothing=\left\{ S,A,B,C,D\right\} $}
+
+$\therefore$ El conjunto de variables no alcanzables es $\left\{ E,F\right\} $
+
+\subsubsection{Eliminación de producciones $\varepsilon$}
+
+\bigskip{}
+
+\begin{defn}
+\emph{(Producción) Una producción de la forma $A\rightarrow\varepsilon$
+se llama producción $\varepsilon$}
+\end{defn}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Variable anulable) Una variable A se llama anulable si $A\Rightarrow^{*}\varepsilon$.}
+\end{defn}
+%
+\textbf{Algoritmo para encontrar las variables anulables}
+
+El siguiente algoritmo sirve para encontrar todas las variables alcanzables
+de una GLC.
+
+\textbf{ANUL$_{1}:=\left\{ A\in V:A\rightarrow\varepsilon\text{ es una producción}\right\} $.}\\
+\textbf{ANUL$_{i+1}:=$ ANUL$_{i}\cup\left\{ A\in V:\exists\text{ producción }A\rightarrow w,w\in\left(ANUL_{i}\right)^{*}\right\} $.}
+
+De esta forma obtenemos una sucesión creciente de conjuntos de variables:
+
+\[
+ANUL_{1}\subseteq ANUL_{2}\subseteq ANUL_{3}\subseteq...
+\]
+
+El algoritmo se presenta entonces como:
+\begin{itemize}
+\item Inicializar: \textbf{ANUL $:=\left\{ A\in V:A\rightarrow\varepsilon\text{ es una producción}\right\} $.}
+\item Repetir: \textbf{ANUL $:=$ ANUL} \textbf{$\cup\left\{ A\in V:\exists\text{ producción }A\rightarrow w,w\in\left(ANUL\right)^{*}\right\} $.}
+\item Hasta: No se añaden nuevas variables a \textbf{ANUL.}
+\end{itemize}
+Una vez que haya sido determinado el conjunto \textbf{ANUL} de variables
+anulables, por medio del algoritmo anterior, las producciones $\varepsilon$
+se pueden eliminar (excepto $S\rightarrow\varepsilon$) añadiendo
+nuevas producciones que simulen el efecto de las producciones $\varepsilon$
+eliminadas. Más concretamente, por cada producción $A\rightarrow u$
+se añaden producciones de la forma $A\rightarrow v$ obtenidas suprimiendo
+de la cadena $u$ una, dos o más variable anulables presentes de todas
+las formas posibles.
+
+\bigskip{}
+
+\begin{example}
+Encontrar las producciones $\varepsilon$ de la siguiente gramática
+\end{example}
+\[
+\begin{array}{rcl}
+S & \rightarrow & AB\;|\;ACA\;|\;ab\\
+A & \rightarrow & aAa\;|\;B\;|\;CD\\
+B & \rightarrow & bB\;|\;bA\\
+C & \rightarrow & cC\;|\;\varepsilon\\
+D & \rightarrow & aDc\;|\;CC\;|\;ABb
+\end{array}
+\]
+
+\emph{Solución}
+
+\textbf{ANUL$_{1}=\left\{ C\right\} $}\\
+\textbf{ANUL$_{2}=\left\{ C\right\} \cup\left\{ D\right\} =\left\{ C,D\right\} $}\\
+\textbf{ANUL$_{3}=\left\{ C,D\right\} \cup\left\{ A\right\} =\left\{ C,D,A\right\} $}\\
+\textbf{ANUL$_{4}=\left\{ C,D,A\right\} \cup\left\{ S\right\} =\left\{ C,D,A,S\right\} $}\\
+\textbf{ANUL$_{5}=\left\{ C,D,A,S\right\} \cup\varnothing=\left\{ C,D,A,S\right\} $}
+
+$\therefore$ El conjunto de variables anulables es $\left\{ C,D,A,S\right\} $.
+Al eliminar las producciones $\varepsilon$, tenemos:
+
+\[
+\begin{array}{rcl}
+S & \rightarrow & AB\;|\;ACA\;|\;ab\;|\;B\;|\;CA\;|\;AA\;|\;AC\;|\;A\;|\;C\;|\;\varepsilon\\
+A & \rightarrow & aAa\;|\;B\;|\;CD\;|\;aa\;|\;C\;|\;D\\
+B & \rightarrow & bB\;|\;bA\;|\;b\\
+C & \rightarrow & cC\;|\;c\\
+D & \rightarrow & aDc\;|\;CC\;|\;ABb\;|\;ac\;|\;C\;|\;Bb
+\end{array}
+\]
+
+
+\subsubsection{Eliminación de producciones unitarias}
+
+\bigskip{}
+
+\begin{defn}
+\emph{(Producción unitaria) Una producción de la forma $A\rightarrow B$
+donde $A$ y $B$ son variables, se llama producción unitaria.}
+\end{defn}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Conjunto unitario) El conjunto unitario de una variable A se
+define de la siguiente manera:}
+
+\[
+UNIT(A):=\left\{ X\in V:\exists\text{ una derivación }A\Rightarrow^{*}X\text{ que usa únicamente producciones unitarias}\right\} 
+\]
+
+Por definición $A\in UNIT\left(A\right)$
+\end{defn}
+%
+\textbf{Algoritmo para encontrar las producciones unitarias}
+
+El siguiente algoritmo sirve para encontrar todas las variables alcanzables
+de una GLC.
+
+\textbf{UNIT$_{1}(A):=\left\{ A\right\} $.}\\
+\textbf{UNIT$_{i+1}:=$ UNIT$_{i}(A)\cup\left\{ X\in V:\exists\text{ producción }Y\rightarrow X,Y\in\left(UNIT_{i}(A)\right)\right\} $.}
+
+De esta forma obtenemos una sucesión creciente de conjuntos de variables:
+
+\[
+UNIT_{1}\subseteq UNIT_{2}\subseteq UNIT_{3}\subseteq...
+\]
+
+El algoritmo se presenta entonces como:
+\begin{itemize}
+\item Inicializar: \textbf{UNIT$(A):=\left\{ A\right\} $.}
+\item Repetir: \textbf{UNIT$(A):=$ UNIT$(A)\cup\left\{ X\in V:\exists\text{ producción }Y\rightarrow X,Y\in\left(UNIT(A)\right)\right\} $}
+\item Hasta: No se añaden nuevas variables a \textbf{ANUL.}
+\end{itemize}
+Las producciones unitarias se pueden eliminar añadiendo para cada
+variable $A$ las producciones (no unitarias) de las variables contenidas
+en el conjunto unitario UNIT(A). 
+
+\bigskip{}
+
+\begin{example}
+Eliminar las producciones unitarias de la siguiente gramática:
+\end{example}
+\[
+\begin{array}{rcl}
+S & \rightarrow & AS\;|\;AA\;|\;BA\;|\;\varepsilon\\
+A & \rightarrow & aA\;|\;a\\
+B & \rightarrow & bB\;|\;bC\;|\;C\\
+C & \rightarrow & aA\;|\;bA\;|\;B\;|ab
+\end{array}
+\]
+
+\emph{Solución}
+
+\textbf{UNIT(S)$_{1}=\left\{ S\right\} $}\\
+\textbf{UNIT(S)$_{2}=\left\{ S\right\} \cup\varnothing=\left\{ S\right\} $}\\
+\textbf{UNIT(A)$_{1}=\left\{ A\right\} $}\\
+\textbf{UNIT(A)$_{2}=\left\{ A\right\} \cup\varnothing=\left\{ A\right\} $}\\
+\textbf{UNIT(B)$_{1}=\left\{ B\right\} $}\\
+\textbf{UNIT(B)$_{2}=\left\{ B\right\} \cup\left\{ C\right\} =\left\{ B,C\right\} $}\\
+\textbf{UNIT(B)$_{3}=\left\{ B,C\right\} \cup\left\{ B\right\} =\left\{ B,C\right\} $}\\
+\textbf{UNIT(C)$_{1}=\left\{ C\right\} $}\\
+\textbf{UNIT(C)$_{2}=\left\{ C\right\} \cup\left\{ B\right\} =\left\{ C,B\right\} $}\\
+\textbf{UNIT(C)$_{3}=\left\{ C,B\right\} \cup\left\{ C\right\} =\left\{ C,B\right\} $}
+
+Eliminando las producciones unitarias se obtiene:
+
+\[
+\begin{array}{rcl}
+S & \rightarrow & AS\;|\;AA\;|\;BA\;|\;\varepsilon\\
+A & \rightarrow & aA\;|\;a\\
+B & \rightarrow & bB\;|\;bC\;|\;aA\;|\;bA\;|\;ab\\
+C & \rightarrow & aA\;|\;bA\;|\;bB\;|\;bC\;|ab
+\end{array}
+\]
+
+\begin{thebibliography}{1}
+\bibitem{key-1}Favio E. Miranda, A. Liliana Reyes, et.al, \emph{Notas
+de Clase para el curso de Autómatas y Lenguajes Formales}, Facultad
+de Ciencias, UNAM, Revisión 2019-2.
+
+\bibitem{key-2}Rodrigo De Castro, \emph{Notas de Clase de Teoría
+de la Computación: Lenguajes, autómatas, gramáticas,} Universidad
+Nacional de Colombia, Facultas de Ciencias, 2004.
+\end{thebibliography}
+
+\end{document}

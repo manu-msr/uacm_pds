@@ -1,0 +1,6673 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-bytype
+theorems-sec-bytype
+\end_modules
+\maintain_unincluded_children false
+\language spanish-mexico
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "cmr" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\boxbgcolor #cccccc
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "mathescape=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Teoría de la Computación, 2021-1
+\begin_inset Newline newline
+\end_inset
+
+Nota de clase 3: Autómatas Finitos
+\end_layout
+
+\begin_layout Author
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Manuel Soto Romero
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today 
+\backslash
+
+\backslash
+ Colegio de Ciencia y Tecnología UACM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*{
+\backslash
+thefootnote}{
+\backslash
+arabic{footnote}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{footnote}{0}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{3}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*
+\backslash
+lstlistingname{C
+\backslash
+'odigo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Autómatas Finitos Deterministas
+\end_layout
+
+\begin_layout Standard
+El primer tipo de máquina abstracta que estudiaremos son los Autómatas Finitos,
+ que permiten reconocer cadenas pertenecientes a Lenguajes Regulares.
+ Estos autómatas sólo pueden estar en un único estado después de leer cualquier
+ secuencia de entradas.
+ Se les llama deterministas puedes para cada entrada sólo existe uno y sólo
+ un estado al que el autómata puede moverse desde el estado actual.
+\end_layout
+
+\begin_layout Standard
+Formalicemos esto un poco.
+ Veamos la definición de Autómata Finito Determinista (AFD).
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Autómata Finito Determinista) Formalmente, un Autómata Finito Determinista
+ (AFD) M es una quintupla 
+\begin_inset Formula $M=\left\langle Q,\Sigma,\delta,q_{0},F\right\rangle $
+\end_inset
+
+, donde:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Q$
+\end_inset
+
+ 
+\emph on
+es un conjunto finito de estados
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ 
+\emph on
+es el alfabeto de entrada
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ 
+\emph on
+es el estado inicial
+\emph default
+, con 
+\begin_inset Formula $q_{0}\in Q$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F$
+\end_inset
+
+ 
+\emph on
+es el conjunto de estados finales
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\delta:Q\times\Sigma\rightarrow Q$
+\end_inset
+
+ 
+\emph on
+es la función de transición entre estados, donde 
+\begin_inset Formula $\delta\left(q,a\right)=p$
+\end_inset
+
+ se representa en forma de diagrama o por medio de una tabla de transición.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, en el siguiente autómata tenemos los siguientes elementos:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Q=\left\{ q_{0},q_{1},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ es el estado inicial.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F=\left\{ q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para representar las transiciones, podemos dibujar el autómata como un diagrama
+ donde:
+\end_layout
+
+\begin_layout Itemize
+Cada estado es denotado por un círculo.
+\end_layout
+
+\begin_layout Itemize
+Si un estado es inicial, tendrá una flecha que apunta hacia él sin tener
+ un origen.
+\end_layout
+
+\begin_layout Itemize
+Si un estado es final, se denota con un círculo doble.
+\end_layout
+
+\begin_layout Itemize
+Para pasar de un estado a otro se dibujan aristas que representan con qué
+ símbolo moverse.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=3cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[loop above] node{0} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[] node{1} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{1} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[bend left] node{0} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[bend left] node{0,1} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En este diagrama por ejemplo, supongamos que queremos leer la cadena 
+\begin_inset Formula $011011$
+\end_inset
+
+.
+ Para procesarla con el autómata debemos seguir la secuencia de estado marcada.
+ Entonces:
+\end_layout
+
+\begin_layout Enumerate
+Nos posicionamos en 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+, dado que nuestro primer símbolo es 
+\begin_inset Formula $0$
+\end_inset
+
+, no nos movemos, nos quedamos en dicho estado como indica la arista del
+ estado.
+\end_layout
+
+\begin_layout Enumerate
+El siguiente símbolo es un 
+\begin_inset Formula $1$
+\end_inset
+
+ que nos lleva al estado 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+El siguiente símbolo 
+\begin_inset Formula $1$
+\end_inset
+
+ nos deja en el estado 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+El siguiente símbolo 0 nos lleva al estado 
+\begin_inset Formula $q_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+El siguiente símbolo 1 nos lleva al estado 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+ nuevamente.
+\end_layout
+
+\begin_layout Enumerate
+El siguiente símbolo 
+\begin_inset Formula $1$
+\end_inset
+
+ nos deja en el estado 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Dado que acabamos de procesar todos los símbolos de la cadena y terminamos
+ en un estado final, podemos concluir que la cadena fue aceptada por el
+ autómata.
+\end_layout
+
+\begin_layout Standard
+Si no llegamos a un estado final, se dice que la cadena fue rechazada por
+ el autómata.
+ Revisemos ahora, la representación de estas transiciones como tabla:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Con 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ señalamos el estado inicial y con 
+\series bold
+F 
+\series default
+los estados finales.
+ 
+\end_layout
+
+\begin_layout Standard
+Es importante notar que nuestra función de transición 
+\begin_inset Formula $\delta$
+\end_inset
+
+, sólo acepta un símbolo.
+ Por ejemplo, para nuestro autómata anterior, tenemos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\delta\left(q_{0},1\right)=q_{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sin embargo, en ocasiones es útil modelar esta función de manera que nos
+ muestre el camino completo pasando por las transiciones, es decir, que
+ en lugar de recibir un símbolo, recibamos una cadena y nos muestre dónde
+ termina dicha cadena.
+ Por ejemplo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\delta\left(q_{0},011011\right)=q_{1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Llamaremos a esta nueva 
+\begin_inset Formula $\delta$
+\end_inset
+
+, la función de transición extendida y la denotaremos por 
+\begin_inset Formula $\hat{\delta}$
+\end_inset
+
+.
+ Su definición es la siguiente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Función de Transición Extendida) La función de transición extendida, 
+\begin_inset Formula $\hat{\delta}:Q\times\Sigma^{*}\rightarrow Q$
+\end_inset
+
+, se define inductivamente en términos de 
+\begin_inset Formula $\delta$
+\end_inset
+
+ como sigue.
+ Sea 
+\begin_inset Formula $q\in Q,a\in\Sigma$
+\end_inset
+
+ y 
+\begin_inset Formula $x\in\Sigma^{*}$
+\end_inset
+
+, entonces:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+\hat{\delta}\left(q,\varepsilon\right) & \rightarrow & q\\
+\hat{\delta}\left(q,xa\right) & \rightarrow & \delta\left(\hat{\delta}\left(q,x\right),a\right)
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente, decimos que el lenguaje de un AFD 
+\begin_inset Formula $M=\left\langle Q,\Sigma,\delta,q_{0},F\right\rangle $
+\end_inset
+
+ denotado por 
+\begin_inset Formula $L\left(M\right)$
+\end_inset
+
+ se define como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L\left(M\right)=\left\{ w:\hat{\delta}\left(q_{0},w\right)\in F\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es decir, son todas las cadenas que procesadas por el autómata desde el
+ estado inicial, terminan en un estado final.
+\end_layout
+
+\begin_layout Example
+Diseñar un AFD que acepte el lenguaje
+\end_layout
+
+\begin_layout Example
+\begin_inset Formula 
+\[
+L=\left\{ w:w\text{ tiene un número par de ceros y un número par de unos}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+La tarea de los estados de este AFD es la de contar el número de ceros y
+ el número de unos contando en módulo 2.
+ Es decir, el estado se emplea para recordar si el número de ceros es par
+ o impar hasta el momento y también para recordar si el número de unos leídos
+ hasta el momento es par o impar.
+ Existen por lo tanto cuatro estados que pueden interpretarse de la siguiente
+ forma:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q_{0}$
+\end_inset
+
+: Tanto el número de ceros como el de unos leídos hasta el momento es par.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q_{1}$
+\end_inset
+
+: El número de ceros leídos hasta el momento es par, pero el de unos es
+ impar.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q_{2}$
+\end_inset
+
+: El número de unos leídos hasta el momento es par, pero el de ceros es
+ impar.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q_{3}$
+\end_inset
+
+: Tanto el número de ceros como el de unos leídos hasta el momento es impar.
+\end_layout
+
+\begin_layout Standard
+El estado 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ es por lo tanto el estado inicial así como el único estado de aceptación.
+ Es el estado inicial porque antes de leer cualquier cosa, la cantidad de
+ ceros y unos leídos hasta ese momento es igual a cero y cero es par.
+ Es el único estado de aceptación porque describe de forma exacta la condición
+ para que una secuencia de ceros y unos pertenezca al lenguaje 
+\begin_inset Formula $L$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Con esto, definimos nuestro autómata con:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left\langle \left\{ q_{0},q_{1},q_{2},q_{3}\right\} ,\left\{ 0,1\right\} ,\delta,q_{0},\left\{ q_{0}\right\} \right\rangle 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Representamos la función de transición en formato de diagrama y de tabla.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=3cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,accepting] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below of=S] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below of=1] (3) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[bend left] node{1} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[bend left] node{0} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[bend left] node{0} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[bend left] node{1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[bend left] node{0} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (2) edge[bend left] node{1} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[bend left] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (3) edge[bend left] node{1} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Obtén los siguientes AFD:
+\end_layout
+
+\begin_layout Itemize
+Un AFD que dado el alfabeto 
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+ reconozca el lenguaje de todas las cadenas que inician en 0.
+\end_layout
+
+\begin_layout Itemize
+Un AFD que dado el alfabeto 
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+ reconozca el lenguaje de todas las cadenas que termian en 1.
+\end_layout
+
+\begin_layout Itemize
+Un AFD que dado el alfabeto 
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+ reconozca el lenguaje de todas las cadenas que contienen la subcadena 01.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Minimización de AFD
+\end_layout
+
+\begin_layout Standard
+Al diseñar AFD, podemos tener distintas versiones que reconocen el mismo
+ lenguaje.
+ Esto en un principio, no representa ningún problema, sin embargo, podemos
+ llegar a tener casos donde el autómata tenga estados y/o transiciones que
+ en realidad no son del todo esenciales.
+ Veamos algunos ejemplos:
+\end_layout
+
+\begin_layout Itemize
+Analicemos por ejemplo el siguiente AFD, ¿qué lenguaje reconoce?
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,below of=1] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, above of=S,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, below of=S,accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, below of=1] (3) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[bend left] node{a} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[bend right] node{b} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[bend left] node{a,b} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[bend right] node{a,b} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (3) edge[loop right] node{a,b} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es fácil ver que el lenguaje admitido por este autómata es 
+\begin_inset Formula $\left\{ a,b\right\} $
+\end_inset
+
+, sin embargo, podemos notar a partir del estado 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+, que sin importar si leemos una 
+\begin_inset Formula $a$
+\end_inset
+
+ o una 
+\begin_inset Formula $b$
+\end_inset
+
+, vamos a un estado final, con lo cual, parece ser que tener dos estados
+ no es del todo necesario.
+ De la misma forma, en ambos casos, una vez que llegamos a un estado de
+ aceptación y leer cualquier otro símbolo del alfabeto, llegamos al estado
+ 
+\begin_inset Formula $q_{3}$
+\end_inset
+
+ lo cual reafirma el hecho de que no es necesario tener estado diferentes.
+\end_layout
+
+\begin_layout Standard
+A partir del análisis anterior, podemos modificar el autómata como sigue:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=1cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,below of=1] (S) {$p_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, right of=S,accepting] (1) {$p_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, right of=1] (2) {$p_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[] node{a,b} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{a,b} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop above] node{a,b} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Veamos ahora el siguiente AFD, ¿qué lenguaje reconoce?
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=1.5cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,below of=1] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, above of=S,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, below of=S,accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (3) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2] (4) {$q_4$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=3, below of=3,accepting] (5) {$q_5$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[bend left] node{$a$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[bend right] node{$b$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[] node{$a$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$b$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (2) edge[] node{$b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$a$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[bend left] node{$a,b$} (5)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (4) edge[bend right] node{$a,b$} (5)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (5) edge[loop right] node{$a,b$} (5)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Los estados 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+ y 
+\begin_inset Formula $q_{2}$
+\end_inset
+
+ nos hacen notar que, al igual que el autómata anterior, el lenguaje reconocido
+ es 
+\begin_inset Formula $\left\{ a,b\right\} $
+\end_inset
+
+, sin embargo, al seguir analizando las transiciones, vemos que también
+ acepta cadenas con una longitud de al menos 3.
+ Es decir, el lenguaje aceptado es: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left\{ a,b\right\} \cup\left\{ w\in\left\{ a,b\right\} ^{*}:|w|\text{ es al menos 3}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Vemos que tanto 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+ como 
+\begin_inset Formula $q_{2}$
+\end_inset
+
+ se pueden colapsar, de la misma forma que en el ejemplo anterior.
+ Por otro lado, los estados 
+\begin_inset Formula $q_{3}$
+\end_inset
+
+ y 
+\begin_inset Formula $q_{4}$
+\end_inset
+
+ son prácticamente idénticos por lo que también podemos colapsarlos, dejando
+ el siguiente AFD:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,below of=1] (S) {$p_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, accepting] (1) {$p_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$p_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2,accepting] (3) {$p_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[] node{$a,b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$a,b$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$a,b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[loop above] node{$a,b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+En ambos ejemplos hemos 
+\emph on
+colapsado
+\emph default
+ estados que tienen el mismo comportamiento, es decir, son 
+\emph on
+equivalentes
+\emph default
+.
+ Esta noción de equivalencia y el proceso de decisión sobre si colapsar
+ o no un par de estados, puede realizarse algorítmicamente.
+ Veamos la definición de equivalencia:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Relación de equivalencia entre estados) Dado un AFD 
+\begin_inset Formula $\left\langle Q,\Sigma,\delta,q_{0},F\right\rangle $
+\end_inset
+
+ decimos que dos estados 
+\begin_inset Formula $p$
+\end_inset
+
+ y 
+\begin_inset Formula $q$
+\end_inset
+
+ están relacionados si y sólo si 
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+\forall x\in\Sigma^{*},\widehat{\delta}\left(p,x\right)\in F\leftrightarrow\widehat{\delta}\left(q,x\right)\in F
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+Denotamos esto como
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+p\approx q
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Intuitivamente, esta definición nos indica tres cosas importantes:
+\end_layout
+
+\begin_layout Enumerate
+No importa qué cadena tomemos del alfabeto, si llegamos a un estado final
+ partiendo de 
+\begin_inset Formula $p$
+\end_inset
+
+ o 
+\begin_inset Formula $q$
+\end_inset
+
+ es equivalente.
+\end_layout
+
+\begin_layout Enumerate
+No necesariamente 
+\begin_inset Formula $p$
+\end_inset
+
+ y 
+\begin_inset Formula $q$
+\end_inset
+
+ deben ser iniciales, puede ser cualquier estado.
+ tampoco deben ser finales.
+\end_layout
+
+\begin_layout Enumerate
+Tienen el mismo comportamiento bajo todas las cadenas posibles.
+\end_layout
+
+\begin_layout Standard
+Partiendo de esta definición, se define el 
+\emph on
+algoritmo de minimización 
+\emph default
+como sigue:
+\end_layout
+
+\begin_layout Enumerate
+Escribir una tabla para cada uno de los pares de estados 
+\begin_inset Formula $\left\{ p,q\right\} $
+\end_inset
+
+, inicialmente sin marca alguna.
+\end_layout
+
+\begin_layout Enumerate
+Marcar la celda correspondiente a 
+\begin_inset Formula $\left\{ p,q\right\} $
+\end_inset
+
+ si 
+\begin_inset Formula $p\in F$
+\end_inset
+
+ y 
+\begin_inset Formula $q\notin F$
+\end_inset
+
+ o viceversa.
+\end_layout
+
+\begin_layout Enumerate
+Repetir lo siguiente hasta que no se presenten cambios: Si existe un par
+ sin marca 
+\begin_inset Formula $\left\{ p,q\right\} $
+\end_inset
+
+ tal que 
+\begin_inset Formula $\left\{ \delta\left(p,a\right),\delta\left(q,a\right)\right\} $
+\end_inset
+
+ está marcado por alguna 
+\begin_inset Formula $a\in\Sigma$
+\end_inset
+
+, entonces, marcamos la celda 
+\begin_inset Formula $\left\{ p,q\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Al terminar 
+\begin_inset Formula $p\approx q$
+\end_inset
+
+ si y sólo si 
+\begin_inset Formula $\left\{ p,q\right\} $
+\end_inset
+
+ no tiene marca.
+\end_layout
+
+\begin_layout Standard
+Veamos cómo aplicar el algoritmo con el AFD revisado anteriormente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,below of=1] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, above of=S,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, below of=S,accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, below of=1] (3) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[bend left] node{a} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[bend right] node{b} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[bend left] node{a,b} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[bend right] node{a,b} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (3) edge[loop right] node{a,b} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Construimos la tabla para cada par de estados en el autómata.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para cada celda, marcarla si uno de los estados es final y el otro no.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ahora revisamos las celdas vacías y analizamos las transiciones con cada
+ uno.
+ Por ejemplo, analicemos 
+\begin_inset Formula $\left\{ q_{0},q_{3}\right\} $
+\end_inset
+
+.
+ Tenemos como alfabeto 
+\begin_inset Formula $\left\{ a,b\right\} $
+\end_inset
+
+, de forma tal que 
+\begin_inset Formula $\delta\left(q_{0},a\right)=q_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $\delta\left(q_{3},a\right)=q_{3}$
+\end_inset
+
+, 
+\begin_inset Formula $\delta\left(q_{0},b\right)=q_{2},\delta\left(q_{3},b\right)=q_{3}$
+\end_inset
+
+, con lo cual debemos verificar si 
+\begin_inset Formula $\left\{ q_{1},q_{3}\right\} $
+\end_inset
+
+ o 
+\begin_inset Formula $\left\{ q_{2},q_{3}\right\} $
+\end_inset
+
+ están marcados.
+ Si están marcados, marcamos la celda 
+\begin_inset Formula $\left\{ q_{0},q_{3}\right\} $
+\end_inset
+
+.
+ En este caso vemos que 
+\begin_inset Formula $\left\{ q_{1},q_{3}\right\} $
+\end_inset
+
+ sí está marcada, por lo tanto marcamos la celda original.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Realizando el mismo análisis vemos que no existe una celda marcada, por
+ lo tanto dejamos dicha celda vacía y dado que el proceso se repite hasta
+ que no haya cambios.
+ Nuestra tabla final queda como 
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\checkmark$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{3}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En este caso, nuestra única celda vacía fue 
+\begin_inset Formula $\left\{ q_{1},q_{2}\right\} $
+\end_inset
+
+ con lo cual concluimos que
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+q_{1}\approx q_{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+y podemos colapsar entonces dichos estados, por ejemplo, cambiando todos
+ las transiciones que llegaban y salían de 
+\begin_inset Formula $q_{2}$
+\end_inset
+
+ a 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=1cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,below of=1] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, right of=S,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, right of=1] (2) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[] node{a,b} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{a,b} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop above] node{a,b} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Minimiza el AFD revisado anteriormente, por medio del algoritmo descrito:
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=1.5cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=,below of=1] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, above of=S,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S, below of=S,accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (3) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2] (4) {$q_4$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=3, below of=3,accepting] (5) {$q_5$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[bend left] node{$a$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[bend right] node{$b$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[] node{$a$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$b$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (2) edge[] node{$b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$a$} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[bend left] node{$a,b$} (5)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (4) edge[bend right] node{$a,b$} (5)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (5) edge[loop right] node{$a,b$} (5)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Autómatas Finitos No Deterministas
+\end_layout
+
+\begin_layout Standard
+Estos autómatas pueden estar en varios estados a la vez después de leer
+ cualquier secuencia de entradas.
+ Se les llama no deterministas pues para cada entrada sólo existe más de
+ un estado al que el autómata puede moverse desde el estado actual.
+\end_layout
+
+\begin_layout Standard
+Formalicemos esto un poco.
+ Veamos la definición de Autómata Finito No Determinista (AFN).
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Autómata Finito No Determinista) Formalmente, un Autómata Finito No Determinist
+a (AFN) M es una quintupla 
+\begin_inset Formula $M=\left\langle Q,\Sigma,\delta,q_{0},F\right\rangle $
+\end_inset
+
+, donde:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Q$
+\end_inset
+
+ 
+\emph on
+es un conjunto finito de estados
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ 
+\emph on
+es el alfabeto de entrada
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ 
+\emph on
+es el estado inicial
+\emph default
+, con 
+\begin_inset Formula $q_{0}\in Q$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F$
+\end_inset
+
+ 
+\emph on
+es el conjunto de estados finales
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\delta:Q\times\Sigma\rightarrow\mathcal{P}\left(Q\right)$
+\end_inset
+
+ 
+\emph on
+es la función de transición entre estados, es decir, la salida de nuestra
+ función de transición es un subconjunto de 
+\begin_inset Formula $Q$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, en el siguiente autómata tenemos los siguientes elementos:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Q=\left\{ q_{0},q_{1},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ es el estado inicial.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $F=\left\{ q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[loop above] node{0,1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[] node{1} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $q_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Este autómata reconoce cadenas formadas por ceros y unos que terminan en
+ 01.
+ Notemos que el estado inicial 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ puede llegar a diferentes estados con el śimbolo cero y que además hay
+ algunos estados que no tienen transiciones definidas, por ejemplo 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+ con cero no tiene transición y 
+\begin_inset Formula $q_{2}$
+\end_inset
+
+ no tiene ninguna transición.
+ Lo cuál es válido pues 
+\begin_inset Formula $\varnothing$
+\end_inset
+
+ es subconjunto de cualquier conjunto.
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, el siguiente diagrama muestra cómo el AFN procesa la entrada
+ 00101: Parte siempre de su estado inicial 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+.
+ Cuando lee el primero 0, el AFN puede psar al estado 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ o 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+, por lo que hace ambos.
+ Estos dos hilosse indican en la segunda columna del diagrama.
+ 
+\end_layout
+
+\begin_layout Standard
+A continuación, lee el segundo 0.
+ El estado 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ puede pasar de nuevo 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ o a 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+.
+ Sin embargo, el estado 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+ no tiene transición para la entrada 0, por lo que el autómata se detiene.
+ Cuando se produce la tercera entrada, un 1, hay que considerar las transiciones
+ tanto de 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ como de 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+.
+ Comprobamos que 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ sólo pasa a 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ cuando la entrada es 1, mientras que el estado 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+ pasa sólo al estado 
+\begin_inset Formula $q_{2}$
+\end_inset
+
+.
+ Por tanto después de leer la secuencia, el AFN se encuentra en los estados
+ 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ y 
+\begin_inset Formula $q_{2}$
+\end_inset
+
+.
+ Dado que 
+\begin_inset Formula $q_{2}$
+\end_inset
+
+ es un estado final, el AFN acepta la secuencia 001.
+\end_layout
+
+\begin_layout Standard
+Sin embargo, la entrada no ha terminado.
+ La cuarta entrada, un 0, hace el hilo de 
+\begin_inset Formula $q_{2}$
+\end_inset
+
+ muera, mientras que 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ va tanto a 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ como a 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+.
+ La última entrada, un 1, hace que 
+\begin_inset Formula $q_{0}$
+\end_inset
+
+ permanezca en este mismo estado y 
+\begin_inset Formula $q_{1}$
+\end_inset
+
+ pasa al estado 
+\begin_inset Formula $q_{2}$
+\end_inset
+
+.
+ Como de nuevo estamos en un estado de aceptación, la secuencia 00101 es
+ aceptada.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename imagenes/imagen1.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+De manera general, diremos que una cadena es 
+\emph on
+aceptada
+\emph default
+ por un AFN si existe al menos una trayectoria de ejecución que termina
+ en un estado final y diremos que es 
+\emph on
+rechazada
+\emph default
+ cuando todas las posibles trayectorias de ejecución se estancan (mueren)
+ o terminan en un estado que no es final.
+ Finalmente, mostramos la función de transición extendida 
+\begin_inset Formula $\hat{\delta}$
+\end_inset
+
+ como sigue:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Función de Transición Extendida) La función de transición extendida, 
+\begin_inset Formula $\hat{\delta}:Q\times\Sigma^{*}\rightarrow\mathcal{P}(Q)$
+\end_inset
+
+, se define inductivamente en términos de 
+\begin_inset Formula $\delta$
+\end_inset
+
+ como sigue.
+ Sea 
+\begin_inset Formula $q\in Q,a\in\Sigma$
+\end_inset
+
+ y 
+\begin_inset Formula $x\in\Sigma^{*}$
+\end_inset
+
+, entonces:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+\hat{\delta}\left(q,\varepsilon\right) & \rightarrow & \left\{ q\right\} \\
+\hat{\delta}\left(q,xa\right) & \rightarrow & \underset{p_{i}\in\hat{\delta}(q,x)}{\text{\ensuremath{\bigcup}}}\delta\left(p_{i},a\right)
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, podemos usar 
+\begin_inset Formula $\hat{\delta}$
+\end_inset
+
+ para describir el procesamiento de la entrada 00101 por el AFN de nuestro
+ ejemplo anterior.
+ 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\hat{\delta}\left(q_{0},\varepsilon\right)=\left\{ q_{0}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\hat{\delta}\left(q_{0},0\right)=\delta\left(q_{0},0\right)=\left\{ q_{0},q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\hat{\delta}\left(q_{0},00\right)=\delta\left(q_{0},0\right)\cup\delta\left(q_{1},0\right)=\left\{ q_{0},q_{1}\right\} \cup\varnothing=\left\{ q_{0},q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\hat{\hat{\delta}\left(q_{0},001\right)=\delta\left(q_{0},1\right)\cup\delta\left(q_{1},1\right)=\left\{ q_{0}\right\} \cup\left\{ q_{2}\right\} =\left\{ q_{0},q_{2}\right\} }$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\hat{\delta}\left(q_{0},0010\right)=\delta\left(q_{0},0\right)\cup\delta\left(q_{2},0\right)=\left\{ q_{0},q_{1}\right\} \cup\varnothing=\left\{ q_{0},q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\hat{\delta}\left(q_{0},00101\right)=\delta\left(q_{0},1\right)\cup\delta\left(q_{1},1\right)=\left\{ q_{0}\right\} \cup\left\{ q_{2}\right\} =\left\{ q_{0},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente, decimos que el lenguaje de un AFN 
+\begin_inset Formula $N=\left\langle Q,\Sigma,\delta,q_{0},F\right\rangle $
+\end_inset
+
+ denotado por 
+\begin_inset Formula $L\left(N\right)$
+\end_inset
+
+ se define como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L\left(N\right)=\left\{ w\in\Sigma^{*}:\hat{\delta}\left(q_{0},w\right)\cap F\neq\varnothing\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es decir, son todas las cadenas que procesadas por el autómata desde el
+ estado inicial, llegan por alguna trayectoria a algún estado final.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Obtén los siguientes AFN:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Un AFN que dado el alfabeto 
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+ reconozca el lenguaje de todas las cadenas que inician en 0.
+\end_layout
+
+\begin_layout Itemize
+Un AFN que dado el alfabeto 
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+ reconozca el lenguaje de todas las cadenas que terminan en 1.
+\end_layout
+
+\begin_layout Itemize
+Un AFN que dado el alfabeto 
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+ reconozca el lenguaje de todas las cadenas que contienen la subcadena 01.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Equivalencia entre AFDs y AFNs
+\end_layout
+
+\begin_layout Standard
+El poder de un autómata se mide en términos de la habilidad para aceptar
+ lenguajes.
+ Observemos que un AFD es un caso especial de un AFN, de modo que todo lo
+ que un AFD puede hacer, un AFN también lo puede hacer, de hecho para cada
+ AFN existe un AFD que acepta el mismo lenguaje.
+ Además, como seguramente te habrás dado cuenta, es más sencillo construir,
+ especificar y comprender un AFN debido a que son más concisos.
+ En general, los AFNs pueden ser usados para capturar patrones en procesadores
+ de texto, pero optamos por los AFD cuando deseamos encontrar dichos patrones.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+Para cada AFN N, existe un AFD M con 
+\begin_inset Formula $L\left(N\right)=L\left(M\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La demostración de este teorema queda fuera de los alcances de este curso,
+ por lo que en su lugar, presentaremos el proceso para transformar un AFN
+ en un AFD por medio de la llamada 
+\emph on
+construcción por subconjuntos
+\emph default
+:
+\end_layout
+
+\begin_layout Enumerate
+Construir una tabla de transiciones a partir del conjunto potencia, que
+ muestre los estados a donde se puede llegar con cada estado de dichos conjuntos.
+ Al conjunto que tenga como único elemento al estado inicial, lo marcamos
+ como final y a todos los conjunto que contengan al estado final original,
+ los marcamos también como finales.
+\end_layout
+
+\begin_layout Enumerate
+Eliminar estados que no sean alcanzables.
+\end_layout
+
+\begin_layout Enumerate
+Renombrar los estados.
+\end_layout
+
+\begin_layout Standard
+Recordemos que el conjunto potencia se define como el conjunto formado por
+ todos los subconjuntos de un conjunto dado.
+ Por ejemplo, dado el conjunto 
+\begin_inset Formula $A=\left\{ 1,2,3\right\} $
+\end_inset
+
+, entonces 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathcal{P}\left(A\right)=\left\{ \varnothing,\left\{ 1\right\} ,\left\{ 2\right\} ,\left\{ 3\right\} ,\left\{ 1,2\right\} ,\left\{ 1,3\right\} ,\left\{ 2,3\right\} ,\left\{ 1,2,3\right\} \right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Veamos entonces cómo aplicar este algoritmo con el autómata revisado anteriormen
+te:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[loop above] node{0,1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[] node{1} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Construimos la tabla de transiciones a partir del conjunto potencia
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\noindent
+Inicialización:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{1},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{1},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\noindent
+Llenamos la tabla con los resultados de transitar desde cada uno de los
+ estados.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{1},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+F
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{1},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{1}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ q_{0},q_{2}\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Construimos el autómata resultante
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.3cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (S) {$
+\backslash
+{q_0
+\backslash
+}$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S,above of=S] (1) {$
+\backslash
+{q_0,q_1
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1,below of=1,accepting] (2) {$
+\backslash
+{q_0,q_1,q_2
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below of=1,left of=2,accepting] (3) {$
+\backslash
+{q_0,q_2
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2] (4) {$
+\backslash
+varnothing$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=4,above of=4] (5) {$
+\backslash
+{q_1
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=5,below of=5,accepting] (6) {$
+\backslash
+{q_2
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below of=4,left of=6,accepting] (7) {$
+\backslash
+{q_1,q_2
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[loop above] node{1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[bend left] node{1} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{1} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[bend left] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[] node{1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+      (4) edge[loop above] node{0,1} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (5) edge[] node{0} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (5) edge[] node{1} (6)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (6) edge[] node{0,1} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (7) edge[] node{0} (4)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (7) edge[] node{1} (6)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Notamos que nuestro autómata se encuentra 
+\emph on
+disconexo
+\emph default
+, esto ocurre debido a que tenemos estados inalcanzables.
+ Partiendo desde el estado inicial detectamos estos estados.
+ Claramente el subautómata de la derecha es inalcanzable, por lo tanto lo
+ eliminamos.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.3cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (S) {$
+\backslash
+{q_0
+\backslash
+}$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S,above of=S] (1) {$
+\backslash
+{q_0,q_1
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1,below of=1,accepting] (2) {$
+\backslash
+{q_0,q_1,q_2
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below of=1,left of=2,accepting] (3) {$
+\backslash
+{q_0,q_2
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[loop above] node{1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[bend left] node{1} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{1} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[bend left] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[] node{1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+De la misma forma, el estado 
+\begin_inset Formula $\left\{ q_{0},q_{1},q_{2}\right\} $
+\end_inset
+
+ es inalcanzable pues no hay ningún estado que llegue a él.
+ Lo eliminamos también.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.3cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (S) {$
+\backslash
+{q_0
+\backslash
+}$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S,above of=S] (1) {$
+\backslash
+{q_0,q_1
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below of=1,left of=2,accepting] (3) {$
+\backslash
+{q_0,q_2
+\backslash
+}$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[loop above] node{1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[bend left] node{1} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[bend left] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[] node{1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Finalmente, renombramos los estados.
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2.3cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S,above of=S] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below of=1,left of=2,accepting] (3) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[loop above] node{1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[bend left] node{1} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[bend left] node{0} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[] node{1} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Notamos que el autómata resultante es un AFD y que además reconoce el mismo
+ lenguaje: cadenas que terminen con 01.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Mediante construcción por subconjuntos, transforma el siguiente AFN a AFD.
+ ¿Qué lenguaje reconoce?
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (S) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S,accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2, accepting] (3) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[loop above] node{$a$} (S)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (S) edge[] node{$a,b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[loop above] node{$b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[] node{$a$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[loop above] node{$a,b$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Equivalencia entre Autómatas Finitos y Gramáticas Regulares
+\end_layout
+
+\begin_layout Standard
+Al igual que entre los AFDs y AFNs existe una equivalencia, también existe
+ una equivalencia entre las gramáticas.
+ El procedimiento de transformación es bastante simple:
+\end_layout
+
+\begin_layout Itemize
+Se deben asociar a los símbolos terminales de la gramática (las variables)
+ los estados de un autómata.
+ Así, para cada regla 
+\begin_inset Formula $A\rightarrow bC$
+\end_inset
+
+ en la gramática tenemos una transición 
+\begin_inset Formula $\delta\left(A,b\right)=C$
+\end_inset
+
+.
+ Observemos que las variables se comportan como estados.
+\end_layout
+
+\begin_layout Itemize
+Para las reglas de constantes como 
+\begin_inset Formula $A\rightarrow b$
+\end_inset
+
+ se generan transiciones 
+\begin_inset Formula $\delta\left(A,b\right)=Z$
+\end_inset
+
+ donde 
+\begin_inset Formula $Z$
+\end_inset
+
+ es un nuevo estado para el que no hay un símbolo terminal asociado; 
+\begin_inset Formula $Z$
+\end_inset
+
+ es un estado final del autómata.
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, supongamos la siguiente gramática:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & aA\\
+S & \rightarrow & bA\\
+A & \rightarrow & aB\\
+A & \rightarrow & bB\\
+A & \rightarrow & a\\
+B & \rightarrow & aA\\
+B & \rightarrow & bA
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tenemos las siguientes transiciones:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+\delta\left(S,a\right) & = & A\\
+\delta\left(S,b\right) & = & A\\
+\delta\left(A,a\right) & = & B\\
+\delta\left(A,b\right) & = & B\\
+\delta\left(A,a\right) & = & Z\\
+\delta\left(B,a\right) & = & A\\
+\delta\left(B,b\right) & = & A
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Quedando el siguiente diagrama:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=] (S) {$S$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=S] (1) {$A$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1] (2) {$B$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, below of=1, accepting] (3) {$Z$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (S) edge[] node{$a,b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend left] node{$a,b$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[] node{$a$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[bend left] node{$a,b$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El proceso inverso es similar.
+ Basta con revisar las transiciones de manera que si tenemos una transición
+ 
+\begin_inset Formula $\delta\left(q_{0},a\right)=q_{1}$
+\end_inset
+
+, entonces tenemos una regla de producción 
+\begin_inset Formula $Q_{0}\rightarrow aQ_{1}$
+\end_inset
+
+ y además si tenemos una transición 
+\begin_inset Formula $\delta\left(q_{1},a\right)=q_{2}$
+\end_inset
+
+ con 
+\begin_inset Formula $q_{2}\in F$
+\end_inset
+
+, entonces tenemos una regla 
+\begin_inset Formula $Q_{1}\rightarrow a$
+\end_inset
+
+.
+ Por ejemplo, la gramática por el siguiente autómata:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[->,shorten >=1pt,auto,node distance=2cm,transform shape]
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, initial, initial text=, accepting] (0) {$q_0$}; 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=0, accepting] (1) {$q_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=1, accepting] (2) {$q_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node[state, right of=2] (3) {$q_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0) edge[bend left] node{$a$} (1)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (0) edge[loop above] node{$b$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  (1) edge[] node{$a$} (2)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (1) edge[bend left] node{$b$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[] node{$a$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (2) edge[bend left=50] node{$b$} (0)
+\end_layout
+
+\begin_layout Plain Layout
+
+      (3) edge[loop above] node{$a,b$} (3)
+\end_layout
+
+\begin_layout Plain Layout
+
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+tenemos las siguientes reglas, obtenidas a partir de las transiciones:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rclcrcl}
+\delta\left(q_{0},a\right) & = & q_{1} &  & Q_{0} & \rightarrow & aQ_{1}\\
+\delta\left(q_{0},b\right) & = & q_{0} &  & Q_{0} & \rightarrow & bQ_{0}\\
+\delta\left(q_{0},a\right) & = & q_{1} &  & Q_{0} & \rightarrow & a\\
+\delta\left(q_{0},b\right) & = & q_{0} &  & Q_{0} & \rightarrow & b\\
+\delta\left(q_{1},a\right) & = & q_{2} &  & Q_{1} & \rightarrow & aQ_{2}\\
+\delta\left(q_{1},b\right) & = & q_{0} &  & Q_{1} & \rightarrow & bQ_{0}\\
+\delta\left(q_{1},a\right) & = & q_{2} &  & Q_{1} & \rightarrow & a\\
+\delta\left(q_{1},b\right) & = & q_{0} &  & Q_{1} & \rightarrow & b\\
+\delta\left(q_{2},a\right) & = & q_{3} &  & Q_{2} & \rightarrow & aQ_{3}\\
+\delta\left(q_{2},b\right) & = & q_{0} &  & Q_{2} & \rightarrow & bQ_{0}\\
+\delta\left(q_{2},b\right) & = & q_{0} &  & Q_{2} & \rightarrow & b\\
+\delta\left(q_{3},a\right) & = & q_{3} &  & Q_{3} & \rightarrow & aQ_{3}\\
+\delta\left(q_{3},b\right) & = & q_{3} &  & Q_{3} & \rightarrow & bQ_{3}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Construye un AFD que acepte cadenas que no tienen tres 
+\begin_inset Formula $a$
+\end_inset
+
+'s seguidas.
+ Partiendo de este autómata proponer una gramática regular.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Propón un autómata finito que reconozca el lenguaje generado por la siguiente
+ gramática:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+A & \rightarrow & aA\\
+A & \rightarrow & bB\\
+B & \rightarrow & aA\\
+B & \rightarrow & bC\\
+B & \rightarrow & b\\
+C & \rightarrow & aC\\
+C & \rightarrow & bC\\
+C & \rightarrow & a\\
+C & \rightarrow & b
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+literal "false"
+
+\end_inset
+
+Hopcroft, J.
+ E; Montwani, R., and Ullman, J.
+ 
+\emph on
+Introduction to Automata Theory Language, and Computation
+\emph default
+.
+ Addison Wesley, third edition 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+literal "false"
+
+\end_inset
+
+Noé S.
+ Hernández, 
+\emph on
+Notas de Clase para el curso de Autómatas y Lenguajes Formales
+\emph default
+, Facultad de Ciencias UNAM, 2020.
+\end_layout
+
+\end_body
+\end_document

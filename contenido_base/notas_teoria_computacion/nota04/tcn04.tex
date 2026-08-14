@@ -1,0 +1,319 @@
+%% LyX 2.3.4.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,spanish]{article}
+\renewcommand{\rmdefault}{cmr}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{remark}
+\newtheorem{rem}{\protect\remarkname}[section]
+\theoremstyle{definition}
+\newtheorem{xca}{\protect\exercisename}[section]
+\theoremstyle{definition}
+\newtheorem{example}{\protect\examplename}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+
+\usepackage{listings}
+\lstset{mathescape=true}
+\providecommand{\examplename}{Ejemplo}
+\providecommand{\exercisename}{Ejercicio}
+\providecommand{\remarkname}{Observación}
+
+\begin{document}
+\title{Teoría de la Computación, 2021-1\\
+Nota de clase 4: Expresiones Regulares}
+\author{Manuel Soto Romero}
+\date{\today \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+\setcounter{section}{4}
+\renewcommand*\lstlistingname{C\'odigo}
+
+Continuaremos nuestro estudio de los Lenguajes Regulares por medio
+de un método basado en métodos algebraicos conocidos como \emph{expresiones
+regulares}. Estas expresiones regulares (como veremos más adelante)
+pueden definir exactamente los mismos lenguajes que describen las
+gramáticas regulares y los autómatas finitos que estudiamos con anterioridad:
+lenguajes regulares. 
+
+Muchos sistemas como lenguajes de programación, procesadores de textos,
+sistemas gestores de bases de datos y muchos otros, incluyen este
+mecanismo como un método de procesamiento de cadenas. Como ejemplos
+de programas tenemos al comando \texttt{grep} que permite buscar
+texto en los sistemas operativos basados en \textsc{Unix} o el software
+para construir analizadores léxicos \textsc{JFlex} de gran importancia
+en el diseño e implementación de compiladores. En esta nota nos dedicaremos
+a estudiar este tipo de mecanismos.
+
+\subsection{Definición}
+
+Sea $\Sigma$ un alfabeto. La \emph{expresión regular} sobre $\Sigma$
+y los conjuntos que ellas denotan son definidos recursivamente como
+sigue:
+\begin{itemize}
+\item $\varnothing$ es una expresión regular y denota el conjunto vacío.
+\item $\varepsilon$ es una expresión regular y denota el conjunto $\left\{ \varepsilon\right\} $.
+\item Para cada $a$ en $\Sigma$, $a$ es una expresión regular y denota
+el conjunto $\left\{ a\right\} $.
+\item Si $r$ y $s$ son expresiones regulares denotando el lenguaje $R$
+y $S$ respectivamente entonces $\left(r+s\right),rs,r^{*}$ son expresiones
+regulares que denotan los conjuntos $R\cup S,RS$ y $R^{*}$, respectivamente.
+\end{itemize}
+De esta forma, usamos a las expresiones regulares como una simplificación
+para denotar lenguajes. Recordando que los lenguajes son conjuntos
+podemos contrastar la definición anterior en la siguiente tabla:
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline 
+Expresión Regular & Lenguaje\tabularnewline
+\hline 
+$\varnothing$ & $\varnothing$\tabularnewline
+\hline 
+$a$ & $\left\{ a\right\} $\tabularnewline
+\hline 
+$\varepsilon$ & $\left\{ \varepsilon\right\} $\tabularnewline
+\hline 
+$\left(r+s\right)$ & $R\cup S$\tabularnewline
+\hline 
+$\left(rs\right)$ & $RS$\tabularnewline
+\hline 
+$\left(r^{*}\right)$ & $R^{*}$\tabularnewline
+\hline 
+\end{tabular}
+\par\end{center}
+
+Los paréntesis sólo son agrupadores. Además, se tiene la siguiente
+prioridad y asociatividad de operadores:
+\begin{itemize}
+\item La cerradura $*$ asocia a la izquierda y tiene la mayor prioridad.
+\item Posteriormente se realiza la concatenación que asocia a la derecha.
+\item Finalmente se tiene el operador $+$ de alternativa que también asocia
+por la derecha.
+\end{itemize}
+Por ejemplo:
+
+\[
+0+1b^{*}+a1^{*}
+\]
+
+se resuelve en el siguiente orden:
+
+\[
+(0+((1(b^{*}))+(a\left(1^{*}\right))))
+\]
+
+Veamos algunos ejemplos de expresiones regulares junto con el lenguaje
+que reconocen.
+\begin{itemize}
+\item ¿Qué lenguaje reconoce la siguiente expresión regular?
+
+\[
+\left(0+1\right)^{*}
+\]
+
+Analicemos cada subexpresión:
+\begin{itemize}
+\item $0$ es la expresión regular que denota al lenguaje $\left\{ 0\right\} $
+\item $1$ es la expresión regular que denota al lenguaje $\left\{ 1\right\} $
+\item Entonces $\left(0+1\right)$ es el lenguaje $\left\{ 0\right\} \cup\left\{ 1\right\} =\left\{ 0,1\right\} $
+\item De esta forma $\left(0+1\right)^{*}=\left\{ 0,1\right\} ^{*}=\left\{ \varepsilon,0,1,00,01,10,11,000,001,...\right\} $
+\end{itemize}
+Es decir, reconoce el lenguaje de todas las posibles cadenas que se
+pueden formar como 0 y 1.
+
+\[
+L_{1}=\left\{ w:w\in\Sigma^{*}\right\} 
+\]
+
+\item ¿Qué lenguaje reconoce la siguiente expresión regular?
+
+\[
+\left(a+b\right)c^{*}
+\]
+
+Analicemos cada subexpresión:
+\begin{itemize}
+\item $a=\left\{ a\right\} $
+\item $b=\left\{ b\right\} $
+\item $c=\left\{ c\right\} $
+\item $\left(a+b\right)=\left\{ a,b\right\} $
+\item $c^{*}=\left\{ \varepsilon,c,cc,ccc,cccc,...\right\} $
+\item $\left(a+b\right)c^{*}=\left\{ a,b,ac,bc,acc,bcc,...\right\} $
+\end{itemize}
+El lenguaje admitido es el de todas las cadenas que comienzan con
+$a$ o $b$ seguidas de 0 o más símbolos $c$.
+\end{itemize}
+\bigskip{}
+
+\begin{rem}
+La representación de lenguajes regulares por medio de expresiones
+regulares no es única. Es posible que haya varias expresiones regulares
+para el mismo lenguaje. Por ejemplo, $b\left(a+b\right)^{*}$ y $b\left(b+a\right)^{*}$
+representan el mismo lenguaje. Otro ejemplo sería con las expresiones
+$\left(a+b\right)^{*}$ y $\left(a^{*}b^{*}\right)^{*}$.
+\end{rem}
+\bigskip{}
+
+\begin{xca}
+Indica el lenguaje que reconocen las siguientes expresiones regulares:
+\end{xca}
+\begin{enumerate}
+\item $\left(a^{*}c\right)+\left(ab^{*}\right)$
+\item $\left(00\right)^{*}+\left(1\left(11\right)^{*}\right)$
+\end{enumerate}
+Veamos ahora, algunos ejemplos sobre diseño de expresiones regulares. 
+
+\bigskip{}
+
+\begin{example}
+Encontrar expresiones regulares que representen los siguientes lenguajes,
+definidos sobre el alfabeto $\Sigma=\left\{ a,b\right\} $:
+\end{example}
+\begin{enumerate}
+\item Lenguaje de todas las cadenas que comienzan con el símbolo $b$ y
+terminan con el símbolo $a$.
+\begin{itemize}
+\item Debemos garantizar que las cadenas inicien con $b$, lo cual puede
+ser representado por: $b$
+\item Después del primer símbolo, puede haber cualquier número de $a$s
+y $b$s, de forma tal que podemos generar dichas cadenas con la expresión:
+$\left(a+b\right)^{*}$.
+\item Finalmente, la cadena debe terminar con $a$, con lo cual, la expresión
+regular más idonea es: $a$.
+\item Concatenando las tres expresiones anteriores tenemos:
+
+\emph{Solución: $b\left(a+b\right)^{*}a$}
+\end{itemize}
+\item Lenguaje de todas las cadenas que tienen un número par de símbolos.
+\begin{itemize}
+\item Dado que queremos pares de símbolos necesitamos construir cada uno
+de éstos, es decir, tanto el primer como el segundo símbolo pueden
+ser una $a$ o una $b$ y debemos concatenarlos. Esto se puede representar
+con $\left(a+b\right)\left(a+b\right).$
+\item Con la expresión del punto anterior, estamos construyendo cadenas
+de longitud 2, pero podemos tener otras longitudes, por ejemplo 0,
+2, 4, 6, etc. Dado que ya concatenamos dos símbolos, esto se puede
+lograr aplicando la estrella de Kleene. Es decir:
+
+\emph{Solución: $\left(\left(a+b\right)\left(a+b\right)\right)^{*}$}
+\end{itemize}
+\item Lenguaje de todas las cadenas que tienen un número par de $a$s.
+\begin{itemize}
+\item Para reconocer cadenas que contengan un número par de $as$, partamos
+de un caso fácil, la cadena que tiene 2 de estos símbolos. En este
+caso, podemos tener alguna de las siguientes formas:
+\begin{itemize}
+\item Dos símbolos al principio.
+\item Dos símbolos al final.
+\item Dos símbolos en medio.
+\item Dos símbolos en cualquier posición.
+\end{itemize}
+Podríamos considerar todos estos casos y separarlos con una operación
+de suma, sin embargo, podemos auxiliarnos de la estrella de Kleene
+para indicar que puede haber cero o más presencias del símbolo $b$
+entre las dos $a$ que queremos. Es decir: $b^{*}ab^{*}ab^{*}$.
+\item Ahora que tenemos fijado un par de $a$s, podemos generalizarlo como
+hicimos en el ejemplo anterior con una estrella de Kleene. Es decir:
+$\left(b^{*}ab^{*}ab^{*}\right)^{*}$.
+\item Hasta el punto anterior, pareciera que ya tenemos la expresión regular,
+sin embargo, recordemos que el cero también es un número par, de forma
+que una cadena sin $a$s también pertenece al lenguaje. Podemos agregar
+este paso con una suma, quedando:
+
+\emph{Solución: $\left(b^{*}ab^{*}ab^{*}\right)$$^{*}+b^{*}$}
+\end{itemize}
+\end{enumerate}
+\bigskip{}
+
+\begin{example}
+Encontrar expresiones regulares que representen los siguientes lenguajes,
+definidos sobre el alfabeto $\Sigma=\left\{ 0,1\right\} $
+\end{example}
+\begin{enumerate}
+\item Lenguaje de todas las cadenas que tienen exactamente dos ceros.
+\begin{itemize}
+\item Este es un caso particular de los ejemplos que vimos anteriormente.
+Dado que queremos exactamente dos ceros, simplemente colocamos los
+unos correspondientes con su respectiva estrella de Kleene entre los
+dos símbolos $0$:
+
+\emph{Solución: $1^{*}01^{*}01^{*}$}
+\end{itemize}
+\item Lenguaje de todas las cadenas cuyo penúltimo símbolo, de izquierda
+a derecha es un 0.
+\begin{itemize}
+\item Queremos que el penúltimo símbolo sea un 0, de forma que antes de
+encontrar dicho símbolo, podemos tener cualquier número de ceros y
+unos, es decir: $\left(0+1\right)^{*}$
+\item Posteriormente, aparecerá el símbolo 0, que se reconoce con: $0$
+\item Y finalmente, después de dichos patrones, podemos tener ya sea otro
+cero u otro uno, es decir: $\left(0+1\right)$
+\item Con lo cual, concatenando las 3 expresiones anteriores, tenemos:
+
+\emph{Solución: $\left(0+1\right)^{*}0\left(0+1\right)$}
+\end{itemize}
+\end{enumerate}
+\bigskip{}
+
+\begin{xca}
+Sea $\Sigma=\left\{ 0,1\right\} $. Encontrar una expresión regular
+que represente el lenguaje de todas las cadenas que no tienen dos
+ceros consecutivos.
+\end{xca}
+%
+\begin{xca}
+Sea $\Sigma=\left\{ a,b,c\right\} $. Encontrar una expresión regular
+que represente el lenguaje de todas las cadenas que no contiene la
+cadena $bc$.
+\end{xca}
+%
+
+\begin{thebibliography}{1}
+\bibitem{key-1}Hopcroft, J. E; Montwani, R., and Ullman, J. \emph{Introduction
+to Automata Theory Language, and Computation}. Addison Wesley, third
+edition 2007.
+
+\bibitem{key-1}Rodrigo De Castro, \emph{Notas de Clase de Teoría
+de la Computación: Lenguajes, autómatas, gramáticas,} Universidad
+Nacional de Colombia, Facultas de Ciencias, 2004.
+\end{thebibliography}
+
+\end{document}

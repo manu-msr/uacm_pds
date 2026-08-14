@@ -1,0 +1,448 @@
+%% LyX 2.3.4.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[11pt,spanish]{article}
+\renewcommand{\rmdefault}{cmr}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\setlength{\parskip}{\bigskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\theoremstyle{definition}
+\newtheorem{defn}{\protect\definitionname}[section]
+\theoremstyle{definition}
+\newtheorem{xca}{\protect\exercisename}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+
+\makeatother
+
+\usepackage{babel}
+\addto\shorthandsspanish{\spanishdeactivate{~<>.}}
+
+\usepackage{listings}
+\lstset{mathescape=true}
+\providecommand{\definitionname}{Definición}
+\providecommand{\exercisename}{Ejercicio}
+
+\begin{document}
+\title{Teoría de la Computación, 2021-1\\
+Nota de clase 1: Introducción al curso\thanks{Material mayormente tomado de \cite{key-1} con ligeras modificaciones.}}
+\author{Manuel Soto Romero}
+\date{\today \\ Colegio de Ciencia y Tecnología UACM}
+
+\maketitle
+\renewcommand*{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+\setcounter{section}{1}
+\renewcommand*\lstlistingname{C\'odigo}
+
+El curso de Teoría de la Computación tiene como fin que apliques las
+teorías de lenguajes formales, gramáticas y las máquinas de estados
+finitos, en el diseño e implementación de aplicaciones reales de software.
+Además que seas capaz reconocer aquellos problemas que no puedan ser
+resueltos utilizando una computadora. 
+
+En esta nota trataremos de entender por qué todo esto es importante
+en el perfil de cualquier carrera de computación y daremos una breve
+introducción a algunos de los elementos básicos que manipularemos
+a lo largo del curso. Estudiaremos con mayor detalle estos conceptos
+en otras notas.
+
+\subsection{¿Por qué estudiar Teoría de la Computación?}
+
+Quizá una forma de entender por qué es importante para nosotros el
+estudio de esta teoría sea platicando algunas de las aplicaciones
+acerca de los temas que estudiaremos a lo largo de estas notas. \cite{key-2}
+\begin{itemize}
+\item \textbf{Autómatas Finitos. }Constituyen un modelo útil para muchos
+tipos de hardware y software. Por mencionar algunos de estos modelos
+tenemos:
+\begin{enumerate}
+\item Software para diseñar y probar el comportamiento de circuitos digitales.
+\item El analizador léxico de un compilador.
+\item Software para explorar patrones en cadenas.
+\item Software para verificar sistemas de todo tipo y que tengan un número
+finito de estados diferentes, por ejemplo, protocolos de intercambio
+de información.
+\end{enumerate}
+\item \textbf{Gramáticas. }Son modelos útiles en el diseño de software que
+sirve para procesar datos con una estructura recursiva. El ejemplo
+más conocido de éstas se puede encontrar en los Analizadores Sintácticos,
+los cuales son componentes de un compilador (o intérprete) encargados
+de verificar que lo que escribimos en un determinado lenguaje de programación
+está bien escrito. Por ejemplo, una regla gramatical E := E + E nos
+dice que una expresión puede formarse tomando dos expresiones y conectándolas
+poniendo un símbolo de suma entre ellos.
+\item \textbf{Expresiones Regulares. }También nos permiten revisar la estructura
+de los datos, especialmente de las cadenas. Los patrones de una cadena
+que puede describir una expresión regular, también pueden ser descritos
+por los autómatas finitos. Por ejemplo, los sistemas operativos basados
+en UNIX, permiten definir expresiones regulares, como la siguiente:
+\begin{center}
+\texttt{'{[}A-Z{]} {[}a-z{]}{*} {[}{]} {[}A-Z{]}{[}A-Z{]}'}
+\par\end{center}
+
+esta expresión regular representa palabras que comienzan por una letra
+mayúscula seguida de un espacio y dos letras mayúsculas. Por ejemplo
+\texttt{``México DF''}.
+\item \textbf{Decidibilidad. }Nos permite responder la pregunta ¿Qué puede
+hacer una computadora?, los problemas que una computadora puede resolver,
+son llamados decidibles.
+\item \textbf{Intratabilidad. }Nos permite responder la pregunta ¿Qué puede
+hacer una computadora de manera eficiente? Estudia los problemas que
+una computadora puede resolver en un tiempo ``descente'' o mejor
+dicho ``tratable''. Esto también se estudia con detalle en los cursos
+de Análisis de Algoritmos.
+\end{itemize}
+
+\subsection{Conceptos básicos}
+
+Se presentan a continuación las definiciones de los términos más importantes
+empleados en la Teoría de la Computación. En general, manejaremos
+tres conceptos:
+\begin{itemize}
+\item Alfabetos: Conjunto de símbolos
+\item Cadenas: Lista de símbolos de un alfabeto
+\item Lenguaje: Conjunto de cadenas de un mismo alfabeto.
+\end{itemize}
+Definamos esto con más formalidad.
+
+\subsubsection{Alfabetos y cadenas}
+
+\bigskip{}
+
+\begin{defn}
+\emph{(Alfabeto) Un alfabeto es un conjunto de símbolos finito y no
+vacío. Denotamos a un alfabeto con la letra griega $\Sigma$. }
+\end{defn}
+%
+Algunos ejemplos de alfabetos son:
+\begin{itemize}
+\item $\Sigma=\left\{ 0,1\right\} $, el alfabeto binario.
+\item $\Sigma=\left\{ a,b,...,z\right\} $, el conjunto de todas las letras
+minúsculas.
+\item El conjunto de todos los caracteres ASCII.
+\end{itemize}
+\bigskip{}
+
+\begin{defn}
+\emph{(Cadena) Una cadena es una secuencia finita de símbolos seleccionados
+de algún alfabeto.} 
+\end{defn}
+%
+Por ejemplo, 01101 y 111 son cadenas del alfabeto binario.
+
+\bigskip{}
+
+\begin{xca}
+Dado el siguiente alfabeto $\Sigma=\left\{ 1,2,3,4,5,6,a,b,c,d\right\} ,$da
+cinco ejemplos de cadenas que puedas formar con él.
+\end{xca}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Cadena vacía) La cadena vacía es aquella que no tiene ningún
+símbolo, es denotada por $\varepsilon$ y está presente en todo alfabeto.}
+\end{defn}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Longitud de una cadena) La longitud de una cadena $w$ es el
+número de símbolos que la conforman, se denota por $|w|$.}
+\end{defn}
+%
+Ejemplos:
+\begin{itemize}
+\item $|01101|=5$
+\item $|011|=3$
+\item $|\varepsilon|=0$.
+\end{itemize}
+\bigskip{}
+
+\begin{xca}
+Calcula la longitud de todas las cadenas que definiste en el Ejercicio
+1.1.
+\end{xca}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Reversa de una cadena) La reversa de una cadena $w$ es simplemente
+la representación en orden inverso de los símbolos que la conforman,
+se denota por $w^{R}$.}
+\end{defn}
+%
+Ejemplos:
+\begin{itemize}
+\item \emph{$0101^{R}=1010$}
+\item $abc^{R}=cba$
+\item $\varepsilon^{R}=\varepsilon$
+\end{itemize}
+\bigskip{}
+
+\begin{xca}
+Calcula la reversa de todas las cadenas que definiste en el Ejercicio
+1.1.
+\end{xca}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Potencia de un alfabeto) La potencia $k$ de un alfabeto ($\Sigma^{k}$)
+se define como el conjunto de las cadenas de longitud $k$, tales
+que cada uno de los símbolos de las mismas pertenecen a $\Sigma$.} 
+\end{defn}
+%
+Por ejemplo, si tomamos $\Sigma=\left\{ 0,1\right\} $, tenemos las
+siguientes potencias:
+\begin{itemize}
+\item $\Sigma^{0}=\left\{ \varepsilon\right\} $
+\item $\Sigma^{1}=\left\{ 0,1\right\} $
+\item $\Sigma^{2}=\left\{ 00,01,10,11\right\} $
+\item $\Sigma^{3}=\left\{ 000,001,010,011,100,101,110,111\right\} $
+\item ...
+\end{itemize}
+Para denotar el conjunto de todas las cadenas de un alfabeto, usamos
+la notación \emph{estrella, }también llamada \emph{Cerradura de Kleen}.\emph{
+}Por ejemplo, para nuestro alfabeto binario, tenemos:
+
+\[
+\Sigma^{*}=\left\{ 0,1\right\} ^{*}=\left\{ \varepsilon,0,1,00,01,10,11,000,...\right\} 
+\]
+
+dicho de otro modo, es el conjunto que tiene a las cadenas de longitud
+0, a las de longitud 1, a las de 2 y así sucesivamente.
+
+\[
+\Sigma^{*}=\Sigma^{0}\cup\Sigma^{1}\cup\Sigma^{2}\cup...
+\]
+
+En ocasiones necesitaremos descartar a $\varepsilon$ de nuestro conjunto
+de cadenas, esto es denotado por $\Sigma^{+}$, y es llamada \emph{Cerradura
+Positiva} es decir:
+
+\[
+\Sigma^{+}=\Sigma^{1}\cup\Sigma^{2}\cup...
+\]
+
+\bigskip{}
+
+\begin{xca}
+Dado el siguiente alfabeto $\Sigma=\left\{ a,b,c\right\} $, obtén
+$\Sigma^{0},\Sigma^{1},\Sigma^{2}$ y muestra los primeros 16 elementos
+de $\Sigma^{*}$y de $\Sigma^{+}$.
+\end{xca}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Concatenación de cadenas) Definimos la concatenación de dos
+cadenas $x$ y $y$ como la cadena formada por una copia de $x$ seguida
+de una copia de $y$. Lo denotamos poniendo las cadenas juntas, es
+decir $xy$. Es decir, si $x=a_{0}a_{1}a_{2}...a_{i}$ y $y=b_{0}b_{1}b_{2}...b_{j}$
+entonces $xy=a_{0}a_{1}a_{2}...a_{i}b_{0}b_{1}b_{2}...b_{j}$. Notemos
+además que $|xy|=i+j$.} 
+\end{defn}
+%
+Por ejemplo, si $x=01101$ y $y=110$, entonces $xy=01101110$ y $yx=11001101$.
+
+Es importante destacar además que $\varepsilon$ es el neutro de la
+concatenación, es decir, si lo concatenamos con cualquier cadena $s$
+siempre obtendremos $s$.
+
+\[
+\varepsilon s=s\varepsilon=s
+\]
+
+
+\subsubsection{Lenguajes}
+
+Ahora que sabemos qué es un alfabeto y qué significa que una cadena
+pertenezca a él. Veamos lo que es un \emph{lenguaje}. 
+
+Se le denomina lenguaje a un subconjunto $L$ de cadenas tomadas de
+$\Sigma^{*}$ ($L\subseteq\Sigma^{*})$. Es decir, dadas todas las
+cadenas que podemos formar con un alfabeto, tomamos algunas de ellas
+para conformar un lenguaje. Veamos algunos ejemplos:
+\begin{itemize}
+\item El español es un lenguaje formado por todas las cadenas escritas en
+español tomadas del abecedario. 
+\item El lenguaje de programación \textsc{Haskell} es un lenguaje formado
+por todos los símbolos y palabras reservadas necesarias para escribir
+un programa.
+\item El lenguaje de todas las cadenas que constan de $n$ ceros, seguidos
+de $n$ unos para cualquier $n\geq0:$
+
+\[
+\left\{ \varepsilon,01,0011,000111,...\right\} 
+\]
+
+\item El conjunto de cadenas formadas por el mismo número de ceros que de
+unos:
+
+\[
+\left\{ \varepsilon,01,10,0011,0101,1001,...\right\} 
+\]
+
+\item El conjunto de números binarios cuyo valor es un número primo:
+
+\[
+\left\{ 10,11,101,111,1011,...\right\} 
+\]
+
+\item $\Sigma^{*}$ es un lenguaje para cualquier alfabeto $\Sigma$.
+\item $\varnothing$, el lenguaje vacío, es un lenguaje de cualquier alfabeto.
+\item $\left\{ \varepsilon\right\} $, el lenguaje que consta sólo de la
+cadena vacía, también es un lenguaje de cualquier alfabeto. (Observa
+que $\varnothing\neq\varepsilon$).
+\end{itemize}
+Dado que un lenguaje es un conjunto, podemos describir lenguajes usando
+la notación por comprensión de los conjuntos:
+
+\[
+\left\{ s:\text{algo acerca de }s\right\} 
+\]
+
+Por ejemplo:
+\begin{itemize}
+\item $\left\{ s:s\text{ consta de un número igual de ceros que de unos}\right\} $
+\item $\left\{ s:s\text{ es un entero binario que es primo}\right\} $
+\item $\left\{ s:s\text{ es un programa en \textsc{Haskell} sintácticamente correcto}\right\} $
+\end{itemize}
+También es común que las definiciones dependan de ciertos parámetros
+y condiciones sobre estos. Por ejemplo:
+\begin{itemize}
+\item $\left\{ 0^{n}1^{n}:n\geq1\right\} $
+\item $\left\{ 0^{i}0^{j}:0\leq i\leq j\right\} $
+\end{itemize}
+Dado que los lenguajes son conjuntos, todas las operaciones de conjuntos
+aplican, tales como $L\cup M$, $L\cap M,L-M,L^{c}=\Sigma^{*}-L$.
+Adicionalmente tenemos otras operaciones.
+
+\bigskip{}
+
+\begin{xca}
+Sea $\Sigma=\left\{ a,b,c\right\} $ y $L_{1}=\left\{ \varepsilon,a,ab\right\} $
+y $L_{2}=\left\{ b,ac,ab\right\} $. Obtén:
+\end{xca}
+\begin{itemize}
+\item $L_{1}\cup L_{2}$
+\item $L_{1}\cap L_{2}$
+\item $L_{1}-L_{2}$
+\end{itemize}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Concatenación de lenguajes) La concatenación de lenguajes se
+define como}
+
+\[
+LM=\left\{ uv:u\in L\land v\in M\right\} 
+\]
+\end{defn}
+%
+Por ejemplo, si $A=\{hola,adi\acute{o}s\}$ y $B=\left\{ casa\right\} $,
+entonces $AB=\left\{ holacasa,adioscasa\right\} $
+
+\bigskip{}
+
+\begin{xca}
+Usando el alfabeto y lenguajes del Ejercicio 1.5, obtén $L_{1}L_{2}$.
+\end{xca}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Reversa de un lenguaje) La reversa de un lenguaje se define
+como}
+
+\[
+L^{R}=\left\{ w^{R}:w\in L\right\} 
+\]
+\end{defn}
+%
+Por ejemplo, si $L=\{01,10,1011\}$, entonces $L^{R}=\left\{ 10,01,1101\right\} $
+
+\bigskip{}
+
+\begin{xca}
+Usando el alfabeto y lenguajes del Ejercicio 1.5, obtén $L_{1}^{R}$
+y $L_{2}^{R}$
+\end{xca}
+%
+\bigskip{}
+
+\begin{defn}
+\emph{(Potencia de un lenguaje) La potencia $k$ de un lenguaje ($L^{k}$)
+se define como el conjunto que contiene la concatenación de L consigo
+mismo $k$ veces}.
+\end{defn}
+%
+Algunos ejemplos sobre el lenguaje $A=\left\{ ab\right\} $
+\begin{itemize}
+\item $A^{0}=\left\{ \varepsilon\right\} $
+\item $A^{1}=A=\left\{ ab\right\} $
+\item $A$$^{2}=AA=\left\{ abab\right\} $
+\item $A^{3}=AAA=\left\{ ababab\right\} $
+\item ...
+\end{itemize}
+Y por supuesto, también tiene sus respectivas cerraduras de Kleen
+y Positiva.
+
+\[
+L^{*}=L^{0}\cup L^{1}\cup L^{3}\cup...
+\]
+
+\[
+L^{+}=L^{1}\cup L^{2}\cup...
+\]
+
+\bigskip{}
+
+\begin{xca}
+Usando el alfabeto y lenguajes del Ejercicio 1.5, obtén los primeros
+11 elementos de $L_{1}^{*}$.
+\end{xca}
+%
+En la Teoría de la Computación, un \emph{problema} es la cuestión
+de decidir si una determinada cadena pertenece a un lenguaje. Como
+estudiaremos más adelante en otra nota, cualquier cosa que denominemos
+problema, puede ser expresado como elemento de un lenguaje. Dicho
+de otra forma, si $\Sigma$ es un alfabeto y $L$ es un lenguaje de
+$\Sigma$, entonces el problema $L$ es:
+\begin{center}
+\emph{Dada una cadena $s$ de $\Sigma^{*}$, decidir si $s$ pertenece
+o no a $L$}
+\par\end{center}
+\begin{thebibliography}{1}
+\bibitem{key-1} Hopcroftt, J. E; Montwani, R., and Ullman, J. \emph{Introduction
+to Automata Theory Language, and Computation}. Addison Wesley, third
+edition 2007. 
+\end{thebibliography}
+
+\end{document}

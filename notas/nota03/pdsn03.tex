@@ -84,6 +84,12 @@ colframe=amber!85!black,
 fonttitle=\bfseries,
 title={#1},
 breakable}
+\newtcolorbox{ruta}[1]{
+colback=darkpastelblue!5!white,
+colframe=darkpastelblue!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
 \newtcolorbox{teorema}[1]{
 colback=bubblegum!5!white,
 colframe=bubblegum!85!black,
@@ -147,6 +153,12 @@ Unidad 2: Análisis léxico\\ \bigskip
 En la nota anterior observamos que un compilador no trabaja todo el tiempo con el texto original. Cada fase recibe una representación, realiza una tarea y comunica un resultado. El análisis léxico inicia ese recorrido: lee los caracteres del programa fuente, reconoce unidades elementales y entrega una secuencia de tokens al analizador sintáctico.
 
 En esta nota estudiaremos la función del analizador léxico y distinguiremos tres conceptos relacionados: token, lexema y patrón. También veremos por qué algunos tokens necesitan atributos y cómo se establece la comunicación con el analizador sintáctico. Todavía no construiremos expresiones regulares, autómatas ni un analizador con Lark; esos desarrollos corresponden a otras notas.
+
+\begin{ruta}{Ruta de lectura (15--20 minutos)}
+\textbf{Lectura esencial:} sigue el caso inicial desde los caracteres hasta la secuencia de tokens; distingue token, lexema, patrón y atributo mediante sus definiciones y ejemplos; identifica qué recibe y qué produce el analizador léxico; y resuelve el mini-checkpoint con \texttt{total = 25;}.
+
+\textbf{Lectura complementaria:} revisa después los matices sobre espacios y comentarios, las dos formas de observar la comunicación con el analizador sintáctico y la configuración de \textsc{Lark}. Retoma esta última parte al comenzar la Práctica 1.
+\end{ruta}
 
 \begin{ejemplo}{Caso inicial. De caracteres a unidades}
 Retomemos el fragmento ilustrativo utilizado en la nota anterior:

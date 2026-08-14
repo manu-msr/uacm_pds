@@ -1,0 +1,1581 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-bytype
+theorems-sec-bytype
+\end_modules
+\maintain_unincluded_children false
+\language spanish-mexico
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "cmr" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\boxbgcolor #cccccc
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "mathescape=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Teoría de la Computación, 2021-1
+\begin_inset Newline newline
+\end_inset
+
+Nota de clase 1: Introducción al curso
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Material mayormente tomado de 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+literal "false"
+
+\end_inset
+
+ con ligeras modificaciones.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Author
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Manuel Soto Romero
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today 
+\backslash
+
+\backslash
+ Colegio de Ciencia y Tecnología UACM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*{
+\backslash
+thefootnote}{
+\backslash
+arabic{footnote}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{footnote}{0}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{1}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*
+\backslash
+lstlistingname{C
+\backslash
+'odigo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El curso de Teoría de la Computación tiene como fin que apliques las teorías
+ de lenguajes formales, gramáticas y las máquinas de estados finitos, en
+ el diseño e implementación de aplicaciones reales de software.
+ Además que seas capaz reconocer aquellos problemas que no puedan ser resueltos
+ utilizando una computadora.
+ 
+\end_layout
+
+\begin_layout Standard
+En esta nota trataremos de entender por qué todo esto es importante en el
+ perfil de cualquier carrera de computación y daremos una breve introducción
+ a algunos de los elementos básicos que manipularemos a lo largo del curso.
+ Estudiaremos con mayor detalle estos conceptos en otras notas.
+\end_layout
+
+\begin_layout Subsection
+¿Por qué estudiar Teoría de la Computación?
+\end_layout
+
+\begin_layout Standard
+Quizá una forma de entender por qué es importante para nosotros el estudio
+ de esta teoría sea platicando algunas de las aplicaciones acerca de los
+ temas que estudiaremos a lo largo de estas notas.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Autómatas Finitos.
+ 
+\series default
+Constituyen un modelo útil para muchos tipos de hardware y software.
+ Por mencionar algunos de estos modelos tenemos:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Software para diseñar y probar el comportamiento de circuitos digitales.
+\end_layout
+
+\begin_layout Enumerate
+El analizador léxico de un compilador.
+\end_layout
+
+\begin_layout Enumerate
+Software para explorar patrones en cadenas.
+\end_layout
+
+\begin_layout Enumerate
+Software para verificar sistemas de todo tipo y que tengan un número finito
+ de estados diferentes, por ejemplo, protocolos de intercambio de información.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+Gramáticas.
+ 
+\series default
+Son modelos útiles en el diseño de software que sirve para procesar datos
+ con una estructura recursiva.
+ El ejemplo más conocido de éstas se puede encontrar en los Analizadores
+ Sintácticos, los cuales son componentes de un compilador (o intérprete)
+ encargados de verificar que lo que escribimos en un determinado lenguaje
+ de programación está bien escrito.
+ Por ejemplo, una regla gramatical E := E + E nos dice que una expresión
+ puede formarse tomando dos expresiones y conectándolas poniendo un símbolo
+ de suma entre ellos.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Expresiones Regulares.
+ 
+\series default
+También nos permiten revisar la estructura de los datos, especialmente de
+ las cadenas.
+ Los patrones de una cadena que puede describir una expresión regular, también
+ pueden ser descritos por los autómatas finitos.
+ Por ejemplo, los sistemas operativos basados en UNIX, permiten definir
+ expresiones regulares, como la siguiente:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\noindent
+\align center
+
+\family typewriter
+'[A-Z] [a-z]* [] [A-Z][A-Z]'
+\end_layout
+
+\begin_layout Standard
+esta expresión regular representa palabras que comienzan por una letra mayúscula
+ seguida de un espacio y dos letras mayúsculas.
+ Por ejemplo 
+\family typewriter
+
+\begin_inset Quotes eld
+\end_inset
+
+México DF
+\begin_inset Quotes erd
+\end_inset
+
+
+\family default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+Decidibilidad.
+ 
+\series default
+Nos permite responder la pregunta ¿Qué puede hacer una computadora?, los
+ problemas que una computadora puede resolver, son llamados decidibles.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Intratabilidad.
+ 
+\series default
+Nos permite responder la pregunta ¿Qué puede hacer una computadora de manera
+ eficiente? Estudia los problemas que una computadora puede resolver en
+ un tiempo 
+\begin_inset Quotes eld
+\end_inset
+
+descente
+\begin_inset Quotes erd
+\end_inset
+
+ o mejor dicho 
+\begin_inset Quotes eld
+\end_inset
+
+tratable
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Esto también se estudia con detalle en los cursos de Análisis de Algoritmos.
+\end_layout
+
+\begin_layout Subsection
+Conceptos básicos
+\end_layout
+
+\begin_layout Standard
+Se presentan a continuación las definiciones de los términos más importantes
+ empleados en la Teoría de la Computación.
+ En general, manejaremos tres conceptos:
+\end_layout
+
+\begin_layout Itemize
+Alfabetos: Conjunto de símbolos
+\end_layout
+
+\begin_layout Itemize
+Cadenas: Lista de símbolos de un alfabeto
+\end_layout
+
+\begin_layout Itemize
+Lenguaje: Conjunto de cadenas de un mismo alfabeto.
+\end_layout
+
+\begin_layout Standard
+Definamos esto con más formalidad.
+\end_layout
+
+\begin_layout Subsubsection
+Alfabetos y cadenas
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Alfabeto) Un alfabeto es un conjunto de símbolos finito y no vacío.
+ Denotamos a un alfabeto con la letra griega 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Algunos ejemplos de alfabetos son:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+, el alfabeto binario.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma=\left\{ a,b,...,z\right\} $
+\end_inset
+
+, el conjunto de todas las letras minúsculas.
+\end_layout
+
+\begin_layout Itemize
+El conjunto de todos los caracteres ASCII.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Cadena) Una cadena es una secuencia finita de símbolos seleccionados de
+ algún alfabeto.
+
+\emph default
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, 01101 y 111 son cadenas del alfabeto binario.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Dado el siguiente alfabeto 
+\begin_inset Formula $\Sigma=\left\{ 1,2,3,4,5,6,a,b,c,d\right\} ,$
+\end_inset
+
+da cinco ejemplos de cadenas que puedas formar con él.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Cadena vacía) La cadena vacía es aquella que no tiene ningún símbolo, es
+ denotada por 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ y está presente en todo alfabeto.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Longitud de una cadena) La longitud de una cadena 
+\begin_inset Formula $w$
+\end_inset
+
+ es el número de símbolos que la conforman, se denota por 
+\begin_inset Formula $|w|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ejemplos:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $|01101|=5$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $|011|=3$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $|\varepsilon|=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Calcula la longitud de todas las cadenas que definiste en el Ejercicio 1.1.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Reversa de una cadena) La reversa de una cadena 
+\begin_inset Formula $w$
+\end_inset
+
+ es simplemente la representación en orden inverso de los símbolos que la
+ conforman, se denota por 
+\begin_inset Formula $w^{R}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ejemplos:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+\begin_inset Formula $0101^{R}=1010$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $abc^{R}=cba$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\varepsilon^{R}=\varepsilon$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Calcula la reversa de todas las cadenas que definiste en el Ejercicio 1.1.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Potencia de un alfabeto) La potencia 
+\begin_inset Formula $k$
+\end_inset
+
+ de un alfabeto (
+\begin_inset Formula $\Sigma^{k}$
+\end_inset
+
+) se define como el conjunto de las cadenas de longitud 
+\begin_inset Formula $k$
+\end_inset
+
+, tales que cada uno de los símbolos de las mismas pertenecen a 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+.
+
+\emph default
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, si tomamos 
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+, tenemos las siguientes potencias:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma^{0}=\left\{ \varepsilon\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma^{1}=\left\{ 0,1\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma^{2}=\left\{ 00,01,10,11\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma^{3}=\left\{ 000,001,010,011,100,101,110,111\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+...
+\end_layout
+
+\begin_layout Standard
+Para denotar el conjunto de todas las cadenas de un alfabeto, usamos la
+ notación 
+\emph on
+estrella, 
+\emph default
+también llamada 
+\emph on
+Cerradura de Kleen
+\emph default
+.
+
+\emph on
+ 
+\emph default
+Por ejemplo, para nuestro alfabeto binario, tenemos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Sigma^{*}=\left\{ 0,1\right\} ^{*}=\left\{ \varepsilon,0,1,00,01,10,11,000,...\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+dicho de otro modo, es el conjunto que tiene a las cadenas de longitud 0,
+ a las de longitud 1, a las de 2 y así sucesivamente.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Sigma^{*}=\Sigma^{0}\cup\Sigma^{1}\cup\Sigma^{2}\cup...
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En ocasiones necesitaremos descartar a 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ de nuestro conjunto de cadenas, esto es denotado por 
+\begin_inset Formula $\Sigma^{+}$
+\end_inset
+
+, y es llamada 
+\emph on
+Cerradura Positiva
+\emph default
+ es decir:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\Sigma^{+}=\Sigma^{1}\cup\Sigma^{2}\cup...
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Dado el siguiente alfabeto 
+\begin_inset Formula $\Sigma=\left\{ a,b,c\right\} $
+\end_inset
+
+, obtén 
+\begin_inset Formula $\Sigma^{0},\Sigma^{1},\Sigma^{2}$
+\end_inset
+
+ y muestra los primeros 16 elementos de 
+\begin_inset Formula $\Sigma^{*}$
+\end_inset
+
+y de 
+\begin_inset Formula $\Sigma^{+}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Concatenación de cadenas) Definimos la concatenación de dos cadenas 
+\begin_inset Formula $x$
+\end_inset
+
+ y 
+\begin_inset Formula $y$
+\end_inset
+
+ como la cadena formada por una copia de 
+\begin_inset Formula $x$
+\end_inset
+
+ seguida de una copia de 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ Lo denotamos poniendo las cadenas juntas, es decir 
+\begin_inset Formula $xy$
+\end_inset
+
+.
+ Es decir, si 
+\begin_inset Formula $x=a_{0}a_{1}a_{2}...a_{i}$
+\end_inset
+
+ y 
+\begin_inset Formula $y=b_{0}b_{1}b_{2}...b_{j}$
+\end_inset
+
+ entonces 
+\begin_inset Formula $xy=a_{0}a_{1}a_{2}...a_{i}b_{0}b_{1}b_{2}...b_{j}$
+\end_inset
+
+.
+ Notemos además que 
+\begin_inset Formula $|xy|=i+j$
+\end_inset
+
+.
+
+\emph default
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, si 
+\begin_inset Formula $x=01101$
+\end_inset
+
+ y 
+\begin_inset Formula $y=110$
+\end_inset
+
+, entonces 
+\begin_inset Formula $xy=01101110$
+\end_inset
+
+ y 
+\begin_inset Formula $yx=11001101$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Es importante destacar además que 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ es el neutro de la concatenación, es decir, si lo concatenamos con cualquier
+ cadena 
+\begin_inset Formula $s$
+\end_inset
+
+ siempre obtendremos 
+\begin_inset Formula $s$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\varepsilon s=s\varepsilon=s
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Lenguajes
+\end_layout
+
+\begin_layout Standard
+Ahora que sabemos qué es un alfabeto y qué significa que una cadena pertenezca
+ a él.
+ Veamos lo que es un 
+\emph on
+lenguaje
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Se le denomina lenguaje a un subconjunto 
+\begin_inset Formula $L$
+\end_inset
+
+ de cadenas tomadas de 
+\begin_inset Formula $\Sigma^{*}$
+\end_inset
+
+ (
+\begin_inset Formula $L\subseteq\Sigma^{*})$
+\end_inset
+
+.
+ Es decir, dadas todas las cadenas que podemos formar con un alfabeto, tomamos
+ algunas de ellas para conformar un lenguaje.
+ Veamos algunos ejemplos:
+\end_layout
+
+\begin_layout Itemize
+El español es un lenguaje formado por todas las cadenas escritas en español
+ tomadas del abecedario.
+ 
+\end_layout
+
+\begin_layout Itemize
+El lenguaje de programación 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{Haskell}
+\end_layout
+
+\end_inset
+
+ es un lenguaje formado por todos los símbolos y palabras reservadas necesarias
+ para escribir un programa.
+\end_layout
+
+\begin_layout Itemize
+El lenguaje de todas las cadenas que constan de 
+\begin_inset Formula $n$
+\end_inset
+
+ ceros, seguidos de 
+\begin_inset Formula $n$
+\end_inset
+
+ unos para cualquier 
+\begin_inset Formula $n\geq0:$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left\{ \varepsilon,01,0011,000111,...\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+El conjunto de cadenas formadas por el mismo número de ceros que de unos:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left\{ \varepsilon,01,10,0011,0101,1001,...\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+El conjunto de números binarios cuyo valor es un número primo:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left\{ 10,11,101,111,1011,...\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Sigma^{*}$
+\end_inset
+
+ es un lenguaje para cualquier alfabeto 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\varnothing$
+\end_inset
+
+, el lenguaje vacío, es un lenguaje de cualquier alfabeto.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left\{ \varepsilon\right\} $
+\end_inset
+
+, el lenguaje que consta sólo de la cadena vacía, también es un lenguaje
+ de cualquier alfabeto.
+ (Observa que 
+\begin_inset Formula $\varnothing\neq\varepsilon$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Dado que un lenguaje es un conjunto, podemos describir lenguajes usando
+ la notación por comprensión de los conjuntos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left\{ s:\text{algo acerca de }s\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left\{ s:s\text{ consta de un número igual de ceros que de unos}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left\{ s:s\text{ es un entero binario que es primo}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left\{ s:s\text{ es un programa en \textsc{Haskell} sintácticamente correcto}\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+También es común que las definiciones dependan de ciertos parámetros y condicion
+es sobre estos.
+ Por ejemplo:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left\{ 0^{n}1^{n}:n\geq1\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left\{ 0^{i}0^{j}:0\leq i\leq j\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Dado que los lenguajes son conjuntos, todas las operaciones de conjuntos
+ aplican, tales como 
+\begin_inset Formula $L\cup M$
+\end_inset
+
+, 
+\begin_inset Formula $L\cap M,L-M,L^{c}=\Sigma^{*}-L$
+\end_inset
+
+.
+ Adicionalmente tenemos otras operaciones.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Sea 
+\begin_inset Formula $\Sigma=\left\{ a,b,c\right\} $
+\end_inset
+
+ y 
+\begin_inset Formula $L_{1}=\left\{ \varepsilon,a,ab\right\} $
+\end_inset
+
+ y 
+\begin_inset Formula $L_{2}=\left\{ b,ac,ab\right\} $
+\end_inset
+
+.
+ Obtén:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L_{1}\cup L_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L_{1}\cap L_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $L_{1}-L_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Concatenación de lenguajes) La concatenación de lenguajes se define como
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+LM=\left\{ uv:u\in L\land v\in M\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, si 
+\begin_inset Formula $A=\{hola,adiós\}$
+\end_inset
+
+ y 
+\begin_inset Formula $B=\left\{ casa\right\} $
+\end_inset
+
+, entonces 
+\begin_inset Formula $AB=\left\{ holacasa,adioscasa\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Usando el alfabeto y lenguajes del Ejercicio 1.5, obtén 
+\begin_inset Formula $L_{1}L_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Reversa de un lenguaje) La reversa de un lenguaje se define como
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+L^{R}=\left\{ w^{R}:w\in L\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, si 
+\begin_inset Formula $L=\{01,10,1011\}$
+\end_inset
+
+, entonces 
+\begin_inset Formula $L^{R}=\left\{ 10,01,1101\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Usando el alfabeto y lenguajes del Ejercicio 1.5, obtén 
+\begin_inset Formula $L_{1}^{R}$
+\end_inset
+
+ y 
+\begin_inset Formula $L_{2}^{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Potencia de un lenguaje) La potencia 
+\begin_inset Formula $k$
+\end_inset
+
+ de un lenguaje (
+\begin_inset Formula $L^{k}$
+\end_inset
+
+) se define como el conjunto que contiene la concatenación de L consigo
+ mismo 
+\begin_inset Formula $k$
+\end_inset
+
+ veces
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Algunos ejemplos sobre el lenguaje 
+\begin_inset Formula $A=\left\{ ab\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A^{0}=\left\{ \varepsilon\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A^{1}=A=\left\{ ab\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+
+\begin_inset Formula $^{2}=AA=\left\{ abab\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A^{3}=AAA=\left\{ ababab\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+...
+\end_layout
+
+\begin_layout Standard
+Y por supuesto, también tiene sus respectivas cerraduras de Kleen y Positiva.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L^{*}=L^{0}\cup L^{1}\cup L^{3}\cup...
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L^{+}=L^{1}\cup L^{2}\cup...
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Usando el alfabeto y lenguajes del Ejercicio 1.5, obtén los primeros 11 elementos
+ de 
+\begin_inset Formula $L_{1}^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En la Teoría de la Computación, un 
+\emph on
+problema
+\emph default
+ es la cuestión de decidir si una determinada cadena pertenece a un lenguaje.
+ Como estudiaremos más adelante en otra nota, cualquier cosa que denominemos
+ problema, puede ser expresado como elemento de un lenguaje.
+ Dicho de otra forma, si 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ es un alfabeto y 
+\begin_inset Formula $L$
+\end_inset
+
+ es un lenguaje de 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+, entonces el problema 
+\begin_inset Formula $L$
+\end_inset
+
+ es:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\emph on
+Dada una cadena 
+\begin_inset Formula $s$
+\end_inset
+
+ de 
+\begin_inset Formula $\Sigma^{*}$
+\end_inset
+
+, decidir si 
+\begin_inset Formula $s$
+\end_inset
+
+ pertenece o no a 
+\begin_inset Formula $L$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+ Hopcroftt, J.
+ E; Montwani, R., and Ullman, J.
+ 
+\emph on
+Introduction to Automata Theory Language, and Computation
+\emph default
+.
+ Addison Wesley, third edition 2007.
+ 
+\end_layout
+
+\end_body
+\end_document

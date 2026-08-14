@@ -1,0 +1,1224 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-bytype
+theorems-sec-bytype
+\end_modules
+\maintain_unincluded_children false
+\language spanish-mexico
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "cmr" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\boxbgcolor #cccccc
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "mathescape=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Teoría de la Computación, 2021-1
+\begin_inset Newline newline
+\end_inset
+
+Nota de clase 4: Expresiones Regulares
+\end_layout
+
+\begin_layout Author
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Manuel Soto Romero
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today 
+\backslash
+
+\backslash
+ Colegio de Ciencia y Tecnología UACM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*{
+\backslash
+thefootnote}{
+\backslash
+arabic{footnote}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{footnote}{0}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{4}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*
+\backslash
+lstlistingname{C
+\backslash
+'odigo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Continuaremos nuestro estudio de los Lenguajes Regulares por medio de un
+ método basado en métodos algebraicos conocidos como 
+\emph on
+expresiones regulares
+\emph default
+.
+ Estas expresiones regulares (como veremos más adelante) pueden definir
+ exactamente los mismos lenguajes que describen las gramáticas regulares
+ y los autómatas finitos que estudiamos con anterioridad: lenguajes regulares.
+ 
+\end_layout
+
+\begin_layout Standard
+Muchos sistemas como lenguajes de programación, procesadores de textos,
+ sistemas gestores de bases de datos y muchos otros, incluyen este mecanismo
+ como un método de procesamiento de cadenas.
+ Como ejemplos de programas tenemos al comando 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{grep}
+\end_layout
+
+\end_inset
+
+ que permite buscar texto en los sistemas operativos basados en 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{Unix}
+\end_layout
+
+\end_inset
+
+ o el software para construir analizadores léxicos 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+textsc{JFlex}
+\end_layout
+
+\end_inset
+
+ de gran importancia en el diseño e implementación de compiladores.
+ En esta nota nos dedicaremos a estudiar este tipo de mecanismos.
+\end_layout
+
+\begin_layout Subsection
+Definición
+\end_layout
+
+\begin_layout Standard
+Sea 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ un alfabeto.
+ La 
+\emph on
+expresión regular
+\emph default
+ sobre 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ y los conjuntos que ellas denotan son definidos recursivamente como sigue:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\varnothing$
+\end_inset
+
+ es una expresión regular y denota el conjunto vacío.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ es una expresión regular y denota el conjunto 
+\begin_inset Formula $\left\{ \varepsilon\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Para cada 
+\begin_inset Formula $a$
+\end_inset
+
+ en 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+, 
+\begin_inset Formula $a$
+\end_inset
+
+ es una expresión regular y denota el conjunto 
+\begin_inset Formula $\left\{ a\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Si 
+\begin_inset Formula $r$
+\end_inset
+
+ y 
+\begin_inset Formula $s$
+\end_inset
+
+ son expresiones regulares denotando el lenguaje 
+\begin_inset Formula $R$
+\end_inset
+
+ y 
+\begin_inset Formula $S$
+\end_inset
+
+ respectivamente entonces 
+\begin_inset Formula $\left(r+s\right),rs,r^{*}$
+\end_inset
+
+ son expresiones regulares que denotan los conjuntos 
+\begin_inset Formula $R\cup S,RS$
+\end_inset
+
+ y 
+\begin_inset Formula $R^{*}$
+\end_inset
+
+, respectivamente.
+\end_layout
+
+\begin_layout Standard
+De esta forma, usamos a las expresiones regulares como una simplificación
+ para denotar lenguajes.
+ Recordando que los lenguajes son conjuntos podemos contrastar la definición
+ anterior en la siguiente tabla:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Expresión Regular
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Lenguaje
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ a\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left\{ \varepsilon\right\} $
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(r+s\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $R\cup S$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(rs\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $RS$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(r^{*}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $R^{*}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Los paréntesis sólo son agrupadores.
+ Además, se tiene la siguiente prioridad y asociatividad de operadores:
+\end_layout
+
+\begin_layout Itemize
+La cerradura 
+\begin_inset Formula $*$
+\end_inset
+
+ asocia a la izquierda y tiene la mayor prioridad.
+\end_layout
+
+\begin_layout Itemize
+Posteriormente se realiza la concatenación que asocia a la derecha.
+\end_layout
+
+\begin_layout Itemize
+Finalmente se tiene el operador 
+\begin_inset Formula $+$
+\end_inset
+
+ de alternativa que también asocia por la derecha.
+\end_layout
+
+\begin_layout Standard
+Por ejemplo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+0+1b^{*}+a1^{*}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+se resuelve en el siguiente orden:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+(0+((1(b^{*}))+(a\left(1^{*}\right))))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Veamos algunos ejemplos de expresiones regulares junto con el lenguaje que
+ reconocen.
+\end_layout
+
+\begin_layout Itemize
+¿Qué lenguaje reconoce la siguiente expresión regular?
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(0+1\right)^{*}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Analicemos cada subexpresión:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $0$
+\end_inset
+
+ es la expresión regular que denota al lenguaje 
+\begin_inset Formula $\left\{ 0\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $1$
+\end_inset
+
+ es la expresión regular que denota al lenguaje 
+\begin_inset Formula $\left\{ 1\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Entonces 
+\begin_inset Formula $\left(0+1\right)$
+\end_inset
+
+ es el lenguaje 
+\begin_inset Formula $\left\{ 0\right\} \cup\left\{ 1\right\} =\left\{ 0,1\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+De esta forma 
+\begin_inset Formula $\left(0+1\right)^{*}=\left\{ 0,1\right\} ^{*}=\left\{ \varepsilon,0,1,00,01,10,11,000,001,...\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es decir, reconoce el lenguaje de todas las posibles cadenas que se pueden
+ formar como 0 y 1.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L_{1}=\left\{ w:w\in\Sigma^{*}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+¿Qué lenguaje reconoce la siguiente expresión regular?
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left(a+b\right)c^{*}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Analicemos cada subexpresión:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a=\left\{ a\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $b=\left\{ b\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $c=\left\{ c\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(a+b\right)=\left\{ a,b\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $c^{*}=\left\{ \varepsilon,c,cc,ccc,cccc,...\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(a+b\right)c^{*}=\left\{ a,b,ac,bc,acc,bcc,...\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El lenguaje admitido es el de todas las cadenas que comienzan con 
+\begin_inset Formula $a$
+\end_inset
+
+ o 
+\begin_inset Formula $b$
+\end_inset
+
+ seguidas de 0 o más símbolos 
+\begin_inset Formula $c$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+La representación de lenguajes regulares por medio de expresiones regulares
+ no es única.
+ Es posible que haya varias expresiones regulares para el mismo lenguaje.
+ Por ejemplo, 
+\begin_inset Formula $b\left(a+b\right)^{*}$
+\end_inset
+
+ y 
+\begin_inset Formula $b\left(b+a\right)^{*}$
+\end_inset
+
+ representan el mismo lenguaje.
+ Otro ejemplo sería con las expresiones 
+\begin_inset Formula $\left(a+b\right)^{*}$
+\end_inset
+
+ y 
+\begin_inset Formula $\left(a^{*}b^{*}\right)^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Indica el lenguaje que reconocen las siguientes expresiones regulares:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(a^{*}c\right)+\left(ab^{*}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\left(00\right)^{*}+\left(1\left(11\right)^{*}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Veamos ahora, algunos ejemplos sobre diseño de expresiones regulares.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Encontrar expresiones regulares que representen los siguientes lenguajes,
+ definidos sobre el alfabeto 
+\begin_inset Formula $\Sigma=\left\{ a,b\right\} $
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Enumerate
+Lenguaje de todas las cadenas que comienzan con el símbolo 
+\begin_inset Formula $b$
+\end_inset
+
+ y terminan con el símbolo 
+\begin_inset Formula $a$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Debemos garantizar que las cadenas inicien con 
+\begin_inset Formula $b$
+\end_inset
+
+, lo cual puede ser representado por: 
+\begin_inset Formula $b$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Después del primer símbolo, puede haber cualquier número de 
+\begin_inset Formula $a$
+\end_inset
+
+s y 
+\begin_inset Formula $b$
+\end_inset
+
+s, de forma tal que podemos generar dichas cadenas con la expresión: 
+\begin_inset Formula $\left(a+b\right)^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Finalmente, la cadena debe terminar con 
+\begin_inset Formula $a$
+\end_inset
+
+, con lo cual, la expresión regular más idonea es: 
+\begin_inset Formula $a$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Concatenando las tres expresiones anteriores tenemos:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\emph on
+Solución: 
+\begin_inset Formula $b\left(a+b\right)^{*}a$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+Lenguaje de todas las cadenas que tienen un número par de símbolos.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Dado que queremos pares de símbolos necesitamos construir cada uno de éstos,
+ es decir, tanto el primer como el segundo símbolo pueden ser una 
+\begin_inset Formula $a$
+\end_inset
+
+ o una 
+\begin_inset Formula $b$
+\end_inset
+
+ y debemos concatenarlos.
+ Esto se puede representar con 
+\begin_inset Formula $\left(a+b\right)\left(a+b\right).$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Con la expresión del punto anterior, estamos construyendo cadenas de longitud
+ 2, pero podemos tener otras longitudes, por ejemplo 0, 2, 4, 6, etc.
+ Dado que ya concatenamos dos símbolos, esto se puede lograr aplicando la
+ estrella de Kleene.
+ Es decir:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\emph on
+Solución: 
+\begin_inset Formula $\left(\left(a+b\right)\left(a+b\right)\right)^{*}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+Lenguaje de todas las cadenas que tienen un número par de 
+\begin_inset Formula $a$
+\end_inset
+
+s.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Para reconocer cadenas que contengan un número par de 
+\begin_inset Formula $as$
+\end_inset
+
+, partamos de un caso fácil, la cadena que tiene 2 de estos símbolos.
+ En este caso, podemos tener alguna de las siguientes formas:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Dos símbolos al principio.
+\end_layout
+
+\begin_layout Itemize
+Dos símbolos al final.
+\end_layout
+
+\begin_layout Itemize
+Dos símbolos en medio.
+\end_layout
+
+\begin_layout Itemize
+Dos símbolos en cualquier posición.
+\end_layout
+
+\begin_layout Standard
+Podríamos considerar todos estos casos y separarlos con una operación de
+ suma, sin embargo, podemos auxiliarnos de la estrella de Kleene para indicar
+ que puede haber cero o más presencias del símbolo 
+\begin_inset Formula $b$
+\end_inset
+
+ entre las dos 
+\begin_inset Formula $a$
+\end_inset
+
+ que queremos.
+ Es decir: 
+\begin_inset Formula $b^{*}ab^{*}ab^{*}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Ahora que tenemos fijado un par de 
+\begin_inset Formula $a$
+\end_inset
+
+s, podemos generalizarlo como hicimos en el ejemplo anterior con una estrella
+ de Kleene.
+ Es decir: 
+\begin_inset Formula $\left(b^{*}ab^{*}ab^{*}\right)^{*}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Hasta el punto anterior, pareciera que ya tenemos la expresión regular,
+ sin embargo, recordemos que el cero también es un número par, de forma
+ que una cadena sin 
+\begin_inset Formula $a$
+\end_inset
+
+s también pertenece al lenguaje.
+ Podemos agregar este paso con una suma, quedando:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\emph on
+Solución: 
+\begin_inset Formula $\left(b^{*}ab^{*}ab^{*}\right)$
+\end_inset
+
+
+\begin_inset Formula $^{*}+b^{*}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Encontrar expresiones regulares que representen los siguientes lenguajes,
+ definidos sobre el alfabeto 
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Lenguaje de todas las cadenas que tienen exactamente dos ceros.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Este es un caso particular de los ejemplos que vimos anteriormente.
+ Dado que queremos exactamente dos ceros, simplemente colocamos los unos
+ correspondientes con su respectiva estrella de Kleene entre los dos símbolos
+ 
+\begin_inset Formula $0$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\emph on
+Solución: 
+\begin_inset Formula $1^{*}01^{*}01^{*}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+Lenguaje de todas las cadenas cuyo penúltimo símbolo, de izquierda a derecha
+ es un 0.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Queremos que el penúltimo símbolo sea un 0, de forma que antes de encontrar
+ dicho símbolo, podemos tener cualquier número de ceros y unos, es decir:
+ 
+\begin_inset Formula $\left(0+1\right)^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Posteriormente, aparecerá el símbolo 0, que se reconoce con: 
+\begin_inset Formula $0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Y finalmente, después de dichos patrones, podemos tener ya sea otro cero
+ u otro uno, es decir: 
+\begin_inset Formula $\left(0+1\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Con lo cual, concatenando las 3 expresiones anteriores, tenemos:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+
+\emph on
+Solución: 
+\begin_inset Formula $\left(0+1\right)^{*}0\left(0+1\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Sea 
+\begin_inset Formula $\Sigma=\left\{ 0,1\right\} $
+\end_inset
+
+.
+ Encontrar una expresión regular que represente el lenguaje de todas las
+ cadenas que no tienen dos ceros consecutivos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Sea 
+\begin_inset Formula $\Sigma=\left\{ a,b,c\right\} $
+\end_inset
+
+.
+ Encontrar una expresión regular que represente el lenguaje de todas las
+ cadenas que no contiene la cadena 
+\begin_inset Formula $bc$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+literal "false"
+
+\end_inset
+
+Hopcroft, J.
+ E; Montwani, R., and Ullman, J.
+ 
+\emph on
+Introduction to Automata Theory Language, and Computation
+\emph default
+.
+ Addison Wesley, third edition 2007.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+Rodrigo De Castro, 
+\emph on
+Notas de Clase de Teoría de la Computación: Lenguajes, autómatas, gramáticas,
+\emph default
+ Universidad Nacional de Colombia, Facultas de Ciencias, 2004.
+\end_layout
+
+\end_body
+\end_document

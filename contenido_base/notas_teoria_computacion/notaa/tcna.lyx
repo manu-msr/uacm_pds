@@ -1,0 +1,3526 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-bytype
+theorems-sec-bytype
+\end_modules
+\maintain_unincluded_children false
+\language spanish-mexico
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "cmr" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\boxbgcolor #cccccc
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "mathescape=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Teoría de la Computación, 2021-1
+\begin_inset Newline newline
+\end_inset
+
+Nota Adicional sobre Recursión
+\end_layout
+
+\begin_layout Author
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Manuel Soto Romero
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today 
+\backslash
+
+\backslash
+ Colegio de Ciencia y Tecnología UACM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{6}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*
+\backslash
+lstlistingname{C
+\backslash
+'odigo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Una definición recursiva es aquella en la cual el concepto definido figura
+ en la definición misma.
+ Decimos que una definición recursiva es válida si consta de:
+\end_layout
+
+\begin_layout Itemize
+Un conjunto de casos base.
+\end_layout
+
+\begin_layout Itemize
+Un conjunto de reglas recursivas.
+\end_layout
+
+\begin_layout Standard
+Este tipo de definiciones pueden darse en tipos de datos como son los números
+ o las listas e incluso en estructuras de datos más complejas como son los
+ árboles.
+ Veamos algunos ejemplos.
+\end_layout
+
+\begin_layout Subsection*
+Recursión sobre números naturales
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Números naturales) Los números naturales se representan por 
+\begin_inset Formula $\mathbb{N}$
+\end_inset
+
+ y se definen recursivamente cómo:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+El cero es un número natural.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Si 
+\begin_inset Formula $n\in\mathbb{N}$
+\end_inset
+
+, entonces 
+\begin_inset Formula $s\left(n\right)$
+\end_inset
+
+ es un número natural.
+ Llamamos a 
+\begin_inset Formula $s$
+\end_inset
+
+ la función sucesor.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Son todas.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Definición Recursiva para Números Naturales
+\end_layout
+
+\begin_layout Standard
+Para definir una función 
+\begin_inset Formula $h:\mathbb{N}\rightarrow A$
+\end_inset
+
+, basta definir 
+\begin_inset Formula $h$
+\end_inset
+
+ como sigue:
+\end_layout
+
+\begin_layout Itemize
+Definir 
+\begin_inset Formula $h$
+\end_inset
+
+ para el cero.
+\end_layout
+
+\begin_layout Itemize
+Suponiendo definida 
+\begin_inset Formula $h\left(n\right)$
+\end_inset
+
+, definir a partir de ésta a 
+\begin_inset Formula $h\left(s\left(n\right)\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Veamos algunos ejemplos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que calcule la suma de los primeros 
+\begin_inset Formula $n$
+\end_inset
+
+ números naturales.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+suma :: Int $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+suma 0 = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+suma n = n + (suma (n+1))
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> suma 5
+\end_layout
+
+\begin_layout Plain Layout
+
+5 + suma 4
+\end_layout
+
+\begin_layout Plain Layout
+
+5 + 4 + suma 3
+\end_layout
+
+\begin_layout Plain Layout
+
+5 + 4 + 3 + suma 2
+\end_layout
+
+\begin_layout Plain Layout
+
+5 + 4 + 3 + 2 + suma 1
+\end_layout
+
+\begin_layout Plain Layout
+
+5 + 4 + 3 + 2 + 1 + suma 0
+\end_layout
+
+\begin_layout Plain Layout
+
+5 + 4 + 3 + 2 + 1 + 0
+\end_layout
+
+\begin_layout Plain Layout
+
+15
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que calcule la potencia 
+\begin_inset Formula $n^{m}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+potencia :: Int $
+\backslash
+rightarrow$ Int $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+potencia n 0 = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+potencia n m = n * (potencia n (m - 1))
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> potencia 2 3
+\end_layout
+
+\begin_layout Plain Layout
+
+2 * potencia 2 2
+\end_layout
+
+\begin_layout Plain Layout
+
+2 * 2 * potencia 2 1
+\end_layout
+
+\begin_layout Plain Layout
+
+2 * 2 * 2 * potencia 2 0
+\end_layout
+
+\begin_layout Plain Layout
+
+2 * 2 * 2 * 1
+\end_layout
+
+\begin_layout Plain Layout
+
+8
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que calcule el factorial de un número.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+factorial :: Int $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+factorial 0 = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+factorial n = n * factorial (n - 1)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> factorial 3
+\end_layout
+
+\begin_layout Plain Layout
+
+3 * factorial 2
+\end_layout
+
+\begin_layout Plain Layout
+
+3 * 2 * factorial 1
+\end_layout
+
+\begin_layout Plain Layout
+
+3 * 2 * 1 * factorial 0
+\end_layout
+
+\begin_layout Plain Layout
+
+3 * 2 * 1 * 1
+\end_layout
+
+\begin_layout Plain Layout
+
+6
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función que encuentre el 
+\begin_inset Formula $n$
+\end_inset
+
+-ésimo elemento en la sucesión de Fibonacci.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+fibonacci :: Int $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+fibonacci 0 = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+fibonacci 1 = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+fibonacci n = fibonacci (n-1) + fibonacci (n-2)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> fibonacci 5
+\end_layout
+
+\begin_layout Plain Layout
+
+fibonacci 4 + fibonacci 3
+\end_layout
+
+\begin_layout Plain Layout
+
+fibonacci 3 + fibonacci 2 + fibonacci 3
+\end_layout
+
+\begin_layout Plain Layout
+
+fibonacci 2 + fibonacci 1 + fibonacci 2 + fibonacci 3
+\end_layout
+
+\begin_layout Plain Layout
+
+fibonacci 1 + fibonacci 0 + 1 + fibonacci 2 + fibonacci 3
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + 1 + fibonacci 1 + fibonacci 0 + fibonacci 3
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + 1 + 1 + 1 + fibonacci 2 + fibonacci 1
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + 1 + 1 + 1 + fibonacci 1 + fibonacci 0 + 1
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + 1 + 1 + 1 + 1 + 1 + 1
+\end_layout
+
+\begin_layout Plain Layout
+
+8
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que encuentre la longitud de un número.
+ Sabiendo que, al dividir un número por 10, elimino su último dígito.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+longitud :: Int $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+longitud n
+\end_layout
+
+\begin_layout Plain Layout
+
+	| n < 10 = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+	| otherwise = 1 + longitud (div n 10)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> longitud 1729
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + longitud 172
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + longitud 17
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + 1 + longitud 1
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + 1 + 1
+\end_layout
+
+\begin_layout Plain Layout
+
+4
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que calcule la suma de los dígitos de un número.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+sumaDigitos :: Int $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+sumaDigitos n
+\end_layout
+
+\begin_layout Plain Layout
+
+	| (n < 10) = n
+\end_layout
+
+\begin_layout Plain Layout
+
+	| otherwise = (mod n 10) + sumaDigitos (div n 10)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> sumaDigitos 1729
+\end_layout
+
+\begin_layout Plain Layout
+
+9 + sumaDigitos 172
+\end_layout
+
+\begin_layout Plain Layout
+
+9 + 2 + sumaDigitos 17
+\end_layout
+
+\begin_layout Plain Layout
+
+9 + 2 + 7 + sumaDigitos 1
+\end_layout
+
+\begin_layout Plain Layout
+
+9 + 2 + 7 + 1
+\end_layout
+
+\begin_layout Plain Layout
+
+19
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Recursión sobre listas
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+(
+\emph on
+Listas) Las listas con elementos en un conjunto A se definen recursivamente
+ cómo:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+La lista vacía es una lista y se denota por 
+\emph default
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{[]}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Si 
+\begin_inset Formula $x\in A$
+\end_inset
+
+ y 
+\begin_inset Formula $xs$
+\end_inset
+
+ es una lista con elementos en A, entonces 
+\begin_inset Formula $x:xs$
+\end_inset
+
+ es una lista.
+ A 
+\begin_inset Formula $x$
+\end_inset
+
+ se le conoce como la cabeza de la lista y a 
+\begin_inset Formula $xs$
+\end_inset
+
+ como la cola de la lista.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Son todas.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, supongamos que se tiene el conjunto 
+\begin_inset Formula $A=\{1,3,6,10,15,21,28\}$
+\end_inset
+
+, podemos construir la siguiente lista:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{(10:(6:(1:(6:[]))))}
+\end_layout
+
+\end_inset
+
+ = 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{[10,6,1,6]}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La primera forma se usa como representación interna de la lista, al operador
+ 
+\family typewriter
+\series bold
+:
+\family default
+\series default
+ se le conoce como 
+\emph on
+cons
+\emph default
+.
+ Mientras que la segunda representación es mucho más intuitiva para el usuario.
+\end_layout
+
+\begin_layout Paragraph
+Definición Recursiva para Listas
+\end_layout
+
+\begin_layout Standard
+Para definir una función 
+\begin_inset Formula $h:\mathbb{\texttt{{[a]}}}\rightarrow A$
+\end_inset
+
+, basta definir 
+\begin_inset Formula $h$
+\end_inset
+
+ como sigue:
+\end_layout
+
+\begin_layout Itemize
+Definir 
+\begin_inset Formula $h$
+\end_inset
+
+ para la lista vacía.
+ 
+\end_layout
+
+\begin_layout Itemize
+Suponiendo definida 
+\begin_inset Formula $h\left(xs\right)$
+\end_inset
+
+, definir a partir de ésta a 
+\begin_inset Formula $h\left(x:xs\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Vemos que en lugar de usar funciones como head o tail, se usa el patrón
+ de construcción de las listas.
+ A esta técnica se le conoce como 
+\emph on
+apareamiento de patrones
+\emph default
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Del inglés 
+\emph on
+Pattern Matching.
+\end_layout
+
+\end_inset
+
+\SpecialChar endofsentence
+
+\end_layout
+
+\begin_layout Standard
+Veamos algunos ejemplos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que dada una lista de números, sume todos
+ sus elementos.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+suma :: [Int] $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+suma [] = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+suma l = head l + suma (tail l)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> suma [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + suma [7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 7 + suma [2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 7 + 2 + suma [9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 7 + 2 + 9 + suma []
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 7 + 2 + 9 + 0
+\end_layout
+
+\begin_layout Plain Layout
+
+19
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Usando apareamiento de patrones:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+suma :: [Int] $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+suma [] = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+suma (x:xs) = x + suma xs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> suma [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + suma [7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 7 + suma [2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 7 + 2 + suma [9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 7 + 2 + 9 + suma []
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 7 + 2 + 9 + 0
+\end_layout
+
+\begin_layout Plain Layout
+
+19
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Usaremos a partir de este punto apareamiento de patrones en todos los ejemplos.
+ 
+\emph on
+
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que dada una lista de números, sume todos
+ sus elementos.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+producto :: [Int] $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+producto [] = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+producto (x:xs) = x * producto xs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> producto [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 * producto [7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 * 7 * producto [2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 * 7 * 2 * producto [9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 * 7 * 2 * 9 * producto []
+\end_layout
+
+\begin_layout Plain Layout
+
+1 * 7 * 2 * 9 + 1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que dada una lista obtenga la longitud de
+ la misma.
+ La longitud de una lista se define como el número de elementos que tiene.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+longitud :: [a] $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+longitud [] = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+longitud (x:xs) = 1 + longitud xs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> longitud [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + longitud [7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + longitud [2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + 1 + longitud [9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + 1 + 1 + longitud []
+\end_layout
+
+\begin_layout Plain Layout
+
+1 + 1 + 1 + 1 + 0
+\end_layout
+
+\begin_layout Plain Layout
+
+4
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función mínimo que dada una lista de números, obtiene el elemento
+ más pequeño de la misma.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+minimo :: [Int] $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+minimo [] = error 
+\begin_inset Quotes eld
+\end_inset
+
+Lista vacía
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+minimo [x] = x
+\end_layout
+
+\begin_layout Plain Layout
+
+minimo (x:xs) = min x (minimo xs)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> minimo [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+min 1 (minimo [7,2,9])
+\end_layout
+
+\begin_layout Plain Layout
+
+min 1 (min 7 (minimo [2,9]))
+\end_layout
+
+\begin_layout Plain Layout
+
+min 1 (min 7 (min 2 (minimo [9]))))
+\end_layout
+
+\begin_layout Plain Layout
+
+min 1 (min 7 (min 2 9))
+\end_layout
+
+\begin_layout Plain Layout
+
+min 1 (min 7 2)
+\end_layout
+
+\begin_layout Plain Layout
+
+min 1 2
+\end_layout
+
+\begin_layout Plain Layout
+
+1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función que dado un número 
+\begin_inset Formula $n$
+\end_inset
+
+ y una lista, toma los primeros 
+\begin_inset Formula $n$
+\end_inset
+
+ elementos de la lista.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+toma :: Int $
+\backslash
+rightarrow$ [a] $
+\backslash
+rightarrow$ [a]
+\end_layout
+
+\begin_layout Plain Layout
+
+toma 0 _ = []
+\end_layout
+
+\begin_layout Plain Layout
+
+toma _ [] = []
+\end_layout
+
+\begin_layout Plain Layout
+
+toma n (x:xs) = x:(toma (n-1) xs)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> toma 2 [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1:(toma 1 [7,2,9])
+\end_layout
+
+\begin_layout Plain Layout
+
+1:(7:(toma 0 [2,9]))
+\end_layout
+
+\begin_layout Plain Layout
+
+1:(7:[]))
+\end_layout
+
+\begin_layout Plain Layout
+
+[1,7]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función que dado un número 
+\begin_inset Formula $n$
+\end_inset
+
+ y una lista, quita los primeros 
+\begin_inset Formula $n$
+\end_inset
+
+ elementos de la lista.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+quita :: Int $
+\backslash
+rightarrow$ [a] $
+\backslash
+rightarrow$ [a]
+\end_layout
+
+\begin_layout Plain Layout
+
+quita 0 l = l
+\end_layout
+
+\begin_layout Plain Layout
+
+quita _ [] = []
+\end_layout
+
+\begin_layout Plain Layout
+
+quita n (x:xs) = quita (n-1) xs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> quita 2 [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+quita 1 [7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+quita 0 [2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+[2,9]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función que dada una lista de números, duplica cada uno de los
+ elementos de la misma.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+dobles :: [Int] $
+\backslash
+rightarrow$ [Int]
+\end_layout
+
+\begin_layout Plain Layout
+
+dobles [] = []
+\end_layout
+
+\begin_layout Plain Layout
+
+dobles (x:xs) = (x*2):(dobles xs)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> dobles [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+(1*2):dobles [7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+(1*2):(7*2):dobles [2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+(1*2):(7*2):(2*2):dobles [9]
+\end_layout
+
+\begin_layout Plain Layout
+
+(1*2):(7*2):(2*2):(9*2):dobles []
+\end_layout
+
+\begin_layout Plain Layout
+
+2:14:4:18:[]
+\end_layout
+
+\begin_layout Plain Layout
+
+[2,14,4,18]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función que dada una lista de números, eleva al cuadrado cada
+ uno de los elementos de la misma.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+cuadrados :: [Int] $
+\backslash
+rightarrow$ [Int]
+\end_layout
+
+\begin_layout Plain Layout
+
+cuadrados [] = []
+\end_layout
+
+\begin_layout Plain Layout
+
+cuadrados (x:xs) = (x^2):cuadrados xs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> cuadrados [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+(1^2):dobles [7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+(1^2):(7^2):dobles [2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+(1^2):(7^2):(2^2):dobles [9]
+\end_layout
+
+\begin_layout Plain Layout
+
+(1^2):(7^2):(2^2):(9^2):dobles []
+\end_layout
+
+\begin_layout Plain Layout
+
+2:49:4:81:[]
+\end_layout
+
+\begin_layout Plain Layout
+
+[2,49,4,81]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función que dada una lista de números, y una función, aplica
+ la misma a cada uno de los elementos de la lista.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+mapea :: (a $
+\backslash
+rightarrow$ b) $
+\backslash
+rightarrow$ [a] $
+\backslash
+rightarrow$ [b]
+\end_layout
+
+\begin_layout Plain Layout
+
+mapea f [] = []
+\end_layout
+
+\begin_layout Plain Layout
+
+mapea f (x:xs) = (f x):mapea xs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> mapea (
+\backslash
+x -> x+1) [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+((
+\backslash
+x -> x+1)1):mapea (
+\backslash
+x -> x+1) [7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+((
+\backslash
+x -> x+1)1):((
+\backslash
+x -> x+1)7):mapea (
+\backslash
+x -> x+1) [2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+((
+\backslash
+x -> x+1)1):((
+\backslash
+x -> x+1)7):((
+\backslash
+x -> x+1)2):mapea (
+\backslash
+x -> x+1) [9]
+\end_layout
+
+\begin_layout Plain Layout
+
+((
+\backslash
+x -> x+1)1):((
+\backslash
+x -> x+1)7):((
+\backslash
+x -> x+1)2):((
+\backslash
+x -> x+1)9):mapea (
+\backslash
+x -> x+1) []
+\end_layout
+
+\begin_layout Plain Layout
+
+2:8:3:10:[]
+\end_layout
+
+\begin_layout Plain Layout
+
+[2,8,3,10]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función que dada una lista de números, deja únicamente aquellos
+ que sean pares.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+pares :: [Int] $
+\backslash
+rightarrow$ [Int]
+\end_layout
+
+\begin_layout Plain Layout
+
+pares [] = []
+\end_layout
+
+\begin_layout Plain Layout
+
+pares (x:xs)
+\end_layout
+
+\begin_layout Plain Layout
+
+	| (even x) = x:pares xs
+\end_layout
+
+\begin_layout Plain Layout
+
+	| otherwise = pares xs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> pares [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+pares [7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+pares [2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+2:pares [9]
+\end_layout
+
+\begin_layout Plain Layout
+
+2:pares []
+\end_layout
+
+\begin_layout Plain Layout
+
+2:[]
+\end_layout
+
+\begin_layout Plain Layout
+
+[2]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función que dada una lista de números, deja únicamente aquellos
+ que sean múltiplos de 5.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+multiplos5 :: [Int] $
+\backslash
+rightarrow$ [Int]
+\end_layout
+
+\begin_layout Plain Layout
+
+multiplos5 [] = []
+\end_layout
+
+\begin_layout Plain Layout
+
+multiplos5
+\end_layout
+
+\begin_layout Plain Layout
+
+	| (mod x 5 == 0) = x:multiplos5 xs
+\end_layout
+
+\begin_layout Plain Layout
+
+	| otherwise = multiplos5 xs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> multiplos5 [1,5,3,15]
+\end_layout
+
+\begin_layout Plain Layout
+
+multiplos5 [5,3,15]
+\end_layout
+
+\begin_layout Plain Layout
+
+5:multiplos5 [3,15]
+\end_layout
+
+\begin_layout Plain Layout
+
+5:multiplos5 [15]
+\end_layout
+
+\begin_layout Plain Layout
+
+5:15:multiplos5 []
+\end_layout
+
+\begin_layout Plain Layout
+
+5:15:[]
+\end_layout
+
+\begin_layout Plain Layout
+
+[5,15]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función que dada una lista y una función booleana, regresa sólo
+ aquellos elementos que cumplan con la propiedad representada por la función.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+filtra :: (a $
+\backslash
+rightarrow$ Bool) $
+\backslash
+rightarrow$ [a] $
+\backslash
+rightarrow$ [a]
+\end_layout
+
+\begin_layout Plain Layout
+
+filtra _ [] = []
+\end_layout
+
+\begin_layout Plain Layout
+
+filtra p (x:xs)
+\end_layout
+
+\begin_layout Plain Layout
+
+	| (p x) = x:filtra p xs
+\end_layout
+
+\begin_layout Plain Layout
+
+	| otherwise = filtra p xs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> multiplos5 [1,5,3,15]
+\end_layout
+
+\begin_layout Plain Layout
+
+multiplos5 [5,3,15]
+\end_layout
+
+\begin_layout Plain Layout
+
+5:multiplos5 [3,15]
+\end_layout
+
+\begin_layout Plain Layout
+
+5:multiplos5 [15]
+\end_layout
+
+\begin_layout Plain Layout
+
+5:15:multiplos5 []
+\end_layout
+
+\begin_layout Plain Layout
+
+5:15:[]
+\end_layout
+
+\begin_layout Plain Layout
+
+[5,15]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que dadas dos listas, las concatene, es decir,
+ que genere una nueva lista que contenga todos los elementos de la primera,
+ con todos los elementos de la segunda.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+concat :: [a] $
+\backslash
+rightarrow$ [a] $
+\backslash
+rightarrow$ [a]
+\end_layout
+
+\begin_layout Plain Layout
+
+concat [] l2 = l2
+\end_layout
+
+\begin_layout Plain Layout
+
+concat (x:xs) = x:(concat x l2)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> concat [1,7] [2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+1:(concat [7] [2,9])
+\end_layout
+
+\begin_layout Plain Layout
+
+1:7:(concat [] [2,9])
+\end_layout
+
+\begin_layout Plain Layout
+
+1:7:[2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+[1,7,2,9]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que dada una lista, obtenga su reversa, es
+ decir, que invierta sus elementos.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+reversa :: [a] $
+\backslash
+rightarrow$ [a]
+\end_layout
+
+\begin_layout Plain Layout
+
+reversa [] = []
+\end_layout
+
+\begin_layout Plain Layout
+
+reversa (x:xs) = concat (reversa xs) [x]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},showstringspaces=false,tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+> reversa [1,7,2,9]
+\end_layout
+
+\begin_layout Plain Layout
+
+concat (reversa [7,2,9]) [1]
+\end_layout
+
+\begin_layout Plain Layout
+
+concat (concat (reversa [2,9]) [7]) [1]
+\end_layout
+
+\begin_layout Plain Layout
+
+concat (concat (concat (reversa [9]) [2]) [7]) [1]
+\end_layout
+
+\begin_layout Plain Layout
+
+concat (concat (concat (concat (reversa []) [9]) [2]) [7]) [1]
+\end_layout
+
+\begin_layout Plain Layout
+
+concat (concat (concat (concat [] [9]) [2]) [7]) [1]
+\end_layout
+
+\begin_layout Plain Layout
+
+concat (concat (concat [9] [2]) [7]) [1]
+\end_layout
+
+\begin_layout Plain Layout
+
+concat (concat [9,2] [7]) [1]
+\end_layout
+
+\begin_layout Plain Layout
+
+concat [9,2,7] [1]
+\end_layout
+
+\begin_layout Plain Layout
+
+[9,2,7,1]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Recursión sobre Árboles Binarios
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+(
+\emph on
+Árboles Binarios) Los Árboles Binarios con elementos en un conjunto A, se
+ definen recursivamente como:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Un árbol vacío es un Árbol Binario, se denota por 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{void}
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Si 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$T_1$
+\end_layout
+
+\end_inset
+
+ y 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$T_2$
+\end_layout
+
+\end_inset
+
+ son árboles binarios y 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$a 
+\backslash
+in A$
+\end_layout
+
+\end_inset
+
+, entonces 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$tree(T_1,a,T_2)$
+\end_layout
+
+\end_inset
+
+ es un Árbol Binario, donde 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$T_1$
+\end_layout
+
+\end_inset
+
+ es el subárbol izquierdo y 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$T_2$
+\end_layout
+
+\end_inset
+
+ es el subárbol derecho.
+ Al nodo etiquedado con 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$a$
+\end_layout
+
+\end_inset
+
+ se le llama la raíz del árbol.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Son todos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Por ejemplo, para los siguientes arboles binarios, podemos usar el constructor
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$tree$
+\end_layout
+
+\end_inset
+
+ como sigue:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{forest}  
+\end_layout
+
+\begin_layout Plain Layout
+
+	[a     
+\end_layout
+
+\begin_layout Plain Layout
+
+		[b [d][e]]     
+\end_layout
+
+\begin_layout Plain Layout
+
+		[c [f]]   
+\end_layout
+
+\begin_layout Plain Layout
+
+	] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{forest}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+tree (
+\end_layout
+
+\begin_layout Plain Layout
+
+	tree (
+\end_layout
+
+\begin_layout Plain Layout
+
+		tree(void,d,void),
+\end_layout
+
+\begin_layout Plain Layout
+
+		b,
+\end_layout
+
+\begin_layout Plain Layout
+
+		tree(void,e,void)
+\end_layout
+
+\begin_layout Plain Layout
+
+	),
+\end_layout
+
+\begin_layout Plain Layout
+
+	a,
+\end_layout
+
+\begin_layout Plain Layout
+
+	tree (
+\end_layout
+
+\begin_layout Plain Layout
+
+		tree(void,f,void),
+\end_layout
+
+\begin_layout Plain Layout
+
+		c,
+\end_layout
+
+\begin_layout Plain Layout
+
+		void
+\end_layout
+
+\begin_layout Plain Layout
+
+	)
+\end_layout
+
+\begin_layout Plain Layout
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{forest}  
+\end_layout
+
+\begin_layout Plain Layout
+
+	[c     
+\end_layout
+
+\begin_layout Plain Layout
+
+		[d]     
+\end_layout
+
+\begin_layout Plain Layout
+
+		[f [e]]   
+\end_layout
+
+\begin_layout Plain Layout
+
+	] 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{forest}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily},tabsize=3"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+tree (
+\end_layout
+
+\begin_layout Plain Layout
+
+	tree (void,d,void)
+\end_layout
+
+\begin_layout Plain Layout
+
+	a,
+\end_layout
+
+\begin_layout Plain Layout
+
+	tree (
+\end_layout
+
+\begin_layout Plain Layout
+
+		tree(void,e,void),
+\end_layout
+
+\begin_layout Plain Layout
+
+		f,
+\end_layout
+
+\begin_layout Plain Layout
+
+		void
+\end_layout
+
+\begin_layout Plain Layout
+
+	)
+\end_layout
+
+\begin_layout Plain Layout
+
+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Definición Recursiva para Árboles Binarios
+\end_layout
+
+\begin_layout Standard
+Para definir una función 
+\begin_inset Formula $h:\mathbb{\texttt{{ArbolB}}}\rightarrow A$
+\end_inset
+
+, basta definir 
+\begin_inset Formula $h$
+\end_inset
+
+ como sigue:
+\end_layout
+
+\begin_layout Itemize
+Definir 
+\begin_inset Formula $h$
+\end_inset
+
+ para el árbol vacío.
+ 
+\end_layout
+
+\begin_layout Itemize
+Suponiendo definida 
+\begin_inset Formula $h\left(T_{1}\right)$
+\end_inset
+
+ y 
+\begin_inset Formula $h\left(T_{2}\right)$
+\end_inset
+
+, definir a partir de ésta a 
+\begin_inset Formula $h\left(tree\left(T_{1},a,T_{2}\right)\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Veamos algunos ejemplos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que dado un Árbol Binario, obtenga el número
+ de hojas del mismo.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+nh :: ArbolB $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+nh void = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+nh tree(void,a,void) = 1
+\end_layout
+
+\begin_layout Plain Layout
+
+nh tree(t1,a,t2) = nh t1 + nh t2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Definir una función recursiva que dado un Árbol Binario, obtenga el número
+ de nodos internos del mismo.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=Haskell,basicstyle={\ttfamily},showstringspaces=false,tabsize=3,mathescape=true,keywordstyle={\bfseries\color{blue}},commentstyle={\bfseries\color{Verde}\itshape},emphstyle={\color{Rojo}},stringstyle={\color{Rojo}}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+ni :: ArbolB $
+\backslash
+rightarrow$ Int
+\end_layout
+
+\begin_layout Plain Layout
+
+nh void = 0
+\end_layout
+
+\begin_layout Plain Layout
+
+nh tree(t1,a,t2) = 1 + ni t1 + ni t2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset space \hfill{}
+\end_inset
+
+ 
+\begin_inset Formula $\boxempty$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+literal "true"
+
+\end_inset
+
+ Favio E.
+ Miranda, Elisa Viso, 
+\emph on
+Matemáticas Discretas
+\emph default
+, Segunda Edición, Las Prensas de Ciencias, 2016.
+\end_layout
+
+\end_body
+\end_document

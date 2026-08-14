@@ -84,6 +84,12 @@ colframe=amber!85!black,
 fonttitle=\bfseries,
 title={#1},
 breakable}
+\newtcolorbox{ruta}[1]{
+colback=darkpastelblue!5!white,
+colframe=darkpastelblue!85!black,
+fonttitle=\bfseries,
+title={#1},
+breakable}
 \newtcolorbox{teorema}[1]{
 colback=bubblegum!5!white,
 colframe=bubblegum!85!black,
@@ -147,6 +153,12 @@ Unidad 1: Introducción a la Programación de Sistemas y los Compiladores\\ \big
 En la nota anterior ubicamos al compilador entre las herramientas de la programación de sistemas. Visto desde fuera, recibe un programa escrito en un lenguaje fuente y produce un programa equivalente en un lenguaje destino. Esa descripción es correcta, pero oculta el trabajo interno. Un compilador debe reconocer unidades elementales, descubrir la estructura del programa, comprobar restricciones de significado y transformar varias representaciones antes de producir su salida.
 
 En esta nota abriremos esa ``caja'' para estudiar su organización general. Primero distinguiremos las dos grandes etapas de análisis y síntesis. Después seguiremos las fases léxica, sintáctica y semántica; ubicaremos las representaciones intermedias, la optimización y la generación de código; y, finalmente, observaremos cómo se comunican las fases. Se trata de un mapa inicial: cada componente se estudiará con mayor detalle en las unidades posteriores.
+
+\begin{ruta}{Ruta de lectura (20--25 minutos)}
+\textbf{Lectura esencial:} sigue el fragmento inicial a través del esquema análisis--síntesis; compara las entradas, tareas y salidas de las fases léxica, sintáctica y semántica; identifica la función de la representación intermedia, la optimización y la generación de código; y completa el mini-checkpoint sobre los contratos entre fases.
+
+\textbf{Lectura complementaria:} revisa en una segunda pasada las variantes posibles de arquitectura, los matices sobre cuántas representaciones u optimizaciones puede emplear un compilador y las explicaciones ampliadas sobre información compartida y manejo de errores.
+\end{ruta}
 
 \begin{ejemplo}{Caso inicial. Un mismo programa, varias representaciones}
 Consideremos el siguiente fragmento ilustrativo:

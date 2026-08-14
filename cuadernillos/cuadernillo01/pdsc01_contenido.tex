@@ -87,18 +87,22 @@ Este cuadernillo acompaña la Nota 01. Su propósito es practicar cuatro ideas: 
 Responde únicamente con lo estudiado en la Nota 01. No necesitas describir las fases internas de un compilador, escribir reglas de \textsc{IMP} ni explicar técnicas de generación de código.
 \end{observacion}
 
+\begin{observacion}{Observación 2. Ruta sugerida}
+Los ejercicios \textbf{1, 3, 5 y 8 son esenciales}: permiten comprobar las ideas centrales de la sesión. Los ejercicios \textbf{2, 4, 6, 7 y 9 son de extensión}: profundizan, aplican o recuperan esas ideas. Si el tiempo es limitado, completa primero los esenciales; ningún ejercicio se elimina del cuadernillo.
+\end{observacion}
+
 \section*{\cf{verde587246}{1. Conceptos fundamentales}}
 
-\begin{ejercicio}{Ejercicio 1. Completar las ideas centrales}
+\begin{ejercicio}{Ejercicio 1. Completar las ideas centrales \hfill {\small [Esencial]}}
 Completa las oraciones con las expresiones del banco. Cada expresión se usa una sola vez.
 
 \begin{center}
 \small
 \begin{tabular}{|c|c|c|}
 \hline
-software de sistemas & programación de sistemas & aplicación \tabularnewline
+interfaces & aplicación & niveles de abstracción \tabularnewline
 \hline
-arquitectura de la computadora & niveles de abstracción & interfaces \tabularnewline
+programación de sistemas & arquitectura de la computadora & software de sistemas \tabularnewline
 \hline
 \end{tabular}
 \end{center}
@@ -120,7 +124,7 @@ arquitectura de la computadora & niveles de abstracción & interfaces \tabularne
 \fi
 
 \ifrespuestas\else\newpage\fi
-\begin{ejercicio}{Ejercicio 2. Aplicación o software de sistemas}
+\begin{ejercicio}{Ejercicio 2. Aplicación o software de sistemas \hfill {\small [Extensión]}}
 Escribe \textbf{A} si el caso se enfoca principalmente en una aplicación y \textbf{S} si se enfoca principalmente en software de sistemas. Después justifica los casos 3 y 6.
 
 \begin{center}
@@ -168,7 +172,7 @@ Justificaciones posibles:
 \ifrespuestas\newpage\fi
 \section*{\cf{verde587246}{2. Áreas y herramientas}}
 
-\begin{ejercicio}{Ejercicio 3. Relacionar responsabilidades}
+\begin{ejercicio}{Ejercicio 3. Relacionar responsabilidades \hfill {\small [Esencial]}}
 Relaciona cada herramienta con su función general. Escribe la letra correspondiente en la tabla de respuestas.
 
 \begin{center}
@@ -212,16 +216,16 @@ Relaciona cada herramienta con su función general. Escribe la letra correspondi
 \fi
 
 \ifrespuestas\else\newpage\fi
-\begin{ejercicio}{Ejercicio 4. Del código fuente a la memoria}
+\begin{ejercicio}{Ejercicio 4. Del código fuente a la memoria \hfill {\small [Extensión]}}
 Completa el recorrido panorámico con las expresiones del banco.
 
 \begin{center}
 \small
 \begin{tabular}{|c|c|c|c|}
 \hline
-compilador & ensamblador & ligador & cargador \tabularnewline
+memoria & ligador & código objeto & compilador \tabularnewline
 \hline
-código en lenguaje ensamblador & código objeto & ejecutable & memoria \tabularnewline
+ejecutable & cargador & código en lenguaje ensamblador & ensamblador \tabularnewline
 \hline
 \end{tabular}
 \end{center}
@@ -260,16 +264,16 @@ El \textbf{lenguaje ensamblador} es una representación del programa; el \textbf
 
 \section*{\cf{verde587246}{3. Compiladores e intérpretes}}
 
-\begin{ejercicio}{Ejercicio 5. Comparar dos procesadores de lenguajes}
+\begin{ejercicio}{Ejercicio 5. Comparar dos procesadores de lenguajes \hfill {\small [Esencial]}}
 Completa la tabla. Usa cada expresión del banco una vez.
 
 \begin{center}
 \small
 \begin{tabular}{|c|c|c|}
 \hline
-programa fuente & programa fuente y datos & traduce \tabularnewline
+resultados de la ejecución & traduce & programa fuente y datos \tabularnewline
 \hline
-ejecuta operaciones & programa destino & resultados de la ejecución \tabularnewline
+programa destino & ejecuta operaciones & programa fuente \tabularnewline
 \hline
 \end{tabular}
 \end{center}
@@ -309,7 +313,7 @@ Resultado principal & programa destino & resultados de la ejecución \tabularnew
 \end{respuesta}
 \fi
 
-\begin{ejercicio}{Ejercicio 6. Identificar el modelo}
+\begin{ejercicio}{Ejercicio 6. Identificar el modelo \hfill {\small [Extensión]}}
 Escribe \textbf{C} para compilador, \textbf{I} para intérprete o \textbf{M} si la situación indica una combinación de ambos modelos.
 
 \begin{center}
@@ -348,7 +352,7 @@ Ejemplo de justificación para la tercera situación: corresponde a una combinac
 
 \section*{\cf{verde587246}{4. El compilador como caso integrador}}
 
-\begin{ejercicio}{Ejercicio 7. Cuatro ideas para construir una herramienta}
+\begin{ejercicio}{Ejercicio 7. Cuatro ideas para construir una herramienta \hfill {\small [Extensión]}}
 Relaciona cada decisión con la idea que representa: \textbf{especificar}, \textbf{transformar}, \textbf{dividir responsabilidades} o \textbf{comprobar}.
 
 \begin{center}
@@ -375,7 +379,7 @@ En orden: especificar, transformar, dividir responsabilidades y comprobar.
 \end{respuesta}
 \fi
 
-\begin{ejercicio}{Ejercicio 8. El caso del compilador del curso}
+\begin{ejercicio}{Ejercicio 8. El caso del compilador del curso \hfill {\small [Esencial]}}
 El producto acumulativo del curso puede representarse así:
 
 \begin{center}
@@ -434,7 +438,7 @@ Responde brevemente.
 \newpage
 \section*{\cf{verde587246}{5. Revisión de afirmaciones}}
 
-\begin{ejercicio}{Ejercicio 9. Detectar y corregir confusiones}
+\begin{ejercicio}{Ejercicio 9. Detectar y corregir confusiones \hfill {\small [Extensión]}}
 Cada afirmación contiene un error. Subraya la parte incorrecta y reescribe la oración de forma adecuada.
 
 \begin{enumerate}[leftmargin=*]

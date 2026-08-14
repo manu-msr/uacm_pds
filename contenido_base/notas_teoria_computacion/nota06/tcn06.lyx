@@ -1,0 +1,2540 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{titling}
+\setlength{\droptitle}{-2cm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{proof}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{forest}
+\usepackage{ebproof}
+\usepackage{amssymb}
+\definecolor{Guinda}{rgb}{0.49, 0.05, 0.12}
+\definecolor{Rojo}{rgb}{0.8, 0, 0}
+\definecolor{Verde}{rgb}{0,0.4,0}
+\definecolor{Azul}{rgb}{0,0.4,0.4}
+\definecolor{Naranja}{rgb}{0.8,0.4,0}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning, arrows}
+\raggedcolumns
+\end_preamble
+\use_default_options true
+\begin_modules
+theorems-bytype
+theorems-sec-bytype
+\end_modules
+\maintain_unincluded_children false
+\language spanish-mexico
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "cmr" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 11
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\boxbgcolor #cccccc
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "mathescape=true"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Teoría de la Computación, 2021-1
+\begin_inset Newline newline
+\end_inset
+
+Nota de clase 6: Gramáticas Libres de Contexto
+\end_layout
+
+\begin_layout Author
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+Manuel Soto Romero
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Date
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+today 
+\backslash
+
+\backslash
+ Colegio de Ciencia y Tecnología UACM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*{
+\backslash
+thefootnote}{
+\backslash
+arabic{footnote}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{footnote}{0}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{section}{6}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand*
+\backslash
+lstlistingname{C
+\backslash
+'odigo}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Introducción
+\end_layout
+
+\begin_layout Standard
+Como hemos visto, un mecanismo relevante para generar un lenguaje es mediante
+ el concepto de gramática formal.
+ Las gramáticas formales fueron introducidas por Noam Chomsky en 1956.
+ La intención era tener un modelo para la descripción de lenguajes naturales.
+ Posteriormente una clase especial de estos formalismos, llamados gramáticas
+ libres de contexto, se utilizaron como herramienta para presentar la sintaxis
+ de lenguajes de programación y para el diseño de analizadores léxicos de
+ compiladores.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+(GLC) 
+\emph on
+Una gramática libre de contexto (GLC) es una cuaterna 
+\begin_inset Formula $G=\left\langle V,T,S,P\right\rangle $
+\end_inset
+
+ tal que:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+V es un alfabeto de variables o símbolos no terminales, los cuales se denotan
+ por mayúsculas A, B, C, ...
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+T es un alfabeto de constantes símbolos terminales, los cuales se denotan
+ por minúsculas a, b, c con la condición de que 
+\begin_inset Formula $T\cap V=\varnothing$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+\begin_inset Formula $S\in V$
+\end_inset
+
+ es una variable distinguida llamada el símbolo inicial.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $P$
+\end_inset
+
+ 
+\emph on
+es un conjunto finito de reglas de producción, donde cada regla es de la
+ forma
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+A\rightarrow\alpha
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+y 
+\begin_inset Formula $A\in V,\alpha\in\left(V\cup T\right)^{*}$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Veamos algunos ejemplos:
+\end_layout
+
+\begin_layout Itemize
+Gramática que reconoce el lenguaje 
+\begin_inset Formula $a^{*}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & aS\\
+S & \rightarrow & \varepsilon
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Gramática que reconoce al lenguaje 
+\begin_inset Formula $a^{*}b^{*}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & aS\\
+S & \rightarrow & bA\\
+S & \rightarrow & \varepsilon\\
+A & \rightarrow & bA\\
+A & \rightarrow & b\\
+A & \rightarrow & \varepsilon
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Gramática que reconoce al lenguaje 
+\begin_inset Formula $0^{*}10^{*}10^{*}$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & A1A1A\\
+A & \rightarrow & 0A\\
+A & \rightarrow & \varepsilon
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Gramática que genere el lenguaje 
+\begin_inset Formula $L=\left\{ a^{i}b^{i}:i\geq0\right\} $
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & aSb\\
+S & \rightarrow & \varepsilon
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Remark
+Es importante notar que toda gramática regular es libre de contexto pero
+ no al revés.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Encontrar una GLC que genere el lenguaje de todos los palíndromos sobre
+ 
+\begin_inset Formula $\Sigma=\left\{ a,b\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Encontrar una GLC que genere el lenguaje de todas las cadenas sobre 
+\begin_inset Formula $\Sigma=\left\{ a,b\right\} $
+\end_inset
+
+ que tienen un número par de símbolos.
+\end_layout
+
+\begin_layout Subsection
+Gramáticas ambiguas
+\end_layout
+
+\begin_layout Standard
+Recordemos que dada una gramática podemos dar una derivación que permita
+ analizar la forma en que una cadena puede ser construida así como analizar
+ su respectivo árbol de derivación.
+ En este caso, una derivación usando gramáticas libres de contexto no suele
+ ser única pues cada paso depende de la variable elegida para su reescritura.
+ Esto genera un no determinismo que puede eliminarse usando una convención,
+ la cual suele ser de dos tipos, eligiendo siempre la variable más a la
+ izquierda o bien más a la derecha para el proceso de reescritura.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Derivación por la izquierda) Una derivación es por la izquierda si en cada
+ paso se reescribe la variable más a la izquierda en la cadena.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Derivación por la derecha) Una derivación es por la derecha si en cada
+ paso se reescribe la variable más a la derecha en la cadena.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+En la gramática
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & aSb\\
+S & \rightarrow & a\\
+A & \rightarrow & SbA\\
+A & \rightarrow & SS\\
+A & \rightarrow & ba
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+La siguiente derivación por la izquierda de la cadena 
+\begin_inset Formula $aabbaa$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S\rightarrow aAS\rightarrow aSbAS\rightarrow aabAS\rightarrow aabbaS\rightarrow aabbaa
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+La siguiente derivación por la derecha de la cadena 
+\begin_inset Formula $aabbaa$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S\rightarrow aAS\rightarrow aAa\rightarrow aSbAa\rightarrow aSbbaa\rightarrow aabbaa
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Gramática ambigua) Una GLC es ambigua si existe una cadena para la cual
+ existen dos derivaciones diferentes.
+ De la misma forma, podemos decir que es ambigua si existen dos árboles
+ de derivación diferentes para la misma cadena.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Consideremos el alfabeto 
+\begin_inset Formula $\Sigma=\left\{ 0,1,+,*,(,)\right\} $
+\end_inset
+
+.
+ La siguiente gramática para generar número naturales, sumas y productos,
+ en numeración binaria es ambigua, recordemos que el símbolo 
+\begin_inset Formula $|$
+\end_inset
+
+ se lee como 
+\begin_inset Quotes eld
+\end_inset
+
+o
+\begin_inset Quotes erd
+\end_inset
+
+ y permite simplificar las reglas de escritura:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S\rightarrow S+S\;|\;S*S\;|\;\left(S\right)\;|\;0S\;|\;1S\;|\;0S\;|\;1S\;|\;0\;|\;1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La cadena 
+\begin_inset Formula $1+1*0$
+\end_inset
+
+ tiene dos derivaciones por la izquierda diferentes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S\rightarrow S+S\rightarrow1+S\rightarrow1+S*S\rightarrow1+1*S\rightarrow1+1*0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S\rightarrow S*S\rightarrow S+S*S\rightarrow1+S*S\rightarrow1+1*S\rightarrow1+1*0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Los árboles de derivación correspondientes a la derivaciones anteriores
+ son:
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{multicols}{2}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{forest}	
+\end_layout
+
+\begin_layout Plain Layout
+
+	[S
+\end_layout
+
+\begin_layout Plain Layout
+
+		[S
+\end_layout
+
+\begin_layout Plain Layout
+
+			[1]
+\end_layout
+
+\begin_layout Plain Layout
+
+		]
+\end_layout
+
+\begin_layout Plain Layout
+
+		[+]
+\end_layout
+
+\begin_layout Plain Layout
+
+		[S
+\end_layout
+
+\begin_layout Plain Layout
+
+			[S
+\end_layout
+
+\begin_layout Plain Layout
+
+				[1]
+\end_layout
+
+\begin_layout Plain Layout
+
+			]
+\end_layout
+
+\begin_layout Plain Layout
+
+			[*]
+\end_layout
+
+\begin_layout Plain Layout
+
+			[S
+\end_layout
+
+\begin_layout Plain Layout
+
+				[0]
+\end_layout
+
+\begin_layout Plain Layout
+
+			]
+\end_layout
+
+\begin_layout Plain Layout
+
+		]
+\end_layout
+
+\begin_layout Plain Layout
+
+	]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{forest}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+columnbreak
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{forest}	
+\end_layout
+
+\begin_layout Plain Layout
+
+	[S
+\end_layout
+
+\begin_layout Plain Layout
+
+		[S
+\end_layout
+
+\begin_layout Plain Layout
+
+			[S
+\end_layout
+
+\begin_layout Plain Layout
+
+				[1]
+\end_layout
+
+\begin_layout Plain Layout
+
+			]
+\end_layout
+
+\begin_layout Plain Layout
+
+			[+]
+\end_layout
+
+\begin_layout Plain Layout
+
+			[S
+\end_layout
+
+\begin_layout Plain Layout
+
+				[1]
+\end_layout
+
+\begin_layout Plain Layout
+
+			]
+\end_layout
+
+\begin_layout Plain Layout
+
+		]
+\end_layout
+
+\begin_layout Plain Layout
+
+		[*]
+\end_layout
+
+\begin_layout Plain Layout
+
+		[S
+\end_layout
+
+\begin_layout Plain Layout
+
+			[0]
+\end_layout
+
+\begin_layout Plain Layout
+
+		]
+\end_layout
+
+\begin_layout Plain Layout
+
+	]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{forest}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{multicols}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La ambigüedad se puede eliminar introduciendo paréntesis:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+S\rightarrow\left(S+S\right)\;|\;\left(S*S\right)\;|\;\left(S\right)\;|\;0S\;|\;1S\;|\;0S\;|\;1S\;|\;0\;|\;1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Sin embargo, aunque la adición de los paréntesis elimina la ambigüedad,
+ las expresiones generadas tienen un excesivo número de paréntesis lo que
+ dificulta el análisis sintáctico (en un compilador por ejemplo).
+ Lo más común en estos casos es utilizar gramáticas como la original siempre
+ y cuando se establezca un orden de precedencia para los operadores.
+ Lo usual es establecer que * tenga una mayor precedencia que +.
+ Por ejemplo, la expresión 1*1+0 se interpreta como (1*1)+0 y la expresión
+ 10+11*110+1 se interpreta como 10+(11*110)+1.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Exercise
+Indica si la siguiente gramática es ambigua.
+ Justifica tu respuesta.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & aSa\;|\;\varepsilon\\
+A & \rightarrow & bA\;|\;\varepsilon
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Normalización de gramáticas
+\end_layout
+
+\begin_layout Standard
+La normalización de gramáticas consiste en transformar todas las producciones
+ de una gramática de manera que tengan cierta forma sintáctica en particular.
+ Así la normalización de gramáticas libres de contexto es útil para homogeneizar
+ la forma de las producciones, además para optimizar los procesos de derivación
+ de cadenas.
+ Con las 
+\emph on
+Formas Normales
+\emph default
+, se facilita una solución al problema de la pertenencia, es decir, decidir
+ si una cadena pertenece o no a un lenguaje:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+
+\emph on
+Dada una gramática G y una cadena w, ¿se cumple que 
+\begin_inset Formula $w\in L\left(G\right)$
+\end_inset
+
+? 
+\end_layout
+
+\begin_layout Itemize
+Si la palabra 
+\begin_inset Formula $w$
+\end_inset
+
+ es generada por 
+\begin_inset Formula $G$
+\end_inset
+
+, el proceso para la construcción de un árbol de derivación terminará eventualme
+nte.
+\end_layout
+
+\begin_layout Itemize
+En caso contrario 
+\series bold
+no
+\series default
+ podemos saber cuando parar en la construcción de un árbol de derivación.
+\end_layout
+
+\begin_layout Itemize
+Pero si la gramática está en cierta forma normal, sí es posible saber cuando
+ parar en la búsqueda de árboles de derivación para contestar el problema
+ de la pertenencia.
+\end_layout
+
+\begin_layout Standard
+Para obtener gramáticas normales, son necesarias varias transformaciones
+ que simplificarán y reorganizarán las producciones.
+\end_layout
+
+\begin_layout Subsubsection
+Eliminación de variables inútiles
+\end_layout
+
+\begin_layout Standard
+En una GLC puede haber dos tipos de variables inútiles: aquéllas que nunca
+ aparecen en el proceso de ninguna derivación y aquéllas que no se pueden
+ convertir en cadenas terminales.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Variable alcanzable) Una variable A es alcanzable si existen 
+\begin_inset Formula $u,v\in\left(V\cup\Sigma\right)^{*}$
+\end_inset
+
+ tales que 
+\begin_inset Formula $S\Rightarrow^{*}uAv$
+\end_inset
+
+.
+ La variable inicial S es alcanzable por definición.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Variable terminal) Una variable A es terminal si existen 
+\begin_inset Formula $w\in\Sigma^{*}$
+\end_inset
+
+ tales que 
+\begin_inset Formula $A\Rightarrow^{*}w$
+\end_inset
+
+.
+ En particular si 
+\begin_inset Formula $A\rightarrow\varepsilon$
+\end_inset
+
+ es una producción, entonces A es terminal.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Algoritmo para encontrar las variables terminales
+\end_layout
+
+\begin_layout Standard
+El siguiente algoritmo sirve para encontrar todas las variables terminales
+ de una GLC.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+TERM
+\begin_inset Formula $_{1}:=\left\{ A\in V:\text{Existe una producción de la forma }A\rightarrow w,w\in\Sigma^{*}\right\} $
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+TERM
+\begin_inset Formula $_{i+1}:=$
+\end_inset
+
+ TERM
+\begin_inset Formula $_{i}\cup\left\{ A\in V:\exists\text{ producción }A\rightarrow w,w\in\left(\Sigma\cup TERM_{i}\right)^{*}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+De esta forma obtenemos una sucesión creciente de conjuntos de variables:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+TERM_{1}\subseteq TERM_{2}\subseteq TERM_{3}\subseteq...
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El algoritmo se presenta entonces como:
+\end_layout
+
+\begin_layout Itemize
+Inicializar: 
+\series bold
+TERM 
+\begin_inset Formula $:=\left\{ A\in V:\text{Existe una producción de la forma }A\rightarrow w,w\in\Sigma^{*}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Repetir: 
+\series bold
+TERM 
+\begin_inset Formula $:=$
+\end_inset
+
+ TERM
+\series default
+ 
+\series bold
+
+\begin_inset Formula $\cup\left\{ A\in V:\exists\text{ producción }A\rightarrow w,w\in\left(\Sigma\cup TERM\right)^{*}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Hasta: No se añaden nuevas variables a 
+\series bold
+TERM.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Encontrar las variables terminales de la siguiente gramática
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & ACD\;|\;bBd\;|\;ab\\
+A & \rightarrow & aB\;|\;aA\;|C\\
+B & \rightarrow & aDS\;|\;aB\\
+C & \rightarrow & aCS\;|\;CB\;|\;CC\\
+D & \rightarrow & bD\;|\;ba\\
+E & \rightarrow & AB\;|\;aDb
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Solución
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+TERM
+\begin_inset Formula $_{1}=\left\{ S,D\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+TERM
+\begin_inset Formula $_{2}=\left\{ S,D\right\} \cup\left\{ B,E\right\} =\left\{ S,D,B,E\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+TERM
+\begin_inset Formula $_{3}=\left\{ S,D,B,E\right\} \cup\left\{ A\right\} =\left\{ S,D,B,E,A\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+TERM
+\begin_inset Formula $_{4}=\left\{ S,D,B,E,A\right\} \cup\varnothing=\left\{ S,D,B,E,A\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\therefore$
+\end_inset
+
+ El conjunto de variables no terminales es 
+\begin_inset Formula $\left\{ C\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Algoritmo para encontrar las variables alcanzables
+\end_layout
+
+\begin_layout Standard
+El siguiente algoritmo sirve para encontrar todas las variables alcanzables
+ de una GLC.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+ALC
+\begin_inset Formula $_{1}:=\left\{ S\right\} $
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+ALC
+\begin_inset Formula $_{i+1}:=$
+\end_inset
+
+ ALC
+\begin_inset Formula $_{i}\cup\left\{ A\in V:\exists\text{ producción }B\rightarrow uAv,B\in ALC_{i}\;u,v\in\left(V\cup\Sigma\right)^{*}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+De esta forma obtenemos una sucesión creciente de conjuntos de variables:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+ALC_{1}\subseteq ALC_{2}\subseteq ALC_{3}\subseteq...
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El algoritmo se presenta entonces como:
+\end_layout
+
+\begin_layout Itemize
+Inicializar: 
+\series bold
+ALC 
+\begin_inset Formula $:=\left\{ S\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Repetir: 
+\series bold
+ALC
+\series default
+ 
+\series bold
+
+\begin_inset Formula $:=$
+\end_inset
+
+ ALC 
+\begin_inset Formula $\cup\left\{ A\in V:\exists\text{ producción }B\rightarrow uAv,B\in ALC\;u,v\in\left(V\cup\Sigma\right)^{*}\right\} $
+\end_inset
+
+..
+\end_layout
+
+\begin_layout Itemize
+Hasta: No se añaden nuevas variables a 
+\series bold
+ALC.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Encontrar las variables terminales de la siguiente gramática
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & aS\;|\;AaB\;|\;ACS\\
+A & \rightarrow & aS\;|\;AaB\;|\;AC\\
+B & \rightarrow & bB\;|\;DB\;|\:BB\\
+C & \rightarrow & aDa\;|\;ABD\;|\;ab\\
+D & \rightarrow & aD\;|\;DD\;|\;ab\\
+E & \rightarrow & FF\;|\;aa\\
+F & \rightarrow & aE\;|\;EF
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Solución
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+ALC
+\begin_inset Formula $_{1}=\left\{ S\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ALC
+\begin_inset Formula $_{2}=\left\{ S\right\} \cup\left\{ A,B,C\right\} =\left\{ S,A,B,C\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ALC
+\begin_inset Formula $_{3}=\left\{ S,A,B,C\right\} \cup\left\{ D\right\} =\left\{ S,A,B,C,D\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ALC
+\begin_inset Formula $_{4}=\left\{ S,A,B,C,D\right\} \cup\varnothing=\left\{ S,A,B,C,D\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\therefore$
+\end_inset
+
+ El conjunto de variables no alcanzables es 
+\begin_inset Formula $\left\{ E,F\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Eliminación de producciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Producción) Una producción de la forma 
+\begin_inset Formula $A\rightarrow\varepsilon$
+\end_inset
+
+ se llama producción 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Variable anulable) Una variable A se llama anulable si 
+\begin_inset Formula $A\Rightarrow^{*}\varepsilon$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Algoritmo para encontrar las variables anulables
+\end_layout
+
+\begin_layout Standard
+El siguiente algoritmo sirve para encontrar todas las variables alcanzables
+ de una GLC.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+ANUL
+\begin_inset Formula $_{1}:=\left\{ A\in V:A\rightarrow\varepsilon\text{ es una producción}\right\} $
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+ANUL
+\begin_inset Formula $_{i+1}:=$
+\end_inset
+
+ ANUL
+\begin_inset Formula $_{i}\cup\left\{ A\in V:\exists\text{ producción }A\rightarrow w,w\in\left(ANUL_{i}\right)^{*}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+De esta forma obtenemos una sucesión creciente de conjuntos de variables:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+ANUL_{1}\subseteq ANUL_{2}\subseteq ANUL_{3}\subseteq...
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El algoritmo se presenta entonces como:
+\end_layout
+
+\begin_layout Itemize
+Inicializar: 
+\series bold
+ANUL 
+\begin_inset Formula $:=\left\{ A\in V:A\rightarrow\varepsilon\text{ es una producción}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Repetir: 
+\series bold
+ANUL 
+\begin_inset Formula $:=$
+\end_inset
+
+ ANUL
+\series default
+ 
+\series bold
+
+\begin_inset Formula $\cup\left\{ A\in V:\exists\text{ producción }A\rightarrow w,w\in\left(ANUL\right)^{*}\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Hasta: No se añaden nuevas variables a 
+\series bold
+ANUL.
+\end_layout
+
+\begin_layout Standard
+Una vez que haya sido determinado el conjunto 
+\series bold
+ANUL
+\series default
+ de variables anulables, por medio del algoritmo anterior, las producciones
+ 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ se pueden eliminar (excepto 
+\begin_inset Formula $S\rightarrow\varepsilon$
+\end_inset
+
+) añadiendo nuevas producciones que simulen el efecto de las producciones
+ 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ eliminadas.
+ Más concretamente, por cada producción 
+\begin_inset Formula $A\rightarrow u$
+\end_inset
+
+ se añaden producciones de la forma 
+\begin_inset Formula $A\rightarrow v$
+\end_inset
+
+ obtenidas suprimiendo de la cadena 
+\begin_inset Formula $u$
+\end_inset
+
+ una, dos o más variable anulables presentes de todas las formas posibles.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Encontrar las producciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ de la siguiente gramática
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & AB\;|\;ACA\;|\;ab\\
+A & \rightarrow & aAa\;|\;B\;|\;CD\\
+B & \rightarrow & bB\;|\;bA\\
+C & \rightarrow & cC\;|\;\varepsilon\\
+D & \rightarrow & aDc\;|\;CC\;|\;ABb
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Solución
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+ANUL
+\begin_inset Formula $_{1}=\left\{ C\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ANUL
+\begin_inset Formula $_{2}=\left\{ C\right\} \cup\left\{ D\right\} =\left\{ C,D\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ANUL
+\begin_inset Formula $_{3}=\left\{ C,D\right\} \cup\left\{ A\right\} =\left\{ C,D,A\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ANUL
+\begin_inset Formula $_{4}=\left\{ C,D,A\right\} \cup\left\{ S\right\} =\left\{ C,D,A,S\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ANUL
+\begin_inset Formula $_{5}=\left\{ C,D,A,S\right\} \cup\varnothing=\left\{ C,D,A,S\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\therefore$
+\end_inset
+
+ El conjunto de variables anulables es 
+\begin_inset Formula $\left\{ C,D,A,S\right\} $
+\end_inset
+
+.
+ Al eliminar las producciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+, tenemos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & AB\;|\;ACA\;|\;ab\;|\;B\;|\;CA\;|\;AA\;|\;AC\;|\;A\;|\;C\;|\;\varepsilon\\
+A & \rightarrow & aAa\;|\;B\;|\;CD\;|\;aa\;|\;C\;|\;D\\
+B & \rightarrow & bB\;|\;bA\;|\;b\\
+C & \rightarrow & cC\;|\;c\\
+D & \rightarrow & aDc\;|\;CC\;|\;ABb\;|\;ac\;|\;C\;|\;Bb
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Eliminación de producciones unitarias
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Producción unitaria) Una producción de la forma 
+\begin_inset Formula $A\rightarrow B$
+\end_inset
+
+ donde 
+\begin_inset Formula $A$
+\end_inset
+
+ y 
+\begin_inset Formula $B$
+\end_inset
+
+ son variables, se llama producción unitaria.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+
+\emph on
+(Conjunto unitario) El conjunto unitario de una variable A se define de
+ la siguiente manera:
+\end_layout
+
+\begin_layout Definition
+\begin_inset Formula 
+\[
+UNIT(A):=\left\{ X\in V:\exists\text{ una derivación }A\Rightarrow^{*}X\text{ que usa únicamente producciones unitarias}\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Definition
+Por definición 
+\begin_inset Formula $A\in UNIT\left(A\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Algoritmo para encontrar las producciones unitarias
+\end_layout
+
+\begin_layout Standard
+El siguiente algoritmo sirve para encontrar todas las variables alcanzables
+ de una GLC.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+UNIT
+\begin_inset Formula $_{1}(A):=\left\{ A\right\} $
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+UNIT
+\begin_inset Formula $_{i+1}:=$
+\end_inset
+
+ UNIT
+\begin_inset Formula $_{i}(A)\cup\left\{ X\in V:\exists\text{ producción }Y\rightarrow X,Y\in\left(UNIT_{i}(A)\right)\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+De esta forma obtenemos una sucesión creciente de conjuntos de variables:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+UNIT_{1}\subseteq UNIT_{2}\subseteq UNIT_{3}\subseteq...
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El algoritmo se presenta entonces como:
+\end_layout
+
+\begin_layout Itemize
+Inicializar: 
+\series bold
+UNIT
+\begin_inset Formula $(A):=\left\{ A\right\} $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Repetir: 
+\series bold
+UNIT
+\begin_inset Formula $(A):=$
+\end_inset
+
+ UNIT
+\begin_inset Formula $(A)\cup\left\{ X\in V:\exists\text{ producción }Y\rightarrow X,Y\in\left(UNIT(A)\right)\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Hasta: No se añaden nuevas variables a 
+\series bold
+ANUL.
+\end_layout
+
+\begin_layout Standard
+Las producciones unitarias se pueden eliminar añadiendo para cada variable
+ 
+\begin_inset Formula $A$
+\end_inset
+
+ las producciones (no unitarias) de las variables contenidas en el conjunto
+ unitario UNIT(A).
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Eliminar las producciones unitarias de la siguiente gramática:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & AS\;|\;AA\;|\;BA\;|\;\varepsilon\\
+A & \rightarrow & aA\;|\;a\\
+B & \rightarrow & bB\;|\;bC\;|\;C\\
+C & \rightarrow & aA\;|\;bA\;|\;B\;|ab
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Solución
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+UNIT(S)
+\begin_inset Formula $_{1}=\left\{ S\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+UNIT(S)
+\begin_inset Formula $_{2}=\left\{ S\right\} \cup\varnothing=\left\{ S\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+UNIT(A)
+\begin_inset Formula $_{1}=\left\{ A\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+UNIT(A)
+\begin_inset Formula $_{2}=\left\{ A\right\} \cup\varnothing=\left\{ A\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+UNIT(B)
+\begin_inset Formula $_{1}=\left\{ B\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+UNIT(B)
+\begin_inset Formula $_{2}=\left\{ B\right\} \cup\left\{ C\right\} =\left\{ B,C\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+UNIT(B)
+\begin_inset Formula $_{3}=\left\{ B,C\right\} \cup\left\{ B\right\} =\left\{ B,C\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+UNIT(C)
+\begin_inset Formula $_{1}=\left\{ C\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+UNIT(C)
+\begin_inset Formula $_{2}=\left\{ C\right\} \cup\left\{ B\right\} =\left\{ C,B\right\} $
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+UNIT(C)
+\begin_inset Formula $_{3}=\left\{ C,B\right\} \cup\left\{ C\right\} =\left\{ C,B\right\} $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Eliminando las producciones unitarias se obtiene:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & AS\;|\;AA\;|\;BA\;|\;\varepsilon\\
+A & \rightarrow & aA\;|\;a\\
+B & \rightarrow & bB\;|\;bC\;|\;aA\;|\;bA\;|\;ab\\
+C & \rightarrow & aA\;|\;bA\;|\;bB\;|\;bC\;|ab
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Forma Normal de Chomsky (FNC)
+\end_layout
+
+\begin_layout Standard
+Una GLC está en 
+\emph on
+Forma Normal de Chomsky (FNC) 
+\emph default
+si cumple con:
+\end_layout
+
+\begin_layout Enumerate
+No tiene variables inútiles.
+\end_layout
+
+\begin_layout Enumerate
+No tiene producciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ (exceptuando el posible caso de 
+\begin_inset Formula $S\rightarrow\varepsilon$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Enumerate
+Todas las producciones son de la forma 
+\begin_inset Formula $A\rightarrow a$
+\end_inset
+
+ (producciones simples) o 
+\begin_inset Formula $A\rightarrow BC$
+\end_inset
+
+ (producciones binarias).
+\end_layout
+
+\begin_layout Standard
+En particular, una gramática FNC no tiene producciones unitarias.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Theorem
+(Procedimiento de conversión a FNC) Toda GLC es equivalente a una gramática
+ en Forma Normal de Chomsky.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para transformar una GLC en FNC, seguiremos los algoritmos de la sección
+ anterior en el siguiente orden:
+\end_layout
+
+\begin_layout Enumerate
+Eliminar todas las variables no terminales.
+\end_layout
+
+\begin_layout Enumerate
+Eliminar todas las variables no alcanzables.
+\end_layout
+
+\begin_layout Enumerate
+Eliminar las producciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+, exceptuando por supuesto el caso del símbolo inicial.
+\end_layout
+
+\begin_layout Enumerate
+Eliminar las producciones unitarias.
+\end_layout
+
+\begin_layout Enumerate
+Las producciones resultantes (que no sean 
+\begin_inset Formula $S\rightarrow\varepsilon$
+\end_inset
+
+) son de la forma: 
+\begin_inset Formula $A\rightarrow a$
+\end_inset
+
+ o 
+\begin_inset Formula $A\rightarrow w$
+\end_inset
+
+, donde 
+\begin_inset Formula $|w|\geq2$
+\end_inset
+
+.
+ Estas últimas se pueden simular con producciones de la forma 
+\begin_inset Formula $A\rightarrow BC$
+\end_inset
+
+ o 
+\begin_inset Formula $A\rightarrow a$
+\end_inset
+
+.
+ Se introduce primero, para cada 
+\begin_inset Formula $a\in\Sigma$
+\end_inset
+
+, una variable nueva 
+\begin_inset Formula $T_{a}$
+\end_inset
+
+ cuya única producción es 
+\begin_inset Formula $T_{a}\rightarrow A$
+\end_inset
+
+.
+ A continuación se introducen nuevas variables, con producciones binarias,
+ para simular las producciones deseadas.
+\end_layout
+
+\begin_layout Standard
+Dado que ya practicamos los pasos 1 al 4, ilustraremos un ejemplo del paso
+ 5.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Simular la producción 
+\begin_inset Formula $A\rightarrow abBaC$
+\end_inset
+
+ con producciones simples y binarias.
+\end_layout
+
+\begin_layout Example
+
+\emph on
+Solución:
+\end_layout
+
+\begin_layout Example
+Introducimos las variables 
+\begin_inset Formula $T_{a}$
+\end_inset
+
+ y 
+\begin_inset Formula $T_{b}$
+\end_inset
+
+ y las producciones 
+\begin_inset Formula $T_{a}\rightarrow a$
+\end_inset
+
+ y 
+\begin_inset Formula $T_{b}\rightarrow b$
+\end_inset
+
+.
+ Entonces 
+\begin_inset Formula $A\rightarrow abBaC$
+\end_inset
+
+ se simula con:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+A & \rightarrow & T_{a}T_{b}BT_{a}C\\
+T_{a} & \rightarrow & a\\
+T_{b} & \rightarrow & b
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Ahora introducimos nuevas variables 
+\begin_inset Formula $T_{1},T_{2},T_{3}$
+\end_inset
+
+ y las producciones binarias necesarias.
+ Las únicas producciones de estas nuevas variables son las siguientes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+A & \rightarrow & T_{a}T_{1}\\
+T_{1} & \rightarrow & T_{b}T_{2}\\
+T_{2} & \rightarrow & BT_{3}\\
+T_{3} & \rightarrow & T_{a}C\\
+T_{a} & \rightarrow & a\\
+T_{b} & \rightarrow & b
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Example
+Encontrar una GLC en FNC equivalente a la siguiente gramática:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & AB\;|\;aBC\;|\;SBS\\
+A & \rightarrow & aA\;|\;C\\
+B & \rightarrow & bbB\;|\;b\\
+C & \rightarrow & cC\;|\;\varepsilon
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Solución
+\end_layout
+
+\begin_layout Standard
+El conjunto de variables terminales es:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+TERM=\left\{ B,C,S,A\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+y el conjunto de variables alcanzables es:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+ALC=\left\{ S,A,B,C\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Es decir, la gramática no tiene variables inútiles.
+ El conjunto de variables anulables es 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+ANUL=\left\{ C,A\right\} 
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Al eliminar las producciones 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ de G se obtiene la gramática:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & AB\;|\;aBC\;|\;SBS\;|\;B\;|\;aB\\
+A & \rightarrow & aA\;|\;C\;|\;a\\
+B & \rightarrow & bbB\;|\;b\\
+C & \rightarrow & cC\;|\;c
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación encontramos los conjuntos unitarios de todas las variables:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+UNIT(S) & = & \left\{ S,B\right\} \\
+UNIT(A) & = & \left\{ A,C\right\} \\
+UNIT(B) & = & \left\{ B\right\} \\
+UNIT\left(C\right) & = & \left\{ C\right\} 
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Al eliminar las producciones unitarias, tenemos:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & AB\;|\;aBC\;|\;SBS\;|\;bbB\;|\;b\;|\;aB\\
+A & \rightarrow & aA\;|\;cC\;|\;c\;|\;a\\
+B & \rightarrow & bbB\;|\;b\\
+C & \rightarrow & cC\;|\;c
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Luego introducimos las variables nuevas 
+\begin_inset Formula $T_{a},T_{b}$
+\end_inset
+
+ y 
+\begin_inset Formula $T_{c}$
+\end_inset
+
+ y las producciones 
+\begin_inset Formula $T_{a}\rightarrow a,T_{b}\rightarrow b$
+\end_inset
+
+ y 
+\begin_inset Formula $T_{c}\rightarrow c$
+\end_inset
+
+ con el propósito de que todas las producciones sean unitarias o de la forma
+ 
+\begin_inset Formula $A\rightarrow w$
+\end_inset
+
+ con 
+\begin_inset Formula $|w|\geq2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & AB\;|\;T_{a}BC\;|\;SBS\;|\;T_{b}T_{b}B\;|\;b\;|\;T_{a}B\\
+A & \rightarrow & T_{a}A\;|\;T_{c}C\;|\;c\;|\;a\\
+B & \rightarrow & T_{b}T_{b}B\;|\;b\\
+C & \rightarrow & T_{c}C\;|\;c\\
+T_{a} & \rightarrow & a\\
+T_{b} & \rightarrow & b\\
+T_{c} & \rightarrow & c
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente, se introducen nuevas variables, con producciones binarias, para
+ simular las producciones de la forma 
+\begin_inset Formula $A\rightarrow w$
+\end_inset
+
+ con 
+\begin_inset Formula $|w|\geq2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{rcl}
+S & \rightarrow & AB\;|\;T_{a}T_{1}\;|\;ST_{2}\;|\;T_{b}T_{3}\;|\;b\;|\;T_{a}B\\
+A & \rightarrow & T_{a}A\;|\;T_{c}C\;|\;c\;|\;a\\
+B & \rightarrow & T_{b}T_{3}\;|\;b\\
+C & \rightarrow & T_{c}C\;|\;c\\
+T_{a} & \rightarrow & a\\
+T_{b} & \rightarrow & b\\
+T_{c} & \rightarrow & c\\
+T_{1} & \rightarrow & BC\\
+T_{2} & \rightarrow & BS\\
+T_{3} & \rightarrow & T_{b}B
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+Favio E.
+ Miranda, A.
+ Liliana Reyes, et.al, 
+\emph on
+Notas de Clase para el curso de Autómatas y Lenguajes Formales
+\emph default
+, Facultad de Ciencias, UNAM, Revisión 2019-2.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+literal "false"
+
+\end_inset
+
+Rodrigo De Castro, 
+\emph on
+Notas de Clase de Teoría de la Computación: Lenguajes, autómatas, gramáticas,
+\emph default
+ Universidad Nacional de Colombia, Facultas de Ciencias, 2004.
+\end_layout
+
+\end_body
+\end_document
